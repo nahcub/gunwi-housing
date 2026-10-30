@@ -47,10 +47,6 @@ INDICATORS = [
     {"id": "senior_center_old_ratio", "label": "노후 경로당 비율", "unit": "%",
      "status": "available", "higher_is_worse": True,
      "reference": "2025-12-19 · 2000년 이전 건립(프로젝트 임시 기준)"},
-    {"id": "drainage_risk_count", "label": "위험지정 세천", "unit": "개소",
-     "status": "available", "higher_is_worse": True, "reference": "2026-07-15"},
-    {"id": "water_supply_rate", "label": "상수도보급률", "unit": "%",
-     "status": "available", "higher_is_worse": False, "reference": "2025-12-31"},
     {"id": "complaint_rate", "label": "민원발생률", "unit": "건/천명",
      "status": "missing", "blocked_by": "COMPLAINT_INTERNAL"},
     {"id": "repeat_rate", "label": "반복민원율", "unit": "%",
@@ -78,8 +74,6 @@ def build_regions() -> dict:
     pop = load("population.json")
     sgis = load("sgis_stats.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
-    drainage = load("drainage_risk.json")["by_region"]
-    water = load("water_supply.json")["by_region"]
     by_period: dict[str, list] = {}
 
     for rec in pop["records"]:
@@ -101,8 +95,6 @@ def build_regions() -> dict:
                 seniors[code]["old_count"] / seniors[code]["count"] * 100, 1),
             "senior_center_per_1k_elderly": round(
                 seniors[code]["count"] / rec["elderly"] * 1000, 1),
-            "drainage_risk_count": drainage[code]["count"],
-            "water_supply_rate": water[code]["supply_rate_pct"],
         })
 
     for period, rows in by_period.items():
@@ -127,7 +119,6 @@ def build_regions() -> dict:
 def build_facilities() -> dict:
     """지도 마커용 시설 지점. 화면에 필요한 필드만 골라 내보낸다."""
     seniors = load("senior_centers.json")
-    drainage = load("drainage_risk.json")
     return {
         "senior_centers": {
             "reference_date": seniors["reference_date"],
@@ -135,12 +126,6 @@ def build_facilities() -> dict:
             "points": [
                 {k: c[k] for k in ("name", "region_code", "lat", "lon", "built_year")}
                 for c in seniors["centers"]],
-        },
-        "drainage_risk": {
-            "reference_date": drainage["reference_date"],
-            "points": [
-                {k: s[k] for k in ("name", "region_code", "lat", "lon", "designated_on")}
-                for s in drainage["sites"]],
         },
     }
 
@@ -205,19 +190,10 @@ def main() -> None:
         print(f"  {path.relative_to(ROOT)}  ({path.stat().st_size:,} bytes)")
 
     boundary = load("eupmyeon.geojson")
-    parks = load("parks.json")
-    potholes = load("potholes.json")
 
     print("public/data 생성:")
     write("regions.json", build_regions())
     write("eupmyeon.geojson", boundary)
-    write("parks.json", {"parks": parks["parks"]})
-    # 지점만 공개한다. 전국 원자료와 품질 집계는 derived/에 남는다
-    write("potholes.json", {
-        "source_id": potholes["source_id"],
-        "period": potholes["period"],
-        "points": potholes["points"],
-    })
     write("facilities.json", build_facilities())
     write("hypotheses.json", build_hypotheses())
     write("sources.json", build_sources())

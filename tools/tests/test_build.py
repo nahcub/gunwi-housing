@@ -101,14 +101,6 @@ def test_facility_points_join_to_regions():
     fac = build.build_facilities()
     codes = {r["region_code"] for r in build.build_regions()["regions"]["2025-12"]}
     assert len(fac["senior_centers"]["points"]) == 215
-    assert len(fac["drainage_risk"]["points"]) == 27
     for group in fac.values():
         for p in group["points"]:
             assert p["region_code"] in codes
-
-
-def test_potholes_public_has_points_only():
-    """전국 원자료 집계는 공개하지 않고 군위 지점만 내보낸다."""
-    pot = build.load("potholes.json")
-    assert {p["region_code"] for p in pot["points"]} <= {
-        r["region_code"] for r in build.build_regions()["regions"]["2026-08"]}

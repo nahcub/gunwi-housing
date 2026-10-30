@@ -23,11 +23,11 @@
       "url": "https://www.data.go.kr/data/15012890/standard.do",
       "reference_date": "2026-03-05",
       "license": "공공데이터 제공 표준 이용조건 확인",
-      "status": "부분확보",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/datagokr-park-2026-03-05",
-      "used_for": ["공원 위치 마커"],
-      "notes": "표준데이터 등록 3건뿐. 군내 공원·녹지 전수가 아니므로 시설밀도 산출에 쓰면 과소계상된다."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-30 분석 제외, raw 삭제] 사유: 새 주제(빈집·노후주택 주거환경)와 무관하고, 표준데이터 등록 3건뿐이라 지표 근거로 쓸 수 없음. 원본은 git 커밋 ea23c30 의 data/raw/datagokr-park-2026-03-05 에서 복구할 수 있다. — 이전 기록: 표준데이터 등록 3건뿐. 군내 공원·녹지 전수가 아니므로 시설밀도 산출에 쓰면 과소계상된다."
     },
     {
       "id": "GUNWI_VILLAGE_POP",
@@ -62,11 +62,11 @@
       "url": "https://www.data.go.kr/data/15063706/fileData.do",
       "reference_date": "2024-11-27",
       "license": "이용허락범위 제한 없음",
-      "status": "확보/군 단위",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/daegu-salpiso-reports-2024-11-27",
-      "used_for": ["보고서 배경 수치(군 단위, 지표 미사용)"],
-      "notes": "처리기관 단위 14행 집계. 군위군 1행: 제보 87 / 처리 68 / 미처리 10 / 반송 9. 읍면 구분·좌표 없음. '대구광역시' 행은 합계가 아니라 본청 몫(전체 = 14행 합). 집계 연도 미명시 — reference_date는 파일데이터명 접미사. 처리기관 기준이라 군위 지역 제보 전체라는 보장 없음."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-30 분석 제외, raw 삭제] 사유: 이전 주제(생활불편 민원)의 배경 수치로 새 주제와 무관하고, 처리기관 단위라 읍면 비교에 쓸 수 없음. 원본은 git 커밋 ea23c30 의 data/raw/daegu-salpiso-reports-2024-11-27 에서 복구할 수 있다. — 이전 기록: 처리기관 단위 14행 집계. 군위군 1행: 제보 87 / 처리 68 / 미처리 10 / 반송 9. 읍면 구분·좌표 없음. '대구광역시' 행은 합계가 아니라 본청 몫(전체 = 14행 합). 집계 연도 미명시 — reference_date는 파일데이터명 접미사. 처리기관 기준이라 군위 지역 제보 전체라는 보장 없음."
     },
     {
       "id": "DATAGOKR_GUNWI_ILLEGAL_PARKING",
@@ -88,11 +88,11 @@
       "url": "https://www.data.go.kr/data/15021104/standard.do",
       "reference_date": "2026-07-15",
       "license": "이용허락범위 제한 없음",
-      "status": "확보",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/datagokr-gunwi-small-facility-risk-2026-07-15",
-      "used_for": ["시설관리 필요도 후보 (산식 미확정)", "배수시설: 현행 위험지정 세천 읍면별 집계 (derived/drainage_risk.json)"],
-      "notes": "39행, 위도·경도 전 행. 세천 28·소교량 7·농로 3·마을진입로 1. 해제 1건(내량천 2018-06-05) → 현행 38건. 지정사유 컬럼 전부 공란. 지표로 쓰려면 methodology.md 에 근거를 먼저 기록할 것. 배수시설로는 세천만 쓴다(해제 1건 제외 현행 27건). 빗물받이·맨홀 전수대장이 아니다."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-30 분석 제외, raw 삭제] 사유: 이전 주제(시설관리·배수시설)의 자료로 새 주제(빈집·노후주택 주거환경)와 무관함. 원본은 git 커밋 ea23c30 의 data/raw/datagokr-gunwi-small-facility-risk-2026-07-15 에서 복구할 수 있다. — 이전 기록: 39행, 위도·경도 전 행. 세천 28·소교량 7·농로 3·마을진입로 1. 해제 1건(내량천 2018-06-05) → 현행 38건. 지정사유 컬럼 전부 공란. 지표로 쓰려면 methodology.md 에 근거를 먼저 기록할 것. 배수시설로는 세천만 쓴다(해제 1건 제외 현행 27건). 빗물받이·맨홀 전수대장이 아니다."
     },
     {
       "id": "DATAGOKR_GUNWI_SENIOR",
@@ -127,11 +127,11 @@
       "url": "https://www.data.go.kr/data/15144103/fileData.do",
       "reference_date": "2025-12-31",
       "license": "이용허락범위 제한 없음",
-      "status": "확보",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/datagokr-gunwi-water-supply-rate-2025-12-31",
-      "used_for": ["읍면별 상수도보급률 (derived/water_supply.json)"],
-      "notes": "읍면 8행(%), 읍면명이 프로젝트 표준과 일치. 군 합계 행 없음. cp949. 삼국유사면 65, 나머지 86~99."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-30 분석 제외, raw 삭제] 사유: 이전 주제(시설관리)의 지표로 새 주제(빈집·노후주택 주거환경)에서 엮을 가설이 없음. 원본은 git 커밋 ea23c30 의 data/raw/datagokr-gunwi-water-supply-rate-2025-12-31 에서 복구할 수 있다. — 이전 기록: 읍면 8행(%), 읍면명이 프로젝트 표준과 일치. 군 합계 행 없음. cp949. 삼국유사면 65, 나머지 86~99."
     },
     {
       "id": "DAEGU_UNSERVED_WATER_POP",
@@ -231,11 +231,11 @@
       "url": "https://www.data.go.kr/data/15114773/openapi.do",
       "reference_date": "2025-01-01 ~ 2026-10-13",
       "license": "공공저작물 출처표시·상업적이용금지(2유형)",
-      "status": "확보/표본부족",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/minwon-pothole-2026-10-13",
-      "used_for": ["포트홀 민원 지점 지도 표시"],
-      "notes": "전국 57,060건을 원자료로 보존하고 군위 경계 내부만 prepare.py 에서 파생. 군위 내부 4건(우보면 2, 효령면 2)뿐이라 읍면 비교 지표로 쓰지 않고 지점으로만 표시. 완전중복 653행, 위도 쉼표 소수점 2행 — 교정하지 않고 개수를 기록. 읍면 판정은 SGIS 2025 2Q 경계(BOUNDARY_EUPMYEON, 2026-10-15 출처 확인)로 한다."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-10-30 분석 제외, raw 삭제] 사유: 이전 주제(생활불편 민원 기반 시설관리)의 자료로 새 주제와 무관하고, 군위 4건뿐이라 지표 근거로 쓸 수 없음. 원본은 git 커밋 ea23c30 의 data/raw/minwon-pothole-2026-10-13 에서 복구할 수 있다. — 이전 기록: 전국 57,060건을 원자료로 보존하고 군위 경계 내부만 prepare.py 에서 파생. 군위 내부 4건(우보면 2, 효령면 2)뿐이라 읍면 비교 지표로 쓰지 않고 지점으로만 표시. 완전중복 653행, 위도 쉼표 소수점 2행 — 교정하지 않고 개수를 기록. 읍면 판정은 SGIS 2025 2Q 경계(BOUNDARY_EUPMYEON, 2026-10-15 출처 확인)로 한다."
     },
     {
       "id": "GUNWI_BOARD",

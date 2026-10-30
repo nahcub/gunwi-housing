@@ -69,32 +69,6 @@
       "verify_with": ["FACILITY_MAINT_HISTORY", "COMPLAINT_INTERNAL"],
       "verify_method": "보수 이력이 들어오면 노후 판정을 '건립연도'에서 '마지막 보수연도'로 바꿔 다시 센다. 그 뒤 생활시설 고장·보수 민원과 순위상관을 본다.",
       "status": "가설(미검증)"
-    },
-    {
-      "id": "H6",
-      "indicator": "drainage_risk_count",
-      "type": "노후형",
-      "direction": "+",
-      "complaint_fields": ["상·하수도", "도로·보행"],
-      "statement": "위험지정 세천이 많은 읍면일수록 침수·배수·세천 정비 관련 민원이 많을 것이다.",
-      "mechanism": "군이 관리가 필요하다고 지정한 세천은 집중호우 때 범람·도로 침수로 이어질 수 있다.",
-      "caveat": "군이 위험시설로 지정한 세천 목록일 뿐 배수시설(빗물받이·맨홀) 전수가 아니다. 지정사유가 원본에서 전부 공란이라 위험 정도를 구분할 수 없다.",
-      "verify_with": ["COMPLAINT_INTERNAL"],
-      "verify_method": "배수·침수 분야 민원을 장마철(6~9월)과 나머지로 나눠, 장마철 건수와의 순위상관을 본다.",
-      "status": "가설(미검증)"
-    },
-    {
-      "id": "H7",
-      "indicator": "water_supply_rate",
-      "type": "부족형",
-      "direction": "-",
-      "complaint_fields": ["상·하수도"],
-      "statement": "상수도보급률이 낮은 읍면일수록 급수·수질·단수 관련 민원이 많을 것이다.",
-      "mechanism": "상수도가 닿지 않는 지역은 지하수·소규모 급수시설에 의존해 수질·수량 문제가 생기기 쉽다. 삼국유사면(65%)이 다른 읍면(86~99%)보다 눈에 띄게 낮다.",
-      "caveat": "읍면 값만 있다. 군 전체 보급률을 읍면 평균으로 구하지 않는다(인구 가중 아님). 관망 노후도는 이 지표에 없다.",
-      "verify_with": ["COMPLAINT_INTERNAL", "WATER_SEWER_ASSET_INTERNAL"],
-      "verify_method": "상·하수도 분야 민원과 순위상관을 본다. 관망 자료가 들어오면 보급률(부족형)과 관로 경년(노후형)을 나눠 본다.",
-      "status": "가설(미검증)"
     }
   ],
   "evidence": [
