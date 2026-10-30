@@ -1,7 +1,7 @@
 """data/derived -> outputs/ 제출용 엑셀·CSV
 
 읍면 8개를 한 행씩 놓은 결과표를 만든다. derived 만 읽고 raw 는 읽지 않는다.
-종합 우선순위는 산식이 정해지지 않아 '우선순위' 열을 비워 둔다.
+종합 점수는 계산하지 않는다. '종합점수' 열은 그 사실을 남기려고 비워 둔다.
 
   python tools/export_excel.py
 """
@@ -17,16 +17,15 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 ROOT = Path(__file__).resolve().parents[1]
 DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
-HYPOTHESES = ROOT / "data" / "hypotheses.json"
 OUT = ROOT / "outputs"
-BASENAME = "군위군_시설관리우선지역_기초지표_2025"
+BASENAME = "군위군_주거환경취약지역_기초지표_2025"
 
 ANALYSIS_PERIOD = "2025-12"      # 인구 분모 기준 시점. 시설 자료 기준일과 가장 가깝다
 SIGUNGU = "군위군"
 
 # (컬럼명, 자료형, 단위, 설명) - 결과표 열 순서와 컬럼설명 시트를 한 곳에서 정한다
 COLUMNS = [
-    ("우선순위", "정수", "위", "시설관리 우선순위. 종합 산식 미확정으로 비워 둔다"),
+    ("종합점수", "실수", "점", "계산하지 않는다. 근거 있는 가중치가 없어 비워 둔다 (docs/methodology.md §3)"),
     ("행정구역코드", "문자열", "", "행정안전부 행정기관코드 10자리. 조인키. 정수로 바꾸면 조인이 깨진다"),
     ("시군구명", "문자열", "", "군 이름"),
     ("읍면명", "문자열", "", "읍·면 이름"),
@@ -40,11 +39,8 @@ COLUMNS = [
     ("가구수", "정수", "가구", "SGIS 2024년 일반가구"),
     ("경로당수", "정수", "개소", "주소 기준 해당 읍면 소재 경로당 (2025-12-19 기준)"),
     ("노후경로당수", "정수", "개소", "건립연도 2000년 이전. 공식 기준이 아닌 프로젝트 임시 기준"),
-    ("노후경로당비율", "실수", "%", "노후경로당수 / 경로당수 × 100. 가설 H5 의 지표"),
+    ("노후경로당비율", "실수", "%", "노후경로당수 / 경로당수 × 100"),
     ("고령인구1천명당_경로당수", "실수", "개소", "경로당수 / 고령인구 × 1,000"),
-    ("위험지정세천수", "정수", "개소", "소규모공공시설 위험지정 중 현행 지정된 세천 (2026-07-15 기준, 해제 1건 제외)"),
-    ("상수도보급률", "실수", "%", "2025년 12월 말 기준. 군 전체 값을 읍면 평균으로 구하지 말 것"),
-    ("포트홀민원수", "정수", "건", "민원빅데이터 포트홀 민원 중 읍면 경계 안 지점 (2025-01~2026-10). 표본이 적어 참고용"),
     ("중심위도", "실수", "도", "읍면 경계의 면적가중 중심점. EPSG:4326"),
     ("중심경도", "실수", "도", "읍면 경계의 면적가중 중심점. EPSG:4326"),
 ]
@@ -86,9 +82,6 @@ def build_rows() -> list[dict]:
     assert len(pop) == 8, f"{ANALYSIS_PERIOD} 읍면 인구가 8행이 아님: {len(pop)}"
     sgis = load("sgis_stats.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
-    drainage = load("drainage_risk.json")["by_region"]
-    water = load("water_supply.json")["by_region"]
-    potholes = load("potholes.json")["points"]
     shapes = {f["properties"]["region_code"]: f["geometry"]
               for f in load("eupmyeon.geojson")["features"]}
 
@@ -97,7 +90,7 @@ def build_rows() -> list[dict]:
         code = p["region_code"]
         lat, lon = centroid(shapes[code])
         rows.append({
-            "우선순위": None,
+            "종합점수": None,
             "행정구역코드": code,
             "시군구명": SIGUNGU,
             "읍면명": p["region_name"],
@@ -113,9 +106,6 @@ def build_rows() -> list[dict]:
             "노후경로당수": seniors[code]["old_count"],
             "노후경로당비율": round(seniors[code]["old_count"] / seniors[code]["count"] * 100, 2),
             "고령인구1천명당_경로당수": round(seniors[code]["count"] / p["elderly"] * 1000, 2),
-            "위험지정세천수": drainage[code]["count"],
-            "상수도보급률": water[code]["supply_rate_pct"],
-            "포트홀민원수": sum(pt["region_code"] == code for pt in potholes),
             "중심위도": round(lat, 6),
             "중심경도": round(lon, 6),
         })
@@ -125,27 +115,22 @@ def build_rows() -> list[dict]:
 
 def method_rows() -> list[tuple[str, str]]:
     reg = {s["id"]: s for s in json.loads(REGISTRY.read_text(encoding="utf-8"))["sources"]}
-    used = ["MOIS_AGE", "SGIS_ADM_STAT_2025", "DATAGOKR_GUNWI_SENIOR",
-            "DATAGOKR_GUNWI_SMALL_FACILITY_RISK", "DATAGOKR_GUNWI_WATER_SUPPLY_RATE",
-            "MINWON_POTHOLE_LATLON", "BOUNDARY_EUPMYEON"]
+    used = ["MOIS_AGE", "SGIS_ADM_STAT_2025", "DATAGOKR_GUNWI_SENIOR", "BOUNDARY_EUPMYEON"]
     excluded = [s for s in reg.values() if s["status"] == "분석제외"]
 
     rows = [
         ("■ 개요", ""),
-        ("데이터셋", "대구광역시 군위군 읍면별 시설관리 우선지역 기초지표"),
+        ("데이터셋", "대구광역시 군위군 읍면별 주거환경 취약지역 기초지표"),
         ("공간 단위", "읍·면 8곳 (군위읍, 소보·효령·부계·우보·의흥·산성·삼국유사면)"),
-        ("기준 시점", "인구 2025년 12월 말 / SGIS 2024년 / 경로당 2025-12-19 / "
-                     "위험지정 세천 2026-07-15 / 상수도 2025년 12월 말"),
+        ("기준 시점", "인구 2025년 12월 말 / SGIS 2024년 / 경로당 2025-12-19"),
         ("좌표계", "EPSG:4326 (WGS84)"),
         ("", ""),
         ("■ 산출식", ""),
-        ("종합 우선순위", "미확정. 지표 간 척도가 달라(건수·비율·지수) 표준화와 가중치 근거가 "
-                       "정해져야 계산할 수 있으므로 '우선순위' 열을 비워 두었다"),
+        ("종합 점수", "계산하지 않는다. 지표 간 척도가 달라(건수·비율·지수) 표준화와 가중치 근거가 "
+                     "없으므로 '종합점수' 열을 비워 두었다"),
         ("고령화율", "65세 이상 인구 ÷ 총인구 × 100"),
         ("고령인구1천명당_경로당수", "경로당수 ÷ 고령인구 × 1,000"),
         ("노후경로당수", "건립연도 < 2000. 공식 기준이 아니라 프로젝트 임시 기준"),
-        ("민원 가설", "지표별 민원 가설은 '가설' 시트(data/hypotheses.json). 전부 미검증이며 "
-                     "점수·가중치를 만들지 않는다"),
         ("", ""),
         ("■ 자료 출처", ""),
     ]
@@ -161,9 +146,6 @@ def method_rows() -> list[tuple[str, str]]:
                       "(2024)다. 정의가 달라 값이 다르므로 한 지표 안에서 섞지 말 것"),
         ("경계 출처", "읍면 경계는 통계청 SGIS 행정구역 경계 2025년 2분기(기준일 2025-06-30). "
                     "2026-10-15 SGIS 원본과 8개 읍면 도형 일치 확인"),
-        ("민원 자료", "읍면별 생활불편 민원 건별 원자료를 확보하지 못해 민원발생률·반복민원율·"
-                    "처리지연율은 계산하지 않았다. 포트홀 민원 4건은 참고용"),
-        ("상수도보급률", "읍면 값만 있다. 군 전체 보급률을 읍면 평균으로 구하면 인구 가중이 빠져 틀린다"),
         ("", ""),
         ("■ 분석에서 제외한 자료", ""),
     ]
@@ -185,23 +167,6 @@ HEADER_FILL = PatternFill("solid", fgColor="1F4E79")
 SECTION_FONT = Font(bold=True)
 THIN = Side(style="thin")
 BORDER = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
-
-
-def hypothesis_rows() -> list[list]:
-    """data/hypotheses.json -> '가설' 시트. 문구는 json 이 원본이다."""
-    hyp = json.loads(HYPOTHESES.read_text(encoding="utf-8"))
-    rows = []
-    for h in hyp["hypotheses"]:
-        rows.append([h["id"], h["indicator"], h["type"], h["direction"],
-                     ", ".join(h["complaint_fields"]), h["statement"], h["mechanism"],
-                     h["caveat"], h["verify_method"], ", ".join(h["verify_with"]), h["status"]])
-    for e in hyp["evidence"]:
-        rows.append([e["id"], e["source"], e["kind"], "", "", e["text"], "", "", "", "", ""])
-    return rows
-
-
-HYP_HEADER = ["ID", "지표", "유형", "방향", "민원 분야", "가설", "근거", "주의",
-              "검증 방법", "검증 자료", "상태"]
 
 
 def _sheet(ws, header: list[str], body: list[list], widths: list[float]) -> None:
@@ -242,12 +207,6 @@ def main() -> None:
         if str(row[0].value or "").startswith("■"):
             row[0].font = SECTION_FONT
         row[1].alignment = Alignment(wrap_text=True, vertical="top")
-
-    ws4 = wb.create_sheet("가설")
-    _sheet(ws4, HYP_HEADER, hypothesis_rows(), [6, 26, 9, 6, 18, 46, 46, 46, 46, 30, 13])
-    for row in ws4.iter_rows(min_row=2):
-        for cell in row:
-            cell.alignment = Alignment(wrap_text=True, vertical="top")
 
     xlsx = OUT / f"{BASENAME}.xlsx"
     wb.save(xlsx)

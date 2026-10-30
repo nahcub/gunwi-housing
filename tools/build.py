@@ -17,7 +17,6 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
-HYPOTHESES = ROOT / "data" / "hypotheses.json"
 OUT = ROOT / "public" / "data"
 
 # 웹 화면에 내보내는 출처 필드. 여기서 뺀 필드는 화면에 안 뜬다.
@@ -47,19 +46,7 @@ INDICATORS = [
     {"id": "senior_center_old_ratio", "label": "노후 경로당 비율", "unit": "%",
      "status": "available", "higher_is_worse": True,
      "reference": "2025-12-19 · 2000년 이전 건립(프로젝트 임시 기준)"},
-    {"id": "drainage_risk_count", "label": "위험지정 세천", "unit": "개소",
-     "status": "available", "higher_is_worse": True, "reference": "2026-07-15"},
-    {"id": "water_supply_rate", "label": "상수도보급률", "unit": "%",
-     "status": "available", "higher_is_worse": False, "reference": "2025-12-31"},
-    {"id": "complaint_rate", "label": "민원발생률", "unit": "건/천명",
-     "status": "missing", "blocked_by": "COMPLAINT_INTERNAL"},
-    {"id": "repeat_rate", "label": "반복민원율", "unit": "%",
-     "status": "missing", "blocked_by": "COMPLAINT_INTERNAL"},
-    {"id": "delay_rate", "label": "처리지연율", "unit": "%",
-     "status": "missing", "blocked_by": "COMPLAINT_INTERNAL"},
-    {"id": "facility_need", "label": "시설관리 필요도", "unit": "점",
-     "status": "missing", "blocked_by": "FACILITY_MAINT_HISTORY"},
-    {"id": "priority_score", "label": "종합 우선순위", "unit": "점",
+    {"id": "priority_score", "label": "종합 점수", "unit": "점",
      "status": "blocked",
      "reason": "검증된 가중치 모형이 없다. docs/methodology.md 참고"},
 ]
@@ -78,8 +65,6 @@ def build_regions() -> dict:
     pop = load("population.json")
     sgis = load("sgis_stats.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
-    drainage = load("drainage_risk.json")["by_region"]
-    water = load("water_supply.json")["by_region"]
     by_period: dict[str, list] = {}
 
     for rec in pop["records"]:
@@ -101,8 +86,6 @@ def build_regions() -> dict:
                 seniors[code]["old_count"] / seniors[code]["count"] * 100, 1),
             "senior_center_per_1k_elderly": round(
                 seniors[code]["count"] / rec["elderly"] * 1000, 1),
-            "drainage_risk_count": drainage[code]["count"],
-            "water_supply_rate": water[code]["supply_rate_pct"],
         })
 
     for period, rows in by_period.items():
@@ -127,7 +110,6 @@ def build_regions() -> dict:
 def build_facilities() -> dict:
     """지도 마커용 시설 지점. 화면에 필요한 필드만 골라 내보낸다."""
     seniors = load("senior_centers.json")
-    drainage = load("drainage_risk.json")
     return {
         "senior_centers": {
             "reference_date": seniors["reference_date"],
@@ -136,45 +118,7 @@ def build_facilities() -> dict:
                 {k: c[k] for k in ("name", "region_code", "lat", "lon", "built_year")}
                 for c in seniors["centers"]],
         },
-        "drainage_risk": {
-            "reference_date": drainage["reference_date"],
-            "points": [
-                {k: s[k] for k in ("name", "region_code", "lat", "lon", "designated_on")}
-                for s in drainage["sites"]],
-        },
     }
-
-
-def build_hypotheses() -> dict:
-    """data/hypotheses.json -> 공개용 가설 목록.
-
-    가설은 '지표가 민원과 이렇게 엮일 것이다'라는 미검증 주장이다. 여기서
-    지표·출처 id 가 실제로 있는지 검사해, 없는 지표에 가설이 붙는 것을 막는다.
-    점수·가중치는 만들지 않는다 - views 의 사분면도 중앙값 위치 표시뿐이다.
-    """
-    hyp = json.loads(HYPOTHESES.read_text(encoding="utf-8"))
-    available = {i["id"] for i in INDICATORS if i["status"] == "available"}
-    sources = {s["id"] for s in json.loads(REGISTRY.read_text(encoding="utf-8"))["sources"]}
-    statuses = set(hyp["status_values"])
-    fields = set(hyp["complaint_fields"])
-
-    ids = [h["id"] for h in hyp["hypotheses"]]
-    assert len(ids) == len(set(ids)), "가설 id 중복"
-    for h in hyp["hypotheses"]:
-        assert h["indicator"] in available, f"{h['id']}: 화면에 없는 지표 {h['indicator']}"
-        assert h["status"] in statuses, f"{h['id']}: 허용되지 않은 상태 {h['status']}"
-        assert h["direction"] in {"+", "-", "±"}, f"{h['id']}: 방향 표기 {h['direction']}"
-        assert set(h["complaint_fields"]) <= fields, f"{h['id']}: 없는 민원 분야"
-        missing = set(h["verify_with"]) - sources
-        assert not missing, f"{h['id']}: sources.json 에 없는 검증 자료 {missing}"
-    for e in hyp["evidence"]:
-        assert e["source"] in sources, f"{e['id']}: sources.json 에 없는 자료 {e['source']}"
-    for v in hyp["views"]:
-        assert {v["x"], v["y"]} <= available, f"{v['id']}: 화면에 없는 지표"
-        assert set(v["hypotheses"]) <= set(ids), f"{v['id']}: 없는 가설 참조"
-        assert v["split"] == "median", f"{v['id']}: 사분면은 중앙값 분할만 쓴다"
-    return {k: hyp[k] for k in ("schema_version", "updated_at", "status_values",
-                                "complaint_fields", "hypotheses", "evidence", "views")}
 
 
 def build_sources() -> dict:
@@ -205,21 +149,11 @@ def main() -> None:
         print(f"  {path.relative_to(ROOT)}  ({path.stat().st_size:,} bytes)")
 
     boundary = load("eupmyeon.geojson")
-    parks = load("parks.json")
-    potholes = load("potholes.json")
 
     print("public/data 생성:")
     write("regions.json", build_regions())
     write("eupmyeon.geojson", boundary)
-    write("parks.json", {"parks": parks["parks"]})
-    # 지점만 공개한다. 전국 원자료와 품질 집계는 derived/에 남는다
-    write("potholes.json", {
-        "source_id": potholes["source_id"],
-        "period": potholes["period"],
-        "points": potholes["points"],
-    })
     write("facilities.json", build_facilities())
-    write("hypotheses.json", build_hypotheses())
     write("sources.json", build_sources())
 
     if boundary.get("_provenance") != "verified":

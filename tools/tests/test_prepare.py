@@ -6,7 +6,6 @@
 from __future__ import annotations
 
 import json
-from collections import Counter
 import sys
 from pathlib import Path
 
@@ -25,9 +24,6 @@ def test_pipeline_runs_and_reproduces_known_counts():
     assert len(population) == 18          # 2시점 x (군 합계 + 읍면 8)
     assert len(name_by_code) == 8
     assert prepare.GUNWI_CODE not in name_by_code
-
-    parks, _ = prepare.prepare_parks()
-    assert len(parks) == 3                # 표준데이터 등록분. 전수가 아니다
 
     boundary = prepare.prepare_boundary(name_by_code)
     assert len(boundary["features"]) == 8
@@ -93,22 +89,6 @@ def test_eupmyeon_total_guard(tmp_path, monkeypatch):
         prepare.prepare_population()
 
 
-def test_park_coordinate_guard(tmp_path, monkeypatch):
-    """군위군 범위 밖 좌표는 통과하면 안 된다."""
-    src = ROOT / "data" / "raw" / "datagokr-park-2026-03-05"
-    dst = tmp_path / "data" / "raw" / "datagokr-park-2026-03-05"
-    dst.mkdir(parents=True)
-    for name in ("_meta.json", "header.json"):
-        (dst / name).write_bytes((src / name).read_bytes())
-    parks = json.loads((src / "parks.json").read_text(encoding="utf-8"))
-    parks[0]["LATITUDE"] = "37.5665"      # 서울
-    (dst / "parks.json").write_text(json.dumps(parks, ensure_ascii=False),
-                                    encoding="utf-8")
-    monkeypatch.setattr(prepare, "RAW", tmp_path / "data" / "raw")
-    with pytest.raises(AssertionError, match="범위 밖"):
-        prepare.prepare_parks()
-
-
 def _patch_age(tmp_path, monkeypatch, corrupt):
     """age.json 한 시점만 망가뜨린 raw 트리를 만들어 RAW 를 가리키게 한다."""
     raw = tmp_path / "data" / "raw"
@@ -125,41 +105,7 @@ def _patch_age(tmp_path, monkeypatch, corrupt):
     monkeypatch.setattr(prepare, "RAW", raw)
 
 
-# ---------------------------------------------------------------- 포트홀
-
-def _boundary():
-    _, name_by_code = prepare.prepare_population()
-    return prepare.prepare_boundary(name_by_code)
-
-
-def test_pothole_known_counts():
-    """원본이 바뀌면 알아채도록 숫자를 고정한다. 품질 문제는 교정하지 않는다."""
-    out = prepare.prepare_potholes(_boundary())
-    assert out["national_row_count"] == 57060
-    assert out["exact_duplicate_count"] == 653
-    assert out["unparsable_coord_count"] == 2       # 위도 '37,642'
-    assert out["period"] == ["2025-01-01", "2026-10-13"]
-    by_name = Counter(p["region_name"] for p in out["points"])
-    assert by_name == {"우보면": 2, "효령면": 2}
-
-
-def test_pothole_points_carry_population_region_code():
-    _, name_by_code = prepare.prepare_population()
-    out = prepare.prepare_potholes(prepare.prepare_boundary(name_by_code))
-    for p in out["points"]:
-        assert name_by_code[p["region_code"]] == p["region_name"]
-
-
-def test_point_in_polygon_respects_holes():
-    square = [[0, 0], [10, 0], [10, 10], [0, 10], [0, 0]]
-    hole = [[4, 4], [6, 4], [6, 6], [4, 6], [4, 4]]
-    geom = {"type": "Polygon", "coordinates": [square, hole]}
-    assert prepare._in_geometry(2, 2, geom)
-    assert not prepare._in_geometry(5, 5, geom)
-    assert not prepare._in_geometry(11, 5, geom)
-
-
-# ------------------------------------------------------- 경로당 / 배수시설
+# ---------------------------------------------------------------- 경로당
 
 def test_senior_center_known_counts():
     """원본이 바뀌면 알아채도록 숫자를 고정한다."""
@@ -174,16 +120,6 @@ def test_senior_center_known_counts():
     assert set(out["by_region"]) == set(name_by_code)   # 군 합계 코드 없음
 
 
-def test_drainage_keeps_only_current_streams():
-    _, name_by_code = prepare.prepare_population()
-    out = prepare.prepare_drainage_risk(name_by_code)
-    assert out["source_type_counts"]["세천"] == 28
-    assert out["released_excluded"] == ["내량천"]    # 2018-06-05 해제
-    assert len(out["sites"]) == 27
-    by_name = {name_by_code[c]: v["count"] for c, v in out["by_region"].items()}
-    assert by_name["부계면"] == 7
-
-
 def test_address_must_resolve_to_one_eupmyeon():
     code_by_name = {"군위읍": "2772025000", "부계면": "2772033000"}
     assert prepare._region_code_from_address(
@@ -193,15 +129,6 @@ def test_address_must_resolve_to_one_eupmyeon():
     with pytest.raises(AssertionError, match="하나로 정할 수 없음"):
         prepare._region_code_from_address(
             code_by_name, "대구광역시 군위군 군위읍 X", "대구광역시 군위군 부계면 Y")
-
-
-def test_water_supply_known_values():
-    _, name_by_code = prepare.prepare_population()
-    out = prepare.prepare_water_supply(name_by_code)
-    by_name = {name_by_code[c]: v["supply_rate_pct"] for c, v in out["by_region"].items()}
-    assert len(by_name) == 8
-    assert by_name["삼국유사면"] == 65
-    assert by_name["의흥면"] == 99
 
 
 # ---------------------------------------------------------------- SGIS
@@ -246,21 +173,12 @@ def test_senior_center_coordinate_guard(tmp_path, monkeypatch):
         prepare.prepare_senior_centers(name_by_code)
 
 
-# ---------------------------------------------------------------- 살피소
-
-def test_salpiso_known_counts():
-    """군 단위 배경 수치. 원본이 바뀌면 알아채도록 고정한다."""
-    out = prepare.prepare_salpiso()
-    assert len(out["agencies"]) == 14
-    assert out["daegu_all"]["reports"] == 253043
-    g = out["gunwi"]
-    assert g["reports"] == 87
-    assert g["status"] == {"처리": 68, "미처리": 10, "반송": 9}
-    assert g["by_field"]["현수막"] == 37
-    assert g["by_field"]["도로시설"] == 13 and g["by_field"]["교통시설"] == 13
-
-
 # ---------------------------------------------------------------- 경계 출처
+
+def _boundary():
+    _, name_by_code = prepare.prepare_population()
+    return prepare.prepare_boundary(name_by_code)
+
 
 def test_boundary_is_verified_and_bytes_unchanged():
     """경계는 2026-10-15 SGIS 원본과 대조해 verified 가 됐다.

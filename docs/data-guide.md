@@ -1,7 +1,7 @@
 # 데이터 설명서: `data/raw` → `data/derived`
 
 `data/raw/` 에 무엇이 있고, `tools/prepare.py` 를 거치면 `data/derived/` 에서
-무엇이 되는지 정리한 문서다. 숫자는 2026-10-14 실행 결과 기준.
+무엇이 되는지 정리한 문서다. 숫자는 2026-10-14 실행 결과 기준(빈집애는 2026-10-30 수집).
 
 ```
 data/raw/<폴더>/          받은 그대로. 동결. _meta.json = 출처 카드(출처·기준일·sha256)
@@ -20,14 +20,21 @@ public/data/*.json        웹 화면용
 | `mois-age-2025-12` | 행안부 연령별 주민등록인구 | 2025-12-31 | `population.json` | 사용 |
 | `mois-age-2026-08` | 〃 | 2026-08-31 | `population.json` | 사용 |
 | `boundary-eupmyeon-2025-06-30` | 읍면 경계 GeoJSON (SGIS 2025 2Q) | 2025-06-30 | `eupmyeon.geojson` | 사용 (2026-10-15 출처 확인) |
-| `datagokr-park-2026-03-05` | 도시공원 표준데이터(군위 3건) | 2026-03-05 | `parks.json` | 사용 |
-| `minwon-pothole-2026-10-13` | 권익위 포트홀 민원 좌표(전국) | 2025-01-01~2026-10-13 | `potholes.json` | 사용(지점 표시 전용) |
 | `datagokr-gunwi-senior-2025-12-19` | 경로당 표준데이터(군위 215곳) | 2025-12-19 | `senior_centers.json` | 사용 |
-| `datagokr-gunwi-small-facility-risk-2026-07-15` | 소규모공공시설 위험지정(39건) | 2026-07-15 | `drainage_risk.json` | 사용 |
-| `datagokr-gunwi-water-supply-rate-2025-12-31` | 읍면별 상수도보급률 | 2025-12-31 | `water_supply.json` | 사용 |
 | `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | `sgis_stats.json` | 19개 CSV 중 10개 사용 |
-| `daegu-salpiso-reports-2024-11-27` | 대구 살피소 제보 처리현황 | 2024-11-27 | `salpiso.json` | 사용(군 단위 배경 수치, 웹 미공개) |
 | `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | — | 등록만(prepare.py 미연결) |
+
+분석 제외(raw 삭제) — 2026-10-30 주제 변경(빈집·노후주택 주거환경)으로 뺐다.
+`data/sources.json` 에 `status: "분석제외"` 와 사유가 남아 있고, 원본은 git 커밋
+`ea23c30` 에서 복구할 수 있다.
+
+| 삭제한 raw 폴더 | 원자료 | 쓰던 derived |
+|---|---|---|
+| `datagokr-park-2026-03-05` | 도시공원 표준데이터(군위 3건) | `parks.json` |
+| `minwon-pothole-2026-10-13` | 권익위 포트홀 민원 좌표(전국) | `potholes.json` |
+| `datagokr-gunwi-small-facility-risk-2026-07-15` | 소규모공공시설 위험지정(39건) | `drainage_risk.json` |
+| `datagokr-gunwi-water-supply-rate-2025-12-31` | 읍면별 상수도보급률 | `water_supply.json` |
+| `daegu-salpiso-reports-2024-11-27` | 대구 살피소 제보 처리현황 | `salpiso.json` |
 
 모든 폴더에 공통으로 있는 파일:
 
@@ -44,9 +51,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 | 주민등록 인구 | `2772025000` 등 | 그대로 (기준) |
 | 경계 GeoJSON | `ADM_CD` `22520111` 등 | 읍면 **이름**으로 대응 (`prepare_boundary`) |
 | SGIS 통계 | `22520111` 등 | 경계에 남긴 `source_adm_cd` 로 대응 |
-| 경로당·위험시설 | 주소 문자열 | 주소 속 읍면 토큰으로 대응 |
-| 상수도보급률 | `읍면명` 컬럼 | 이름으로 대응 |
-| 포트홀 | 위경도 | 경계 다각형 안에 들어가는지 판정 |
+| 경로당 | 주소 문자열 | 주소 속 읍면 토큰으로 대응 |
 
 | region_code | 읍면 | SGIS/경계 코드 |
 |---|---|---|
@@ -112,64 +117,10 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
  "source_adm_cd": "22520111", "base_date": "20250630"}
 ```
 
-- `source_adm_cd` 는 SGIS 통계를 붙일 때 다리로 쓰인다(§7).
+- `source_adm_cd` 는 SGIS 통계를 붙일 때 다리로 쓰인다(§4).
 - `_provenance` 가 `verified` 가 아니면 웹 화면 상단에 경고 배너가 뜬다(현재는 verified 라 뜨지 않는다).
 
-## 3. 도시공원 → `parks.json`
-
-**raw**: `datagokr-park-2026-03-05/parks.json`(3행), `header.json`(컬럼 코드↔한글명)
-
-- 공공데이터포털 전국도시공원정보 표준데이터 중 군위군 등록분 3건뿐.
-  **군내 공원·녹지 전수가 아니다.**
-
-**가공** (`prepare_parks`)
-
-- 검증: 관리번호 중복 없음, 좌표가 군위 범위(경도 128.3~128.9, 위도 35.9~36.5) 안.
-- 컬럼 8개만 골라 영문 키로 바꾼다.
-
-**derived**: `column_labels`(header 매핑) + `parks` 3건
-
-```json
-{"manage_no": "27720-00003", "name": "서부제3어린이공원", "category": "어린이공원",
- "address": "대구광역시 군위군 군위읍 중앙4길 16-6",
- "lon": 128.5661865, "lat": 36.23..., "area_sqm": 1627.0, "reference_date": "2026-03-05"}
-```
-
-3건 모두 군위읍 어린이공원(서부제2·서부제3·동부제1). region_code 는 붙이지 않는다.
-
-## 4. 포트홀 민원 → `potholes.json`
-
-**raw**: `minwon-pothole-2026-10-13/`
-
-| 파일 | 내용 | 가공에 사용 |
-|---|---|---|
-| `pothole_all.csv` | 전국 포트홀 민원 57,060행. 컬럼 `create_dt, event_lat, event_lon` 3개 | O |
-| `progress.json` | `fetch_pothole.py` 가 완료한 15일 구간 44개 기록 | X |
-| `test_response.txt` | 2025-01-01 하루치 API 원응답 표본(JSON) | X |
-
-- `pothole_all.csv` 는 API 응답 그대로가 아니라 `tools/fetch_pothole.py` 가 3개 필드만 옮긴 것.
-- 알려진 품질 문제: 완전중복 653행, 위도에 쉼표 소수점(`37,642`)이 들어간 2행.
-
-**가공** (`prepare_potholes`)
-
-1. 품질 문제는 **고치지 않고 개수만 센다.** 좌표 파싱이 안 되는 행은 버린다.
-2. 경계 전체 외접사각형으로 먼저 거른 뒤, 남은 점을 읍면 다각형마다 포함 판정.
-3. 읍면 안에 들어간 점에 region_code 를 붙인다(두 읍면에 동시에 속하면 멈춘다).
-
-**derived**: 전국 57,060행 중 **군위 4건** (우보면 2, 효령면 2)
-
-```json
-{"source_id": "MINWON_POTHOLE_LATLON", "period": ["2025-01-01", "2026-10-13"],
- "boundary_provenance": "verified",
- "national_row_count": 57060, "exact_duplicate_count": 653, "unparsable_coord_count": 2,
- "points": [{"date": "2025-03-12", "lat": 36.19..., "lon": 128.66...,
-             "region_code": "2772034000", "region_name": "우보면"}, ...]}
-```
-
-- 표본이 너무 적어 **읍면 비교 지표로 쓰지 않는다.** 지도에 지점으로만 표시.
-- 읍면 판정은 SGIS 2025 2Q 경계(§2)로 한다.
-
-## 5. 경로당 → `senior_centers.json`
+## 3. 경로당 → `senior_centers.json`
 
 **raw**: `datagokr-gunwi-senior-2025-12-19/15114136_gunwi.csv` (215행, UTF-8 BOM)
 
@@ -205,60 +156,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - **2000년 기준은 공식 기준이 아니라 프로젝트 임시값**이다(`SENIOR_OLD_BEFORE_YEAR`).
 - `source_row` 로 원본 CSV 몇 번째 행인지 추적할 수 있다.
 
-## 6. 소규모공공시설 위험지정 → `drainage_risk.json`
-
-**raw**: `datagokr-gunwi-small-facility-risk-2026-07-15/대구광역시_군위군_소규모공공시설위험지정정보_20260715.csv`
-(39행 16컬럼, UTF-8 BOM). `capture-file-detail.html` 은 파일 상세 페이지 증빙.
-
-- 시설유형: 세천 28 · 소교량 7 · 농로 3 · 마을진입로 1.
-- 위험시설해제일자가 있는 행 1건(내량천, 2018-06-05 해제).
-- 지정사유·도로명주소·시설부속물 컬럼은 전부 공란, 폭은 13행만 있음.
-
-**가공** (`prepare_drainage_risk`)
-
-1. 시설유형 **`세천`만** 남긴다(배수시설 관점).
-2. 해제일자가 있는 행은 제외 → 현행 지정 세천 **27곳**.
-3. 좌표 범위 검증, 주소로 region_code 부여.
-
-**derived**
-
-```json
-{"reference_date": "2026-07-15", "provenance": "verified",
- "source_type_counts": {"세천": 28, "소교량": 7, "마을진입로": 1, "농로": 3},
- "released_excluded": ["내량천"],
- "by_region": {"2772033000": {"count": 7}, ...},
- "sites": [{"name": "새터천", "region_code": "2772033000",
-            "address": "대구광역시 군위군 부계면 춘산리 957", "lon": 128.658, "lat": 36.093,
-            "designated_on": "2017-02-28", "notice_no": "군위군 고시 제2017-14호(2017.2.28)",
-            "length_m": 300.0, "width_m": 4.0, "reference_date": "2026-07-15", "source_row": 2}, ...]}
-```
-
-| 읍면 | 군위읍 | 소보면 | 효령면 | 부계면 | 우보면 | 의흥면 | 산성면 | 삼국유사면 | 계 |
-|---|---|---|---|---|---|---|---|---|---|
-| 위험지정 세천 | 3 | 2 | 3 | 7 | 3 | 2 | 4 | 3 | 27 |
-
-- **빗물받이·맨홀 전수대장이 아니다.** 군이 위험시설로 지정한 세천 목록일 뿐이다.
-- 소교량·농로·마을진입로는 derived 에 개수(`source_type_counts`)만 남는다.
-
-## 7. 상수도보급률 → `water_supply.json`
-
-**raw**: `datagokr-gunwi-water-supply-rate-2025-12-31/대구광역시 군위군_상수도보급률 현황_20260622.csv`
-(8행, **cp949 인코딩**). 컬럼: 시도명, 시군구명, 읍면명, `상수도보급률(2025년 12월말 기준)`.
-
-- 파일명의 `20260622` 는 포털 갱신일이다. 기준일은 컬럼명에 적힌 2025년 12월말.
-- 군 합계 행은 없다.
-
-**가공** (`prepare_water_supply`): 읍면명 → region_code, 값이 0~100 범위인지 검증.
-
-**derived**
-
-| 읍면 | 군위읍 | 소보면 | 효령면 | 부계면 | 우보면 | 의흥면 | 산성면 | 삼국유사면 |
-|---|---|---|---|---|---|---|---|---|
-| `supply_rate_pct` | 95 | 92 | 96 | 86 | 98 | 99 | 99 | **65** |
-
-- 읍면 값을 단순 평균해 군 전체 보급률로 쓰지 말 것(인구 가중이 아니다).
-
-## 8. SGIS 행정구역 통계 → `sgis_stats.json`
+## 4. SGIS 행정구역 통계 → `sgis_stats.json`
 
 **raw**: `sgis-admstat-2025-2q/` CSV 19개 (**cp949**). 전국 파일(269MB zip, 저장소 밖 보관)에서
 군위군(SGIS 코드 `22520`) 행만 걸러낸 것. 형식은 모두 같다:
@@ -285,9 +183,11 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 | 산업분류별(11차_대분류)_총괄사업체수 | `to_fa_010` | `businesses` | 개 | O |
 | 산업분류별(11차_대분류)_총괄종사자수 | `to_em_020` | `employees` | 명 | O |
 
-**쓰지 않는 9개 파일**: 건축년도별주택, 주택유형별주택, 연건평별주택, 세대구성별가구,
+**아직 읽지 않는 9개 파일**: 건축년도별주택, 주택유형별주택, 연건평별주택, 세대구성별가구,
 성연령별인구, 산업분류별 대분류 사업체수·종사자수, 중분류 사업체수·종사자수.
-주택 세부 항목은 사유 재산이라 공공시설 관리 분석 범위 밖으로 뺐다.
+이 중 건축년도별주택(`ho_yr_001`~`ho_yr_020`, 읍면 단위, `N/A` 칸 있음)·주택유형별주택·
+연건평별주택은 노후주택 주제의 원천 후보다. 파일은 raw 에 있으나 `prepare.py` 에 연결하지
+않았다. 항목코드가 어느 건축연도 구간인지는 SGIS 제공용 코드집으로 확인한 뒤 연결한다.
 
 **가공** (`prepare_sgis_stats`)
 
@@ -312,34 +212,24 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - SGIS 인구(등록센서스, 2024)와 주민등록 인구(§1)는 **정의가 달라 값이 다르다**
   (군 전체 21,493 vs 22,452). 한 표에서 섞어 쓰지 말 것.
 
-## 9. 살피소 제보 처리현황 → `salpiso.json`
+## 5. 빈집애 읍면별 빈집 수 (derived 없음)
 
-**raw**: `daegu-salpiso-reports-2024-11-27/대구광역시_살피소처리현황.csv` (14행 × 15열, UTF-8 BOM)
+**raw**: `binzibe-gunwi-vacant-houses-2025/`
 
-- 컬럼: 구분, 제보, 처리, 미처리, 반송 + 분야 10개(건축건설·도로시설·교통시설·각종시설물·
-  환경청소·공원녹지·광고물·현수막·도로적치물·기타).
-- 행은 **처리기관 단위**(본청·사업본부 5개 + 구군 9개). 읍면 구분이 없다.
-- 주의: `대구광역시` 행은 시 합계가 아니라 본청 몫이다. 전체는 14행 합(253,043).
-- 집계 연도가 확정되지 않았다(파일명 기준 2023년분, 등록일 기준 2024년분 추정).
+- `rank.json` — 빈집애 지도 내부 API 응답. 읍면 8행, `binCnt` 합 602.
+  의흥 112 · 우보 108 · 군위읍 103 · 산성 65 · 소보 65 · 효령 65 · 삼국유사 42 · 부계 42.
+- `filter-options.json` — 조사연도 선택지(year=2026 하나. 화면은 '2025년'으로 표시).
+- `capture.html`, `capture-map-filter-loader.js` — 지도 페이지와 연도 표시 로직 보존본.
+- 수집: `python tools/fetch_binzibe.py` (받기만 한다. 등록은 `add_source.py`).
 
-**가공** (`prepare_salpiso`)
+주의:
 
-1. 검증: 14행, 분야 컬럼 10개 순서 유지, 행마다 처리+미처리+반송 = 제보, 분야 합 = 제보.
-2. 군위군 1행과 14행 합계(대구 전체)를 따로 남긴다.
-
-**derived**
-
-```json
-{"reference_date": "2024-11-27", "fields": ["건축건설", ...],
- "gunwi": {"agency": "군위군", "reports": 87,
-           "status": {"처리": 68, "미처리": 10, "반송": 9},
-           "by_field": {"현수막": 37, "도로시설": 13, "교통시설": 13, ...}},
- "daegu_all": {"reports": 253043, "by_field": {...}},
- "agencies": [...]}
-```
-
-- 군 단위 1행이라 **읍면 비교 지표로 쓰지 않는다.** `build.py` 는 이 파일을 공개하지 않는다.
-- 쓰는 곳: 가설 레지스트리의 배경 근거 E1, 그림4(군위군 vs 대구 전체 분야 구성).
+- 지자체 빈집행정조사 결과이며 국가승인통계가 아니다(지도 안내문).
+- `binzipRateReg` 는 빈집률이 아니라 군 전체 빈집 수 대비 그 읍면의 비중(%)이다.
+- 등급·건별 위치는 없다. 조사시점은 사이트에 없어 미확인.
+- 같은 정의의 분모(주택 수)가 없어 빈집률을 만들지 않는다. SGIS 주택 수(§4)나
+  통계청 미거주주택과 정의가 달라 한 산식에서 섞지 않는다.
+- `prepare.py` 에 연결하지 않았다. 연결하면 읍면명(`sojaeji` 끝 단어)으로 region_code 를 붙인다.
 
 ---
 
@@ -350,12 +240,13 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 | `population.json` | `regions.json` 에 합쳐짐(군 합계 행 제거) | 결과표 |
 | `sgis_stats.json` | `regions.json` 에 합쳐짐 | 결과표 |
 | `senior_centers.json` | `regions.json`(읍면 집계·노후 비율) + `facilities.json`(지점) | 결과표 |
-| `drainage_risk.json` | `regions.json`(읍면 집계) + `facilities.json`(지점) | 결과표 |
-| `water_supply.json` | `regions.json` | 결과표 |
 | `eupmyeon.geojson` | 그대로 복사 | — |
-| `parks.json` | `parks` 배열만 | — |
-| `potholes.json` | 지점만 공개(전국 행수·품질 집계는 derived 에 남음) | — |
-| `salpiso.json` | 공개하지 않음 | — (그림4 · 가설 E1 에만) |
+
+## 저장소에 없는 자료
+
+빈집 등급·위치(군청 실태조사), 건축물대장(리·지번 단위 사용승인일), 통계청 미거주주택 등은
+아직 raw 에 없다. 무엇이 어디에 있는지는 `docs/data-survey.md`, 상태는 `data/sources.json`
+(`status: "미확보"`)에 있다.
 
 ## 원자료를 바꿀 때
 

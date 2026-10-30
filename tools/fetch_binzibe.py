@@ -6,7 +6,7 @@
 인증키는 필요 없다.
 
   python tools/fetch_binzibe.py                 # 프로젝트 루트/binzibe-download/ 에 저장
-  python tools/add_source.py ... --file binzibe-download/rank.json ...   # 출력된 명령대로 등록
+  python tools/add_source.py ... --file binzibe-download/rank.json ...   # 받은 4개 파일을 등록
 
 저장 파일
   rank.json                   읍면별 빈집 수 (rank API 응답 바이트 그대로)
