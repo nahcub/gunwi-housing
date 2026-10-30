@@ -1,0 +1,30 @@
+{
+  "source_id": "BINZIBE_GUNWI_VACANT_HOUSES",
+  "name": "빈집애 빈집현황 지도 중 군위군 읍면별 빈집 수",
+  "provider": "한국부동산원 빈집정보시스템(빈집애) / 지자체 빈집행정조사",
+  "url": "https://www.binzibe.kr/apihome/map/vacant-houses/rank?year=2026&sreg=27&sigungu=27720&mapInfo=VACANT_COUNT",
+  "reference_date": "2025 (화면 조사연도 표시값, 조사시점 미확인)",
+  "retrieved_at": "2026-10-30",
+  "retrieved_by": "Grok Bot 에이전트 (사용자 요청, tools/fetch_binzibe.py)",
+  "license": "이용조건 미확인 (지도 페이지·API 응답에 이용허락 표시 없음, 출처표시: 한국부동산원 빈집애)",
+  "provenance": "verified",
+  "notes": "빈집애 지도(https://www.binzibe.kr/main/html/map.html)가 쓰는 내부 API 응답을 받은 그대로 저장(tools/fetch_binzibe.py, 2026-10-30 14:14 KST). data.go.kr 등에 공개된 Open API 가 아니라 예고 없이 바뀌거나 막힐 수 있다. rank.json = 읍면 8행(sojaeji '대구광역시_군위군_<읍면>'), binCnt 합 602 = regionStatus.totalBinCnt 602. 읍면별 binCnt: 의흥 112·우보 108·군위읍 103·산성 65·소보 65·효령 65·삼국유사 42·부계 42. binzipRateReg 는 빈집률이 아니라 군 전체 빈집 수 대비 그 읍면의 비중(%)이다(binCnt/602 를 소수 둘째 자리로 반올림한 값과 8행 모두 일치, 합 100.01). binzipRate·prevBinCnt·modifyCnt 는 전 행 null. 요청 파라미터 sigungu=27720·sreg=27720 은 통계청 최신 시군구 코드로, 프로젝트 region_code(2772025000 계열)·SGIS(22520 계열)와 다른 체계다 — 읍면은 sojaeji 의 읍면명으로만 대응한다. 기준시점: API year=2026 이 유일한 조사연도(filter-options.json)이고, 화면은 이를 '2025년'으로 표시한다(capture-map-filter-loader.js: textContent = year - 1 + '년'). 실제 조사시점·기준일은 사이트에 적혀 있지 않아 미확인. regionStatus.updateDate 는 수집 당일(2026-10-30)과 같아 조회일로 보이며 기준일 근거로 쓰지 않는다. capture.html 안내문: '빈집현황 정보는 지자체가 실시한 빈집행정조사 결과로서 국가승인통계가 아닌 단순 수량적 정보', '법정 실태조사 전 과도기적으로 실시한 행정조사 결과로서 담당자의 숙련도 및 현장 여건에 따라 조사 품질의 한계가 있을 수 있습니다'. 통계청 미거주주택(KOSIS DT_1JU1512)·군청 실태조사 등 다른 출처의 빈집 수와 정의가 달라 값이 다르다 — 한 산식에서 섞지 말고, 분모 정의가 같은 주택 수 없이 빈집률을 만들지 말 것. 빈집 등급·건별 위치는 없다. lon/lat 은 읍면마다 1점이며 의미는 사이트에 설명이 없다. 같은 날 13:58 KST 조사 때 받은 응답과 sha256 동일.",
+  "files": {
+    "rank.json": {
+      "sha256": "3b1b9b3afc4c9dcdc9fd06cab985c1d73db6d911bf3069543f52556e8ae8e905",
+      "bytes": 2477
+    },
+    "filter-options.json": {
+      "sha256": "334b3333009443adfa2b4497732f0fdaa66e1cc007f429d3ab7ac1125b7f5384",
+      "bytes": 2141
+    },
+    "capture.html": {
+      "sha256": "18a2ef312b982ec92c968322888d46c5bd7bdf65975a7801820b4ad4ba6b8dbf",
+      "bytes": 11119
+    },
+    "capture-map-filter-loader.js": {
+      "sha256": "1a08c3bfe95ea982b3c784c0180c2d112b84df8da8e3395bb1b518b74f2a7878",
+      "bytes": 8846
+    }
+  }
+}

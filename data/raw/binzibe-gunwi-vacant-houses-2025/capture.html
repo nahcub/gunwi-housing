@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>빈집애-REB</title>
+    <link rel="shortcut icon" href="/main/images/reb.ico" />
+
+    <!-- JS Start -->
+    <!--  공통 JS -->
+    <script src="/main/js/lib/jquery/jquery-1.12.2.min.js"></script>
+    <script src="/main/js/lib/swiper/swiper_4.5.1.min.js"></script>
+    <script src="/main/js/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="/main/js/lib/bpopup/jquery.bpopup.min.js"></script>
+    
+    <!--  API 설정 -->
+    <script src="/main/js/api-config.js"></script>
+    <script src="/main/js/common.js"></script>
+
+    <script src="/main/js/lib/highcharts/highcharts.js"></script>
+    
+    <!-- Leaflet JS -->
+    <script src="/main/js/lib/leaflet/leaflet.js"></script>
+
+    <!-- Leaflet MarkerCluster JS -->
+    <script src="/main/js/lib/leaflet/leaflet.markercluster.js"></script>
+
+    <!-- Proj4 (좌표계 변환) -->
+    <script src="/main/js/lib/leaflet/proj4.js"></script>
+    <script src="/main/js/lib/leaflet/proj4leaflet.js"></script>
+
+    <script src="/main/js/sub.js"></script>
+	
+	<!--  HEADER 로더 -->
+    <script src="/main/js/common-header-loader.js"></script>
+    <!-- JS End -->
+
+    <!-- CSS Start -->
+    <!--  공통 CSS -->
+    <link rel="stylesheet" href="/main/js/lib/swiper/swiper_4.5.1.css" />
+    <link rel="stylesheet" href="/main/js/lib/jquery-ui/jquery-ui.min.css" />
+    <link rel="stylesheet" href="/main/js/lib/jquery-ui/jquery-ui.theme.css" />
+    <link rel="stylesheet" href="/main/css/reset.css" />
+    <link rel="stylesheet" href="/main/css/common_asset.css" />
+    <link rel="stylesheet" href="/main/css/common_layout.css" />
+
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="/main/js/lib/leaflet/leaflet.css" />
+
+    <!-- Leaflet MarkerCluster CSS -->
+    <link rel="stylesheet" href="/main/js/lib/leaflet/MarkerCluster.css" />
+    <link rel="stylesheet" href="/main/js/lib/leaflet/MarkerCluster.Default.css" />
+
+    <!-- 울트라 모던 맵 UI CSS -->
+    <link rel="stylesheet" href="/main/css/map-ultra-modern.css" />
+    <!-- CSS End -->
+
+    <style>
+        .wms-boundary-layer {
+            will-change: transform, opacity;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 접근성 -->
+<div class="skip_navi">
+    <strong class="sr_only">컨텐츠 바로가기</strong>
+    <a href="#gnb">주메뉴 바로가기</a>
+    <a href="#mapContent">본문 바로가기</a>
+</div>
+
+<div class="wrapper">
+
+    <div class="sub_container">
+
+        <div class="sub_body">
+            <div id="mapContent" class="map-full-container">
+                <h2 class="sr_only">빈집지도</h2>
+
+                <!-- ★ 지도 배경 -->
+                <div class="map_inner" id="vworldMapMain"></div>
+
+                <!-- ★ 안내 문구 배너 -->
+                <div class="map-notice-banner" id="mapNoticeBanner">
+                    <span class="map-notice-icon">&#9888;</span>
+                    <span class="map-notice-text">빈집현황 정보는 지자체가 실시한 빈집행정조사 결과로서 국가승인통계가 아닌 단순 수량적 정보임을 알려드립니다.</span>
+                    <button type="button" class="map-notice-close" id="mapNoticeClose" title="닫기">&times;</button>
+                </div>
+
+                <!-- ★ 상단: 지역 필터 (sale.html locate_tools 스타일) -->
+                <div class="locate_tools" style="margin-left:20px;">
+                    <button type="button" class="mobile_toggle"><span class="txt">위치</span></button>
+                    <div class="locate_select">
+                        <div class="select_wrap">
+                            <select class="custom_select" id="selectSurveyYear">
+                                <option value="">연도</option>
+                            </select>
+                            <select class="custom_select" id="selectRegion">
+                                <option value="">전국</option>
+                            </select>
+                            <select class="custom_select" id="selectSigungu" disabled>
+                                <option value="">시군구</option>
+                            </select>
+                        </div>
+                        <button type="button" class="bt_submit" id="applyFilterBtn"><span class="sr_only">위치적용실행</span></button>
+                    </div>
+                </div>
+
+                <!-- ★ 우측: 데이터 카드 스택 -->
+                <div class="data-cards-container" id="dataCardsContainer">
+                    <!-- 동적 생성 -->
+                </div>
+
+                <!-- ★ 우측 사이드: 리스트 패널 -->
+                <div class="side-list-panel" id="sideListPanel">
+                    <div class="side-header">
+                        <span class="side-title"> </span>
+                        <button class="side-close" id="sideCloseBtn" title="닫기">×</button>
+                    </div>
+                    <div class="side-content">
+                        <div style="font-size: 15.5px; color: #0070C0; background-color: #FFF2CC; padding: 10px; border-radius: 15px;">
+                            <p style="display: flex; align-items: flex-start;">
+                                <span style="flex: 0 0 auto; margin-right: 4px;">※</span> 
+                                <span style="flex: 1;">빈집 현황정보는 지자체가 법정 실태조사 전 과도기적으로 실시한 행정조사 결과로서 담당자의 숙련도 및 현장 여건에 따라 조사 품질의 한계가 있을 수 있습니다. 향후 「빈 건축물 특별법」 에 따른 법정 조사 체계로 전환하여 데이터의 공신력을 확보할 예정입니다.</span>
+                            </p>
+                        </div>
+                        <div class="chart_inner" id="container">
+                            <!-- 데이터는 state-loader.js에서 동적으로 로드됩니다 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ★ 우측 사이드: 열기 버튼 (닫혀있을 때) -->
+                <button class="side-open-btn" id="sideOpenBtn" title="리스트 열기">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/>
+                    </svg>
+                </button>
+
+                <!-- ★ 우하단: 범례 위젯 -->
+                <div class="legend-widget" id="legendWidget">
+                    <div class="legend-header">
+                        <span class="legend-title">범례 (호)</span>
+                        <button class="legend-toggle" id="legendToggle" title="범례">−</button>
+                    </div>
+                    <div class="legend-content">
+                        <div class="legend-item">
+                            <span class="legend-color lv05"></span>
+                            <span>상위 20%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color lv04"></span>
+                            <span>20~40%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color lv03"></span>
+                            <span>40~60%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color lv02"></span>
+                            <span>60~80%</span>
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color lv01"></span>
+                            <span>80~100%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ★ 우측 하단: 지도 컨트롤 (sale.html과 동일) -->
+                <div class="map_controls">
+                    <div class="con_inner">
+                        <div class="item plus"><button type="button" class="bt" id="zoomInBtn"><span class="sr_only">확대</span></button></div>
+                        <div class="item minus"><button type="button" class="bt" id="zoomOutBtn"><span class="sr_only">축소</span></button></div>
+                        <div class="item curr"><button type="button" class="bt" id="resetMapBtn"><span class="sr_only">초기위치</span></button></div>
+                    </div>
+                </div>
+
+                <!-- ★ 모바일 FAB (리스트) -->
+                <button class="mobile-fab" id="mobileListFab" title="리스트 열기">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z"/>
+                    </svg>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- 안내 배너 닫기 -->
+<script>
+    document.getElementById('mapNoticeClose').addEventListener('click', function() {
+        document.getElementById('mapNoticeBanner').classList.add('hidden');
+    });
+</script>
+
+<!-- 데이터 로더들 -->
+<script src="/main/js/map-filter-loader.js"></script>
+<script src="/main/js/map-filter-handler.js"></script>
+<script src="/main/js/map_polygon.js" charset="utf-8"></script>
+<script src="/main/js/map-ultra-modern-ui.js"></script>
+<script src="/main/js/map-state-chart.js"></script>
+<!-- 빈집 현황 데이터 로더 -->
+<!-- <script>
+    (function deferStateLoader() {
+        var loaded = false;
+
+        function loadStateLoader() {
+            if (loaded) return;
+            loaded = true;
+            var script = document.createElement('script');
+            script.src = '/main/js/map-state-chart.js';
+            script.async = true;
+            document.body.appendChild(script);
+        }
+
+        function handleEarlyInteraction(event) {
+            var target = event.target;
+            if (!target || typeof target.closest !== 'function') return;
+            if (target.closest('#sideOpenBtn') || target.closest('#mobileListFab')) {
+                loadStateLoader();
+                document.removeEventListener('click', handleEarlyInteraction, true);
+            }
+        }
+
+        document.addEventListener('click', handleEarlyInteraction, true);
+
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(function() {
+                loadStateLoader();
+                document.removeEventListener('click', handleEarlyInteraction, true);
+            }, { timeout: 1200 });
+        } else {
+            setTimeout(function() {
+                loadStateLoader();
+                document.removeEventListener('click', handleEarlyInteraction, true);
+            }, 800);
+        }
+    })();
+</script> -->
+</body>
+
+</html>
