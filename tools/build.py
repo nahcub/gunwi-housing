@@ -46,7 +46,7 @@ INDICATORS = [
     {"id": "senior_center_old_ratio", "label": "노후 경로당 비율", "unit": "%",
      "status": "available", "higher_is_worse": True,
      "reference": "2025-12-19 · 2000년 이전 건립(프로젝트 임시 기준)"},
-    {"id": "priority_score", "label": "종합 우선순위", "unit": "점",
+    {"id": "priority_score", "label": "종합 점수", "unit": "점",
      "status": "blocked",
      "reason": "검증된 가중치 모형이 없다. docs/methodology.md 참고"},
 ]
