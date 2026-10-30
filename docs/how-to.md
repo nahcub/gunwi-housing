@@ -27,10 +27,8 @@ http://127.0.0.1:8787 접속. "데이터를 불러오지 못했습니다" 가 �
 |---|---|
 | `regions.json` | 읍면 8개 × 2시점 지표값 + 지표 정의(`indicators`) |
 | `eupmyeon.geojson` | 읍면 경계(`region_code`) |
-| `facilities.json` | 경로당·위험 세천 지점 |
-| `parks.json` / `potholes.json` | 공원·포트홀 지점 |
+| `facilities.json` | 경로당 지점 |
 | `sources.json` | 출처 패널 |
-| `hypotheses.json` | 민원 가설 카드·사분면 (`data/hypotheses.json` 에서 생성) |
 
 ## 2. 이미 derived 에 있는 값을 화면에 새 지표로 올리기
 
@@ -80,7 +78,7 @@ http://127.0.0.1:8787 접속. "데이터를 불러오지 못했습니다" 가 �
 python tools/export_excel.py
 ```
 
-- 출력: `outputs/군위군_시설관리우선지역_기초지표_2025.xlsx` (+ 같은 이름 `.csv`)
+- 출력: `outputs/군위군_주거환경취약지역_기초지표_2025.xlsx` (+ 같은 이름 `.csv`)
 - 시트 3개: `기초지표`(읍면 8행) · `컬럼설명` · `산출방법`
 - 열을 추가·변경하려면 `export_excel.py` 의 `COLUMNS`(열 정의)와 `build_rows()`(값)를 같이 고친다
 - 엑셀을 열어 둔 채로 실행하면 저장이 실패한다. 닫고 실행
@@ -99,41 +97,42 @@ python tools/export_excel.py
   python tools/build.py
   ```
 
-## 7. (삭제) 포트홀 민원 수집기
+## 7. 빈집애 자료 다시 받기
 
-2026-10-30 포트홀 민원 자료(`MINWON_POTHOLE_LATLON`)를 분석 제외하면서
-`tools/fetch_pothole.py` 를 지웠다. 커밋 `ea23c30` 에서 복구할 수 있다.
+```bash
+python tools/fetch_binzibe.py          # binzibe-download/ 에 4개 파일 저장. 키 불필요
+                                       # 조사연도가 바뀌면 --year (화면 표시는 year - 1 년)
+```
 
-## 8. 민원 원자료(군청)가 들어오면
+1. 받은 4개 파일을 `--file` 로 넘겨 §3-1 처럼 `add_source.py` 로 **새 raw 폴더**에 등록한다
+   (기존 폴더는 고치지 않는다)
+2. 쓴 `year` 값과 화면 표시 연도를 `--notes` 에 적는다
+3. `data/sources.json` 의 `BINZIBE_GUNWI_VACANT_HOUSES` 의 `raw_dir`·`reference_date` 를 갱신한다
+4. 공개 Open API 가 아니라 예고 없이 바뀌거나 막힐 수 있다. 실패하면 응답을 고쳐 쓰지 말고 기록만 남긴다
 
-이 프로젝트의 본래 목표. 들어오면 민원발생률·반복민원율·처리지연율이 풀린다.
+이전 주제의 포트홀 수집기(`tools/fetch_pothole.py`)는 2026-10-30 지웠다. 커밋 `ea23c30` 에서 복구할 수 있다.
 
-1. 개인정보가 섞여 있으면 **공개 저장소에 올리지 않는다** — 비식별 집계만 raw 에
-2. §3 절차로 등록, 산식은 `docs/methodology.md` §2 를 따른다
-3. `build.py` `INDICATORS` 에서 해당 지표 `status` 를 `"available"` 로 바꾸고 값 추가
-4. `test_missing_indicators_have_no_values` 등 테스트를 새 상태에 맞게 고친다
-5. `data/sources.json` 의 `COMPLAINT_INTERNAL` 상태 갱신
+## 8. 군청 빈집 실태조사 자료가 들어오면
 
 청구서 초안: `docs/requests/README.md` (아직 발송 안 됨)
 
-## 9. 민원 가설 고치기·추가하기
+1. 소유자·상세 지번 등 개인정보가 섞여 있으면 **공개 저장소에 올리지 않는다** —
+   비식별 집계(읍면·리별, 등급별 수)만 raw 에
+2. §3 절차로 등록. `--notes` 에 조사연도·조사기준일·등급 기준 문서 여부를 적는다
+3. `data/sources.json` 의 `GUNWI_VACANT_SURVEY_INTERNAL` 을 `확보` 로 바꾸고 `raw_dir` 를 채운다
+4. 빈집애(`BINZIBE_GUNWI_VACANT_HOUSES`)·통계청 미거주주택과 정의가 다르다.
+   값을 합치거나 서로의 분모로 쓰지 않는다(`docs/methodology.md` §2)
 
-가설 문구·방향·검증 방법은 **`data/hypotheses.json` 한 곳만** 고친다.
-웹 카드, 엑셀 '가설' 시트, 그림5 가 모두 여기서 나온다.
+## 9. 건축물대장 API 로 수집하기
 
-1. `data/hypotheses.json` 의 `hypotheses` 에 항목 추가 (`id`, `indicator`, `type`,
-   `direction`, `complaint_fields`, `statement`, `mechanism`, `caveat`,
-   `verify_with`, `verify_method`, `status`)
-   - `indicator` 는 `build.py` `INDICATORS` 에서 `available` 인 id 여야 한다
-   - `verify_with` 는 `data/sources.json` 의 id 여야 한다
-   - `status` 는 `가설(미검증)` 으로 시작한다. 민원 원자료 없이 바꾸지 않는다
-2. `python tools/build.py` — 위 조건이 틀리면 assert 로 멈춘다
-3. `python -m pytest tools/tests -q`
-4. `python tools/export_excel.py` · `python tools/figures.py` 로 엑셀·그림 갱신
+아직 수집기가 없다. 만들 때 지킬 것:
 
-민원 원자료가 들어와 가설을 검증하면: `status` 를 `검증 중` → `지지`/`기각` 으로
-바꾸고, 근거(순위상관 값, 기간)를 `verify_method` 아래가 아니라 `docs/hypotheses.md`
-에 기록한다. `test_no_hypothesis_is_verified_without_complaint_data` 는 그때 고친다.
+1. 키는 환경변수 `DATA_GO_KR_KEY` 에서만 읽는다. 코드·파일·로그·커밋에 적지 않는다
+   (요청 URL 을 저장할 때도 키를 지운다)
+2. 수집기(`tools/fetch_*.py`)는 받기만 한다. 응답은 손대지 않고 `tools/add_source.py` 로
+   새 raw 폴더에 등록한다(§3)
+3. 조회 범위(법정동·리 코드 목록), 조회일, 응답 건수를 `--notes` 에 남긴다
+4. `data/sources.json` 의 `BUILDING_HUB_API` 상태를 갱신한다
 
 ## 10. 보고서 그림 다시 만들기
 
@@ -142,7 +141,7 @@ pip install -r requirements.txt      # matplotlib 포함
 python tools/figures.py              # 또는 npm run figures
 ```
 
-- 출력: `outputs/figures/그림1~5_*.png` (+ 그림3·4 근거 CSV)
+- 출력: `outputs/figures/그림1~2_*.png` (+ 그림2 근거 CSV)
 - 값은 `build.py` `build_regions()` 를 그대로 쓴다 — 웹과 같은 숫자
 - 기준 시점은 `export_excel.py` 의 `ANALYSIS_PERIOD`(2025-12)
 - 한글 글꼴(맑은 고딕·AppleGothic·나눔고딕·Noto CJK) 중 하나가 있어야 한글이 안 깨진다

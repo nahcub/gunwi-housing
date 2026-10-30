@@ -1,9 +1,9 @@
-# 군위군 생활불편 민원 기반 시설관리 우선지역 분석
+# 군위군 빈집·노후주택 기반 주거환경 취약지역 분석
 
-군위군 8개 읍·면의 생활불편 민원과 공공시설 정보를 결합해 시설관리 우선지역을
-도출하는 것이 목표다. 현재는 **민원 원자료를 확보하지 못해 인구·고령화 지표와 공공시설
-(경로당·위험지정 세천·상수도보급률) 지표까지만 지도에 표시**하며, 민원 관련
-지표는 "미확보"로 비활성 표시한다.
+군위군 8개 읍·면의 빈집·노후주택 자료와 인구·생활시설 자료를 모으는 저장소다.
+지금 단계는 **데이터 수집**이다. 새 지표·시각화는 만들지 않는다.
+`nahcub/gunwi`(생활불편 민원 기반 시설관리 분석)를 복제해 주제를 바꿨다.
+이전 주제의 원자료·문서는 git 커밋 `ea23c30` 에서 복구할 수 있다.
 
 > **인수인계 안내** — 작업 전 `CLAUDE.md`(규칙)와 `docs/how-to.md`(작업별 절차)를
 > 먼저 읽는다. AI 도구를 쓴다면 이 두 파일을 먼저 읽게 한다.
@@ -24,8 +24,8 @@ npm run dev               # 빌드 후 http://127.0.0.1:8787
 |---|---|
 | `npm run prepare-data` | 원자료 검증·정제 → `data/derived/` |
 | `npm run build` | `data/derived/` → `public/data/` |
-| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV (가설 시트 포함) |
-| `npm run figures` | `data/derived/` → `outputs/figures/` 보고서 삽화 5장 |
+| `npm run export` | `data/derived/` → `outputs/` 제출용 엑셀·CSV |
+| `npm run figures` | `data/derived/` → `outputs/figures/` 보고서 삽화 2장 |
 | `npm test` | 검증 로직이 살아 있는지 확인 |
 | `npm run deploy` | 빌드 후 Cloudflare 배포 (main push 시 GitHub Actions 가 자동 실행) |
 
@@ -57,39 +57,45 @@ data/sources.json    출처 레지스트리 — 유일한 진실. public/data/so
 data/raw/            원자료 + _meta.json(출처 카드) + capture.html(원본 페이지 증빙)
 data/derived/        prepare.py 출력
 tools/               add_source.py / fetch_binzibe.py / prepare.py / build.py / export_excel.py / tests
-data/hypotheses.json 지표–민원 가설 레지스트리 (웹·엑셀·그림의 원본)
 outputs/             export_excel.py 출력 (제출용 엑셀·CSV)
 outputs/figures/     figures.py 출력 (보고서 삽화 PNG + 근거 CSV)
 public/              배포되는 폴더. "여기 넣은 건 공개"
 docs/methodology.md  산식 근거. 공식 기준과 프로젝트 파생지표의 구분
 docs/data-guide.md   raw 원자료별 내용과 derived 에서 무엇이 되는지
 docs/how-to.md       작업별 절차 ("X 하려면 어디를 고치나")
-docs/data-survey.md  미확보 자료 조사 결과
+docs/data-survey.md  있는 자료와 없는 자료 조사 결과
 docs/requests/       군청 정보공개청구 초안 (미발송)
-docs/hypotheses.md   지표–민원 가설, 사분면, 지표 간 상관 읽는 법
 ```
 
 ## 지금 지도에서 보이는 것
 
 **표시됨** — 읍면 8개 코로플레스: 총인구 · 고령화율 · 노령화지수 · 인구밀도 ·
-경로당 수 · 고령인구 1천명당 경로당 · 노후 경로당 비율 · 위험지정 세천 · 상수도보급률 /
+경로당 수 · 고령인구 1천명당 경로당 · 노후 경로당 비율 /
 2개 시점 전환(2025-12, 2026-08. 시설·SGIS 지표는 시점과 무관) /
-경로당 215곳·위험지정 세천 27곳·도시공원 3건 마커 /
-포트홀 민원 4건 마커(2025-01~2026-10, 표본이 적어 지표로는 쓰지 않음) /
-읍면 순위·상세 / 데이터 출처 패널 /
-선택한 지표의 **민원 가설 카드**(H1~H7, 전부 미검증) /
-**사분면**(노후 경로당 비율 × 고령화율, 중앙값 분할 위치 표시 — 우선순위 아님)
+경로당 215곳 마커 / 읍면 순위·상세 / 데이터 출처 패널
 
-**비활성(원자료 미확보)** — 민원발생률 · 반복민원율 · 처리지연율 ·
-시설관리 필요도 · 종합 우선순위
+**비활성** — 종합 점수(계산하지 않는다. `docs/methodology.md` §3)
+
+빈집애 읍면별 빈집 수(합 602)는 raw 에 등록만 했고 아직 화면·엑셀에 없다.
+
+## 있는 자료와 없는 자료
+
+자세한 표는 `docs/data-survey.md`, 상태는 `data/sources.json`.
+
+- **있음** — 빈집애 읍면별 빈집 수, SGIS 읍면별 주택 수·건축년도별 주택(2024),
+  주민등록 인구, 경로당, 읍면 경계
+- **없음** — 빈집 등급·위치(군청 실태조사, 정보공개청구 필요·미발송),
+  건축물대장(리·지번 단위 사용승인일, API 키 승인·미수집),
+  통계청 미거주주택(시군구 단위)
+- **빈집률은 만들지 않는다** — 빈집애 빈집 수와 같은 정의의 분모(주택 수)가 없다
 
 ## 알려진 과제
 
 1. ~~경계 GeoJSON 출처 미확인~~ — **2026-10-15 해결.** SGIS 2025 2Q 원본과 8개 읍면
    도형 일치 확인(`tools/verify_boundary.py`). → `CLAUDE.md`
-2. **민원 건별 원자료 요청 미발송** — 군청 자료요청이 아직 발송되지 않았다.
-   이게 들어오면 3개 지표가 한꺼번에 풀린다. → `data/sources.json`
-3. **종합 우선순위 가중치 근거 없음** → `docs/methodology.md`
+2. **군청 빈집 실태조사 청구 미발송** → `docs/requests/README.md`
+3. **건축물대장 수집기 없음** → `docs/how-to.md` §9
+4. **SGIS 건축년도별주택 미연결** — 항목코드–연도 구간 대응 확인 필요 → `docs/data-guide.md` §4
 
 ## 이 저장소를 새로 판 이유
 

@@ -1,7 +1,8 @@
 # CLAUDE.md
 
 코드만 봐서는 알 수 없고, 모르면 반드시 틀리는 것들. 사람이 읽어도 그대로 유용하다.
-(2026-10-15 인수인계 시점 최신화. 원작성자는 더 이상 이 저장소를 관리하지 않는다)
+(2026-10-15 인수인계 시점 최신화. 원작성자는 더 이상 이 저장소를 관리하지 않는다.
+2026-10-30 주제를 "군위군 빈집·노후주택 기반 주거환경 취약지역 분석"으로 바꿨다)
 
 ## 먼저 읽을 문서
 
@@ -10,10 +11,8 @@
 | raw 원자료별 내용과 derived 에서 무엇이 되는지 | `docs/data-guide.md` |
 | "X 하려면 어느 파일을 고치나" 작업별 절차 | `docs/how-to.md` |
 | 지표 산식과 근거, 계산하지 않는 이유 | `docs/methodology.md` |
-| 아직 못 구한 자료 조사 결과 | `docs/data-survey.md` |
+| 있는 자료와 없는 자료 조사 결과 | `docs/data-survey.md` |
 | 군청 정보공개청구 초안(미발송) | `docs/requests/README.md` |
-| 지표–민원 가설과 사분면 (B 역할) | `docs/hypotheses.md` |
-| B 역할이 한 일 한 장 요약 | `docs/handoff-B.md` |
 
 ## 폴더 소유권
 
@@ -25,7 +24,6 @@
 | `public/data/` | `tools/build.py` | 손대지 않는다. `.gitignore` 에 있다 → **clone/pull 직후엔 비어 있다** |
 | `outputs/` | `tools/export_excel.py` | 제출용 엑셀·CSV. 손으로 고치지 않는다 |
 | `outputs/figures/` | `tools/figures.py` | 보고서 삽화 PNG·근거 CSV. 손으로 고치지 않는다 |
-| `data/hypotheses.json` | 사람 (B 역할) | 지표–민원 가설 레지스트리. 웹·엑셀·그림이 여기서 나온다 |
 
 `public/` 에 들어간 것은 **인터넷에 공개된다.** `derived/` → `public/data/` 로
 올릴 파일을 정하는 곳이 `tools/build.py` 이고, 그게 공개 여부를 결정하는 자리다.
@@ -38,7 +36,7 @@ tools/add_source.py    새 원자료를 data/raw/<새 폴더>/ 에 등록 (_meta
 tools/fetch_binzibe.py 빈집애 지도 내부 API 수집기 (군위군 읍면별 빈집 수, 키 불필요)
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
-tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV, '가설' 시트 포함)
+tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV)
 tools/figures.py       data/derived -> outputs/figures (보고서 삽화. matplotlib 필요)
 tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 둔 테스트가 많다
 ```
@@ -71,8 +69,8 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 
 세 체계는 **일치하지 않는다.** `prepare_boundary()` 가 지역명으로 한 번만 맞춰서
 경계에 `region_code` 와 `source_adm_cd` 를 심는다. SGIS 통계는 그 `source_adm_cd`
-로 붙인다(`prepare_sgis_stats()`). 경로당·위험시설은 주소의 읍면 토큰으로,
-포트홀은 경계 다각형 포함 판정으로 region_code 를 얻는다. 전부 prepare.py 안에서
+로 붙인다(`prepare_sgis_stats()`). 경로당은 주소의 읍면 토큰으로 region_code 를
+얻는다. 빈집애 API 는 통계청 코드(27720)를 쓰므로 읍면명으로 붙인다. 전부 prepare.py 안에서
 끝나고, 웹·엑셀은 `region_code` 만 쓴다. 이 변환을 다른 곳으로 옮기지 말 것 —
 런타임 이름 매칭은 기존 저장소에서 실제로 문제를 만들었다.
 
@@ -82,7 +80,8 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 - 성별 `계` 와 `남`·`여`
 - 주민등록 인구(`population.json`)와 SGIS 인구(`sgis_stats.json`) — 정의가 달라
   값이 다르다(2025-12 군 22,452 vs SGIS 2024 군 21,493). 한 산식 안에서 섞지 않는다
-- 상수도보급률 읍면 값의 단순 평균 — 군 전체 보급률이 아니다(인구 가중 아님)
+- 출처가 다른 빈집 수 — 빈집애(지자체 행정조사, 읍면 합 602), 통계청 미거주주택(등록센서스,
+  시군구), 군청 실태조사는 정의가 달라 값이 다르다. 합치거나 서로의 분모로 쓰지 않는다
 
 `build_regions()` 가 군 합계를 공개 데이터에서 걸러내고, 테스트가 그걸 검사한다.
 
@@ -91,7 +90,6 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 | 값 | 위치 | 의미 |
 |---|---|---|
 | `SENIOR_OLD_BEFORE_YEAR = 2000` | prepare.py | 이 해 이전 건립 경로당을 "노후"로 센다 |
-| 세천만 사용 | `prepare_drainage_risk()` | 위험지정 39건 중 현행 지정 세천 27곳만. 소교량·농로 등은 개수만 |
 | `SGIS_POP_TOLERANCE = 0.15` | prepare.py | SGIS·주민등록 인구 차이가 이보다 크면 코드 매핑이 뒤바뀐 것으로 보고 멈춤 |
 | `ANALYSIS_PERIOD = "2025-12"` | export_excel.py | 엑셀 결과표의 인구 기준 시점 |
 
@@ -110,48 +108,35 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 - 같은 폴더의 `boundary-alt.geojson` 은 여전히 출처 미확인. 쓰지 않는다
 - 경계를 새 시점으로 바꿀 때도 같은 스크립트로 대조하고 새 raw 폴더로 등록한다
 
-## 종합 우선순위는 계산하지 않는다
+## 종합 점수는 계산하지 않는다
 
-문서에서 제안된 가중치는 `0.35 / 0.25 / 0.25 / 0.15` 인데 공식 기관 산식이
-아니다. 네 지표의 척도가 서로 달라(건수 vs 비율) 표준화 없이 가중합하면 숫자가
-의미를 잃는다. `priority_score` 는 `status: "blocked"` 로 두고 값을 만들지 않으며,
-테스트가 그걸 검사한다. 엑셀의 `우선순위` 열도 비워 둔다. 근거는 `docs/methodology.md`.
+지표를 가중합한 종합 점수·취약순위는 공식 산식이 없다. 지표의 척도가 서로 달라
+(건수 vs 비율) 표준화 없이 가중합하면 숫자가 의미를 잃는다. `priority_score` 는
+`status: "blocked"` 로 두고 값을 만들지 않으며, 테스트가 그걸 검사한다. 엑셀의
+`종합점수` 열도 비워 둔다. 근거는 `docs/methodology.md` §3.
+
+빈집률도 만들지 않는다. 빈집애 빈집 수와 같은 정의의 주택 수(분모)가 없다
+(`docs/methodology.md` §2).
 
 ## 없는 데이터는 만들지 않는다
 
-민원 3지표와 시설관리 필요도는 원자료가 없다. 샘플값을 채우지 말고 지표를
-`status: "missing"` 으로 두면 화면이 비활성으로 표시하고 이유까지 보여준다.
+빈집 등급·위치(군청 실태조사)와 건축물대장은 아직 없다. 샘플값을 채우지 않는다.
+원자료가 없는 지표는 `status: "missing"` 으로 두면 화면이 비활성으로 표시하고
+이유까지 보여준다. 계획만 있는 자료는 `data/sources.json` 에
+`status: "미확보"`, `raw_dir: null` 로 남긴다.
 기존 저장소는 여기에 임의 숫자를 넣었고, 그 숫자가 모든 테스트를 통과했다.
 통계 비공개 셀(`N/A`)도 0 으로 바꾸지 않고 `null` 로 둔다.
 
-포트홀 민원은 군위 4건뿐이라 지표로 쓰지 않고 지점 표시만 한다.
-살피소 제보 현황(`daegu-salpiso-reports-2024-11-27`)은 처리기관 단위라 읍면 비교에
-쓰지 않는다. `prepare_salpiso()` 가 `derived/salpiso.json` 으로 정리해 두지만 웹
-(`build.py`)에는 올리지 않고, 보고서 배경 수치와 그림4 에만 쓴다.
-
-## 가설은 점수가 아니다
-
-`data/hypotheses.json` 의 가설(H1~H7)은 "이 지표가 이 민원과 엮일 것이다"라는
-**미검증 주장**이다. 민원 원자료(`COMPLAINT_INTERNAL`)가 미확보인 동안 `status` 는
-`가설(미검증)` 에서 바꾸지 않는다 — `test_hypotheses.py` 가 막는다.
-
-웹·그림의 사분면(Q1: 노후 경로당 비율 × 고령화율)은 두 지표를 각각 8개 읍면
-중앙값으로 나눈 **위치 표시**다. 가중치·합산이 없고 `priority_score` 를 대신하지
-않는다. 사분면에 점수·가중치 필드를 넣으면 테스트가 실패한다.
-
-지표끼리 순위상관이 큰 쌍(고령화율–노령화지수 0.79, 노령화지수–고령인구 1천명당
-경로당 0.93)은 같은 현상을 다른 분모로 본 것이다. 한 가설의 증거로 두 번 세지 않는다.
-
 ## 비밀값
 
-- 이 저장소는 **공개(GitHub nahcub/gunwi)** 다. 인증키·토큰을 코드나 커밋에 넣지 않는다
-- 공공데이터포털 키는 환경변수 `DATA_GO_KR_KEY` 로만 넣는다
-- 과거 커밋(`tools/fetch_pothole.py`)에 키가 노출된 적이 있다 → 해당 키는 폐기·재발급 대상
+- 이 저장소는 **공개(GitHub nahcub/gunwi-housing, nahcub/gunwi 에서 복제)** 다. 인증키·토큰을 코드나 커밋에 넣지 않는다
+- 공공데이터포털 키(건축물대장 API 등)는 환경변수 `DATA_GO_KR_KEY` 로만 넣는다
+- 과거 커밋(`tools/fetch_pothole.py`, 지금은 삭제)에 키가 노출된 적이 있다 → 해당 키는 폐기·재발급 대상
 - Cloudflare 토큰은 GitHub Secrets(`CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`)에만 있다
 
 ## 테스트가 깨질 때
 
-`tools/tests/` 는 현재 원자료의 개수·값(경로당 215, 세천 27, 포트홀 4 등)을
+`tools/tests/` 는 현재 원자료의 개수·값(경로당 215, SGIS 군 인구 21,493 등)을
 고정해 둔 테스트가 많다. **원자료를 새로 받아서** 숫자가 바뀐 거라면 테스트의
 기대값을 새 값으로 고친다(이유를 커밋 메시지에). 원자료가 그대로인데 깨졌다면
 코드가 틀린 것이다 — 테스트를 고치지 말고 코드를 고친다.
