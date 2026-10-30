@@ -72,7 +72,6 @@ def test_missing_indicators_have_no_values():
     out = build.build_regions()
     blocked = [i["id"] for i in out["indicators"] if i["status"] != "available"]
     assert "priority_score" in blocked
-    assert "complaint_rate" in blocked
     for rows in out["regions"].values():
         for r in rows:
             for key in blocked:

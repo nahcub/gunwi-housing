@@ -56,7 +56,7 @@ Leaflet 으로 그린다.
 data/sources.json    출처 레지스트리 — 유일한 진실. public/data/sources.json 이 여기서 생성된다
 data/raw/            원자료 + _meta.json(출처 카드) + capture.html(원본 페이지 증빙)
 data/derived/        prepare.py 출력
-tools/               add_source.py / fetch_pothole.py / prepare.py / build.py / export_excel.py / tests
+tools/               add_source.py / fetch_binzibe.py / prepare.py / build.py / export_excel.py / tests
 data/hypotheses.json 지표–민원 가설 레지스트리 (웹·엑셀·그림의 원본)
 outputs/             export_excel.py 출력 (제출용 엑셀·CSV)
 outputs/figures/     figures.py 출력 (보고서 삽화 PNG + 근거 CSV)

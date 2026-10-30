@@ -99,18 +99,10 @@ python tools/export_excel.py
   python tools/build.py
   ```
 
-## 7. 포트홀 민원 다시 수집하기
+## 7. (삭제) 포트홀 민원 수집기
 
-```bash
-$env:DATA_GO_KR_KEY='발급받은 일반 인증키'      # PowerShell. Mac/Linux 는 export
-python tools/fetch_pothole.py --test 20250101
-python tools/fetch_pothole.py --start 20250101 --end YYYYMMDD --max-calls 90
-```
-
-- 키는 **코드에 적지 않는다**(공개 저장소)
-- 결과는 프로젝트 루트에 생긴다 → `pothole_all.csv`·`progress.json` 을 새 raw 폴더로 등록(§3).
-  `gunwi_candidate.csv` 는 bbox 가 실제 경계보다 좁아 쓰지 않는다
-- prepare.py 의 `POTHOLE_FOLDER` 를 새 폴더명으로 바꾼다
+2026-10-30 포트홀 민원 자료(`MINWON_POTHOLE_LATLON`)를 분석 제외하면서
+`tools/fetch_pothole.py` 를 지웠다. 커밋 `ea23c30` 에서 복구할 수 있다.
 
 ## 8. 민원 원자료(군청)가 들어오면
 

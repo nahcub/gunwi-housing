@@ -35,7 +35,6 @@
 
 ```
 tools/add_source.py    새 원자료를 data/raw/<새 폴더>/ 에 등록 (_meta.json·sha256 자동)
-tools/fetch_pothole.py 포트홀 민원 API 수집기 (인증키는 환경변수 DATA_GO_KR_KEY)
 tools/fetch_binzibe.py 빈집애 지도 내부 API 수집기 (군위군 읍면별 빈집 수, 키 불필요)
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
