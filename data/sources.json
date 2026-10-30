@@ -327,6 +327,19 @@
       "raw_dir": null,
       "used_for": ["민원 처리 현황·통계 결재문서"],
       "notes": "민원 통계를 담은 결재문서가 원문공개돼 있는지 미확인."
+    },
+    {
+      "id": "BINZIBE_GUNWI_VACANT_HOUSES",
+      "name": "빈집애 빈집현황 지도 중 군위군 읍면별 빈집 수",
+      "provider": "한국부동산원 빈집정보시스템(빈집애) / 지자체 빈집행정조사",
+      "url": "https://www.binzibe.kr/main/html/map.html",
+      "reference_date": "2025 (화면 조사연도 표시값, 조사시점 미확인)",
+      "license": "이용조건 미확인 (출처표시: 한국부동산원 빈집애)",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/binzibe-gunwi-vacant-houses-2025",
+      "used_for": ["읍면별 빈집 수 (prepare.py 미연결)"],
+      "notes": "지도 화면이 쓰는 내부 API(/apihome/map/vacant-houses/rank, sigungu=27720) 응답을 tools/fetch_binzibe.py 로 받은 그대로 보존. 공개 Open API 가 아니다. 읍면 8행, 합 602. 지자체 빈집행정조사 결과로 국가승인통계가 아니다(지도 안내문). binzipRateReg 는 빈집률이 아니라 군 전체 대비 읍면 비중(%). 27720 은 통계청 코드라 region_code 와 다르다 — 읍면명으로 대응. 조사시점은 사이트에 없어 미확인(API year=2026, 화면 표시 2025년). 통계청 미거주주택·군청 실태조사와 정의가 달라 섞지 말 것. 등급·건별 위치 없음."
     }
   ]
 }

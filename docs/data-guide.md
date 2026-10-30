@@ -27,6 +27,7 @@ public/data/*.json        웹 화면용
 | `datagokr-gunwi-water-supply-rate-2025-12-31` | 읍면별 상수도보급률 | 2025-12-31 | `water_supply.json` | 사용 |
 | `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | `sgis_stats.json` | 19개 CSV 중 10개 사용 |
 | `daegu-salpiso-reports-2024-11-27` | 대구 살피소 제보 처리현황 | 2024-11-27 | `salpiso.json` | 사용(군 단위 배경 수치, 웹 미공개) |
+| `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | — | 등록만(prepare.py 미연결) |
 
 모든 폴더에 공통으로 있는 파일:
 
