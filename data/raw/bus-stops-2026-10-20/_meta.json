@@ -1,0 +1,23 @@
+{
+  "source_id": "BUS_STOPS_NATIONAL",
+  "name": "국토교통부_전국 버스정류장 위치정보_20261020",
+  "provider": "국토교통부",
+  "url": "https://www.data.go.kr/data/15067528/fileData.do",
+  "reference_date": "2026-10-20",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "이용허락범위 제한 없음",
+  "provenance": "verified",
+  "notes": "포털 원본 CSV 그대로(파일명도 포털 원본). 전국 213,985행, WGS84. 도시명·도시코드는 BIS 운영주체 기준이라 군위 판정은 좌표를 읍면 경계에 넣어 한다(조사 시 725행). 같은 정류장 다중 BIS 등록, '(미정차)' IC/JC 행 있음.",
+  "files": {
+    "TAGO1020_station_cp949.csv": {
+      "sha256": "08ab0ecca91fd0d09d5f8846a5bcb01bbcee406adc1cdfbb1f1097a350be2571",
+      "bytes": 19854813
+    },
+    "capture.html": {
+      "sha256": "ea37779090326d7ae2fd802b7ee76ce99913699b9ab4cb59fed00ec194f5dee4",
+      "bytes": 209823
+    }
+  },
+  "encoding": "cp949"
+}

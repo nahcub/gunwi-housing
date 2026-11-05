@@ -1,0 +1,19 @@
+{
+  "source_id": "KINDERGARTEN_GENERAL",
+  "name": "유치원알리미 공시자료 일반현황 (대구, 2026년 2차)",
+  "provider": "교육부 / 한국교육학술정보원",
+  "url": "https://e-childschoolinfo.moe.go.kr/openData.do",
+  "reference_date": "2026년 2차 공시",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "확인 필요 (data.go.kr 대응 15036719 는 제1유형·제3자 권리 포함)",
+  "provenance": "verified",
+  "notes": "유치원알리미 공시자료 다운로드 CSV(대구 전체) 그대로. 파일명만 알아보기 쉽게 바꿨다. 군위 1곳(대구군위초 병설유치원). 위도·경도 있음.",
+  "files": {
+    "유치원알리미_일반현황_대구_2026년2차.csv": {
+      "sha256": "e106cf9a617f48f9c7fff50c647fb8d1445506cc5ac22bf1df0d0bd6d0864066",
+      "bytes": 74707
+    }
+  },
+  "encoding": "utf-8-sig"
+}

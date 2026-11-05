@@ -1,0 +1,374 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ko" lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>어린이집정보공개포털</title>
+
+<link rel="stylesheet" type="text/css" href="https://img.childcare.go.kr/css/info/common.css" />
+<!--[if IE 7 ]><link rel="stylesheet" type="text/css" href="https://img.childcare.go.kr/css/info/ie7.css" /><![endif]-->
+<!--[if IE 8 ]><link rel="stylesheet" type="text/css" href="https://img.childcare.go.kr/css/info/ie8.css" /><![endif]-->
+<script type="text/javascript" src="/js/info/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="/js/info/publishing.js"></script>
+    
+<script type="text/javascript">
+//<![CDATA[
+    var imagePath       = "https://img.childcare.go.kr/info";
+    var imageRootPath   = "https://img.childcare.go.kr";
+    var serverType      = "P";
+    var serverId        = "info";
+    
+    var serverIdSame        = "https://img.childcare.go.kr";
+  
+    $(document).ready(function(){
+    	var $frmCrname = $('#nurseryNameSearchFrm input[name="crname"]');
+    	$frmCrname.focus(function(){
+    		if( this.value == 'ì´ë¦°ì´ì§ì ê²ìíì¸ì' ){
+    			this.value = '';
+    		}
+    	});
+    	
+        $frmCrname.blur(function(){
+        	if( this.value == '' ){
+                this.value = 'ì´ë¦°ì´ì§ì ê²ìíì¸ì';
+            }
+        });
+        
+        function fnComNurseryNameSearch(){
+        	var cName = $frmCrname.val().replace(/\s/g, "");
+        	
+            if( cName == '' || cName == 'ì´ë¦°ì´ì§ì ê²ìíì¸ì' ){
+                alert('ì´ë¦°ì´ì§ëªì ìë ¥í´ ì£¼ì­ìì¤.');
+                return false;
+            }
+            
+            if( cName.length < 2 ){
+                alert('ì´ë¦°ì´ì§ëªì 2ì ì´ì ìë ¥íì¸ì.');
+                return false;
+            }
+            
+            var filterSearch = ["ì´ë¦°ì´ì§", "ì´ë¦°ì´", "ë¦°ì´ì§", "ì´ë¦°", "ì´ì§", "ë¦°ì´"];
+            
+            for(var i=0;i<filterSearch.length;i++) {
+                if (cName == filterSearch[i]) {
+                    alert("ì íí ì´ë¦°ì´ì§ëªì ìë ¥íì¸ì");
+                    $frmCrname.focus();
+                    return false;
+                } 
+            }
+            
+            $('#nurseryNameSearchFrm').get(0).submit();
+        }
+        
+        $frmCrname.keydown(function(e){
+        	if( e.keyCode == 13 ){
+        		fnComNurseryNameSearch();
+            }
+        });
+        
+        $('#nurseryNameSearchBtn').click(function(){
+        	fnComNurseryNameSearch();
+        });
+    });
+    
+    document.oncontextmenu = function(e){
+    	if (serverType == "P") {
+    	    alert('ì¤ë¥¸ìª½ ë§ì°ì¤ë ì¬ì©í  ì ììµëë¤.');
+    	    return false;
+    	}
+    };
+//]]>
+</script>
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+
+<script type="text/javascript">
+//<![CDATA[
+$(document).ready(function() {
+});
+
+//검색
+function fnSearch() {
+
+  var sfrm = parent.document.sfrm2;
+
+  var _target = sfrm.target ;
+  var _action = sfrm.action ;
+
+  sfrm.action = '/info/stat/sheet/StatCrInfoExcel.jsp';
+  sfrm.target = 'excelFrame';
+  sfrm.submit();
+
+  sfrm.target = _target ;
+  sfrm.action = _action ;
+}
+//]]>
+</script>
+
+</head>
+
+
+<body>
+<div class="api_view">
+
+<div style="margin:20px 0px 0px 0px;text-align:left;float:left;line-height:20px;padding-right:15px;height:30px;">
+  * 총 건수 : 4 건
+</div>
+<div style="margin:20px 0px 0px 0px;text-align:left;float:left;line-height:20px;height:30px;">
+	<a href="#none" onclick="fnSearch();"><img src="http://img.childcare.go.kr/cpis2gi/gty/common/btn_excel.gif" alt="엑셀파일저장" /></a>
+</div>
+
+
+<form id="sfrm2" name="sfrm2" method="post" action="">
+  <input type="hidden" name="flag"       value="crInfo" />
+  <input type="hidden" name="std_condi"  value="Y" />
+  <input type="hidden" name="sido"       value="27" />
+  <input type="hidden" name="sigun"      value="720" />
+  <input type="hidden" name="wkyear"     value="2026" />
+  <input type="hidden" name="wkmonth"    value="09" />
+</form>
+<!-- board:list -->
+<div class="file_list">
+    <table cellpadding="0" cellspacing="0" border="0" summary="시도,시군구,계,어린이집명, 어린이집유형, 운영현황등으로 구성되어 있습니다." style="width:2500px;">
+        <caption>어린이집 기본정보 조회</caption>
+          
+          
+          
+          <colgroup>
+            <col scope='col' style='width:50px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:150px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:450px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:70px;'/>
+            <col scope='col' style='width:70px;'/>
+            <col scope='col' style='width:70px;'/>
+            <col scope='col' style='width:70px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>
+            <col scope='col' style='width:100px;'/>	<!-- 20160927_박정현 -->
+            <col scope='col' style='width:100px;'/>	<!-- 20160927_박정현 -->
+            <col scope='col' style='width:100px;'/>	<!-- 20160927_박정현 -->
+            <col scope='col' style='width:100px;'/>	<!-- 20160927_박정현 -->
+         </colgroup>
+         <thead>
+          <tr>
+            <th scope='col'>번호</th>
+            <th scope='col'>시도</th>
+            <th scope='col'>시군구</th>
+            <th scope='col'>어린이집명</th>
+            <th scope='col'>어린이집유형구분</th>
+            <th scope='col'>운영현황</th>
+            <th scope='col'>우편번호</th>
+            <th scope='col'>주소</th>
+            <th scope='col'>어린이집전화번호</th>
+            <th scope='col'>어린이집팩스번호</th>
+            <th scope='col'>보육실수</th>
+            <th scope='col'>보육실면적</th>
+            <th scope='col'>놀이터수</th>
+            <th scope='col'>CCTV설치수</th>
+            <th scope='col'>보육교직원수</th>
+            <th scope='col'>정원수</th>
+            <th scope='col'>현원수</th>
+            <th scope='col'>위도</th>
+            <th scope='col'>경도</th>
+            <th scope='col'>통학차량운영여부</th>
+            <th scope='col'>홈페이지주소</th>
+            <th scope='col'>인가일자</th>			<!-- 20160927_박정현 -->
+            <th scope='col'>휴지시작일자</th>		<!-- 20160927_박정현 -->
+            <th scope='col'>휴지종료일자</th>		<!-- 20160927_박정현 -->
+            <th scope='col'>폐지일자</th>			<!-- 20160927_박정현 -->
+          </tr>
+          </thead>
+          <tbody>
+  
+    
+      
+        <tr>
+          <td align='center'>1</td>
+          <td align='center'>대구광역시</td>
+          <td align='center'>군위군</td>
+          <td style="text-align:left;"> 군위어린이집</td>
+          <td align='center'>사회복지법인</td>
+          <td align='center'>정상</td>
+          <td align='center'>39019</td>
+          <td style="text-align:left;">대구광역시 군위군 군위읍 군청로 107 </td>
+          <td align='center'>054-383-2032</td>
+          <td align='center'>054-382-3737</td>
+          <td align='center'>9</td>
+          <td align='center'>437</td>
+          <td align='center'>2</td>
+          <td align='center'>12</td>
+          <td align='center'>12</td>
+          <td align='center'>160</td>
+          <td align='center'>51</td>
+          <td align='center'>36.2331418</td>
+          <td align='center'>128.5704886</td>
+          <td align='center'>운영</td>
+          <td style="text-align:left;"></td>
+          <td align='center'>1979-03-09</td>			<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>			<!-- 20160927_박정현 -->
+        </tr>
+      
+        <tr>
+          <td align='center'>2</td>
+          <td align='center'>대구광역시</td>
+          <td align='center'>군위군</td>
+          <td style="text-align:left;"> 군위군립 보듬이나눔이어린이집</td>
+          <td align='center'>국공립</td>
+          <td align='center'>정상</td>
+          <td align='center'>39018</td>
+          <td style="text-align:left;">대구광역시 군위군 군위읍 동산새길 46 </td>
+          <td align='center'>054-383-7625</td>
+          <td align='center'>054-383-7626</td>
+          <td align='center'>3</td>
+          <td align='center'>53</td>
+          <td align='center'>0</td>
+          <td align='center'>7</td>
+          <td align='center'>7</td>
+          <td align='center'>17</td>
+          <td align='center'>15</td>
+          <td align='center'>36.23950266616611</td>
+          <td align='center'>128.5738254181605</td>
+          <td align='center'>운영</td>
+          <td style="text-align:left;"></td>
+          <td align='center'>2016-07-01</td>			<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>			<!-- 20160927_박정현 -->
+        </tr>
+      
+        <tr>
+          <td align='center'>3</td>
+          <td align='center'>대구광역시</td>
+          <td align='center'>군위군</td>
+          <td style="text-align:left;"> 군위군립 의흥어린이집</td>
+          <td align='center'>국공립</td>
+          <td align='center'>정상</td>
+          <td align='center'>39049</td>
+          <td style="text-align:left;">대구광역시 군위군 읍내2길 17 </td>
+          <td align='center'>054-382-3887</td>
+          <td align='center'>--</td>
+          <td align='center'>3</td>
+          <td align='center'>174</td>
+          <td align='center'>0</td>
+          <td align='center'>11</td>
+          <td align='center'>8</td>
+          <td align='center'>37</td>
+          <td align='center'>28</td>
+          <td align='center'>36.17594770637434</td>
+          <td align='center'>128.71644974206671</td>
+          <td align='center'>운영</td>
+          <td style="text-align:left;"></td>
+          <td align='center'>2020-12-14</td>			<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>			<!-- 20160927_박정현 -->
+        </tr>
+      
+        <tr>
+          <td align='center'>4</td>
+          <td align='center'>대구광역시</td>
+          <td align='center'>군위군</td>
+          <td style="text-align:left;"> 군위군립 하나어린이집</td>
+          <td align='center'>국공립</td>
+          <td align='center'>정상</td>
+          <td align='center'>39002</td>
+          <td style="text-align:left;">대구광역시 군위군 송원3길 30-7 </td>
+          <td align='center'>054-383-5981</td>
+          <td align='center'>--</td>
+          <td align='center'>2</td>
+          <td align='center'>49</td>
+          <td align='center'>0</td>
+          <td align='center'>10</td>
+          <td align='center'>4</td>
+          <td align='center'>16</td>
+          <td align='center'>5</td>
+          <td align='center'>36.2556025</td>
+          <td align='center'>128.4786448</td>
+          <td align='center'>운영</td>
+          <td style="text-align:left;"></td>
+          <td align='center'>2022-01-04</td>			<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>		<!-- 20160927_박정현 -->
+          <td align='center'></td>			<!-- 20160927_박정현 -->
+        </tr>
+      
+    
+    
+  
+  </tbody>
+</table>
+</div>
+
+<iframe name="excelFrame" src="about:blank" frameborder="0" scrolling="auto" width="0" height="0" title="자격별 결과 엑셀 다운로드"></iframe>
+
+</div>
+</body>
+</html>
+
+

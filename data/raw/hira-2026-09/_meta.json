@@ -1,0 +1,22 @@
+{
+  "source_id": "HIRA_HOSPITAL_PHARMACY",
+  "name": "건강보험심사평가원_전국 병의원 및 약국 현황_20260930",
+  "provider": "건강보험심사평가원",
+  "url": "https://www.data.go.kr/data/15051059/fileData.do",
+  "reference_date": "2026-09 (파일명 2026.9.)",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "공공누리 제1유형(출처표시)",
+  "provenance": "verified",
+  "notes": "포털 원본 zip 그대로(원래 파일명). 안에 CSV 12개(CP949). 쓰는 것은 1.병원정보서비스·2.약국정보서비스. 군위 = 시군구코드명 '대구군위군'(HIRA 코드 230200): 병원 35 + 약국 7. 좌표(X)=경도, 좌표(Y)=위도. capture.html = data.go.kr 데이터 페이지.",
+  "files": {
+    "전국 병의원 및 약국 현황 2026.9.zip": {
+      "sha256": "ceff684b8eb1dc9059b668ec56bc91d2a643997420733b2996a0bc5d8910f9c3",
+      "bytes": 20609715
+    },
+    "capture.html": {
+      "sha256": "00e802aa36847cd2f8366084ad0e4f5ae76671d555ebbc1b8148611c66b7e752",
+      "bytes": 169851
+    }
+  }
+}
