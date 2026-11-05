@@ -336,6 +336,7 @@ def main() -> None:
     ri_boundary = prepare_ri.prepare_ri_boundary(RAW, read_meta, name_by_code)
     ri_facilities = prepare_ri.assign_facilities(RAW, read_meta, ri_boundary, seniors)
     ri_access = prepare_ri.prepare_access(RAW, read_meta, ri_boundary, ri_facilities)
+    ri_housing = prepare_ri.prepare_housing_age(RAW, read_meta, ri_boundary, ANALYSIS_PERIOD)
 
     def write(name: str, obj) -> None:
         path = DERIVED / name
@@ -358,6 +359,7 @@ def main() -> None:
     write("ri_boundary.geojson", ri_boundary)
     write("ri_facilities.json", ri_facilities)
     write("ri_access.json", ri_access)
+    write("ri_housing_age.json", ri_housing)
 
     print(f"\n  인구 {len(population)}행")
     old = sum(v["old_count"] for v in seniors["by_region"].values())
@@ -373,6 +375,9 @@ def main() -> None:
     g = ri_access["gun"]
     print(f"  주거 건물 {g['houses']}채 → 1차 의료 평균 {g['primary_care']['mean_m']} m, "
           f"{ri_access['far_m']} m 초과 {g['primary_care']['far_share_pct']}% (임시 기준)")
+    h = ri_housing["gun"]
+    print(f"  노후주택({ri_housing['old_house_years']}년+) 확인 {h['old_confirmed_pct']}%, "
+          f"구조 추정 포함 {h['old_with_estimate_pct']}%, 사용승인일 빈칸 {h['blank_pct']}%")
 
 if __name__ == "__main__":
     main()

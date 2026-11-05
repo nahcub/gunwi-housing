@@ -123,6 +123,8 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 | 값 | 위치 | 의미 |
 |---|---|---|
 | `SENIOR_OLD_BEFORE_YEAR = 2000` | prepare.py | 이 해 이전 건립 경로당을 "노후"로 센다 |
+| `OLD_HOUSE_YEARS = 30` | prepare_ri.py | 사용승인 후 이 연수 이상이면 노후주택 (2026-11-05 사용자 결정, 법정 기준 아님) |
+| `TRADITIONAL_STRUCTURES` | prepare_ri.py | 사용승인일 빈칸 + 이 구조(목·조적·블록·벽돌·석)면 노후로 추정 |
 | `ACCESS_FAR_M = 2000` | prepare_ri.py | 집에서 가장 가까운 1차 의료·약국이 이보다 멀면 "먼 집"으로 센다 |
 | `SGIS_POP_TOLERANCE = 0.15` | prepare.py | SGIS·주민등록 인구 차이가 이보다 크면 코드 매핑이 뒤바뀐 것으로 보고 멈춤 |
 | `ANALYSIS_PERIOD = "2026-09"` | prepare.py (export_excel·figures 가 가져다 씀) | 분석 기준 시점 |

@@ -50,6 +50,12 @@ HIRA_COORD_FIXES = {
     "군위군부계면대율보건진료소": {"building_name": "대율보건진료소", "ri_code": "2772033024"},
 }
 
+# 노후주택(2026-11-05 사용자 결정). 사용승인 후 OLD_HOUSE_YEARS 년 이상. 공식 기준이 아닌 프로젝트 기준이다.
+OLD_HOUSE_YEARS = 30
+# 사용승인일이 빈 집 중 이 구조면 '노후 추정'으로 센다. 빈칸 집의 98% 가 이 구조이고(사용승인 제도
+# 이전·대장 소급 등재 추정), 30년 미만 확인 집에는 드물다(5%+32%). 통나무구조는 근래 전원주택이라 뺀다.
+TRADITIONAL_STRUCTURES = ("일반목구조", "목구조", "기타조적구조", "조적구조", "블록구조", "벽돌구조", "석구조")
+
 RI_FOLDER = "vworld-ri-boundary-2026-10-09"
 BJD_FOLDER = "bjd-code-2026-09-29"
 SIGUNGU = "27720"
@@ -458,7 +464,8 @@ def read_residential(raw: Path, read_meta) -> list[dict]:
         c = g.centroid
         houses.append({"ri_code": rec["A3"], "use": rec["A9"],
                        "x": round(c.x, 1), "y": round(c.y, 1),
-                       "approved": str(rec["A13"]).strip() or None})
+                       "approved": str(rec["A13"]).strip() or None,
+                       "structure": (rec["A11"] or "").strip()})
     return houses
 
 
@@ -556,6 +563,63 @@ def prepare_access(raw: Path, read_meta, ri_gj: dict, ri_fac: dict) -> dict:
                    "houses_without_approval_date": sum(1 for h in houses if not h["approved"])},
         "checks": {"건물 법정동코드 vs 중심점 좌표": {"n": len(houses), "mismatch": mismatch}},
         "gun": summarize(houses),
+        "by_region": by_region,
+        "by_ri": by_ri,
+    }
+
+
+# ------------------------------------------------------------- 노후주택
+
+def prepare_housing_age(raw: Path, read_meta, ri_gj: dict, analysis_period: str) -> dict:
+    """주거용 건물의 노후 비율. 분모는 주거용 건물 전체(사용승인일 빈칸 포함).
+
+    old_confirmed : 사용승인일이 기준일(분석 시점 말일 - OLD_HOUSE_YEARS 년) 이전
+    old_estimated : 사용승인일 빈칸 + 재래식 구조(TRADITIONAL_STRUCTURES) - 노후로 추정
+    blank         : 사용승인일 빈칸 전체
+    """
+    import calendar
+    y, m = map(int, analysis_period.split("-"))
+    cutoff = f"{y - OLD_HOUSE_YEARS:04d}-{m:02d}-{calendar.monthrange(y - OLD_HOUSE_YEARS, m)[1]:02d}"
+    houses = read_residential(raw, read_meta)
+    for h in houses:
+        a = h["approved"]
+        if a:
+            assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", a), f"사용승인일 형식이 바뀜 {a!r}"
+            assert a <= f"{y:04d}-{m:02d}-31", f"분석 시점 이후 사용승인 {a}"
+        h["old_confirmed"] = bool(a) and a <= cutoff
+        h["old_estimated"] = not a and h["structure"] in TRADITIONAL_STRUCTURES
+
+    def summarize(group: list[dict]) -> dict:
+        n = len(group)
+        conf = sum(h["old_confirmed"] for h in group)
+        est = sum(h["old_estimated"] for h in group)
+        blank = sum(not h["approved"] for h in group)
+        pct = (lambda k: round(k / n * 100, 1)) if n else (lambda k: None)
+        return {"houses": n, "old_confirmed": conf, "old_estimated": est, "blank": blank,
+                "old_confirmed_pct": pct(conf),           # 하한: 확인된 노후만
+                "old_with_estimate_pct": pct(conf + est),  # 주 지표: 확인 + 구조 추정
+                "blank_pct": pct(blank)}                   # 추정에 기댄 정도
+
+    ri_props = {f["properties"]["ri_code"]: f["properties"] for f in ri_gj["features"]}
+    by_ri = {code: {"ri_name": p["ri_name"], "region_code": p["region_code"],
+                    "region_name": p["region_name"],
+                    **summarize([h for h in houses if h["ri_code"] == code])}
+             for code, p in sorted(ri_props.items())}
+    by_region = {rc: summarize([h for h in houses if h["ri_code"][:8] + "00" == rc])
+                 for rc in sorted({p["region_code"] for p in ri_props.values()})}
+    gun = summarize(houses)
+    assert sum(v["houses"] for v in by_ri.values()) == gun["houses"]
+    return {
+        "_note": (f"주거용 건물(단독·공동주택) 중 사용승인 후 {OLD_HOUSE_YEARS}년 이상(사용승인일 ≤ {cutoff}). "
+                  "사용승인일 빈칸 + 재래식 구조(목·조적·블록·벽돌·석)는 노후로 추정한다. 분모는 주거용 건물 "
+                  "전체. 주 지표는 old_with_estimate_pct, 하한은 old_confirmed_pct, blank_pct 는 추정 의존도. "
+                  "노후 기준 연수는 공식 기준이 아닌 프로젝트 기준."),
+        "reference_date": "2026-09-09",
+        "analysis_period": analysis_period,
+        "old_house_years": OLD_HOUSE_YEARS,
+        "cutoff_date": cutoff,
+        "traditional_structures": list(TRADITIONAL_STRUCTURES),
+        "gun": gun,
         "by_region": by_region,
         "by_ri": by_ri,
     }

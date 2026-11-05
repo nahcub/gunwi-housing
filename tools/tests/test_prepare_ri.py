@@ -132,3 +132,30 @@ def test_daeyul_clinic_coordinate_fixed(ri):
     p = next(p for p in fac["points"] if p["name"] == "군위군부계면대율보건진료소")
     assert p["ri_code"] == "2772033024"          # 부계면 대율리
     assert "coord_fix" in p
+
+
+# ------------------------------------------------------------- 노후주택
+
+@pytest.fixture(scope="module")
+def housing(ri):
+    _, gj, _ = ri
+    return prepare_ri.prepare_housing_age(prepare.RAW, prepare.read_meta, gj, prepare.ANALYSIS_PERIOD)
+
+
+def test_housing_age_cutoff_follows_analysis_period(housing):
+    # 2026-09 분석 시점, 30년 → 1996-09-30 이전 사용승인
+    assert housing["cutoff_date"] == "1996-09-30"
+    assert housing["old_house_years"] == 30
+
+
+def test_housing_age_known_counts(housing):
+    g = housing["gun"]
+    assert (g["houses"], g["old_confirmed"], g["old_estimated"], g["blank"]) == (10264, 2818, 3477, 3522)
+    assert g["old_estimated"] <= g["blank"]
+
+
+def test_housing_age_parts_add_up(housing):
+    for v in [*housing["by_region"].values(), *housing["by_ri"].values()]:
+        assert v["old_confirmed"] + v["old_estimated"] <= v["houses"]
+        assert v["old_confirmed_pct"] <= v["old_with_estimate_pct"]
+    assert sum(v["old_estimated"] for v in housing["by_ri"].values()) == housing["gun"]["old_estimated"]

@@ -279,6 +279,10 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 재고 리(`by_ri`)·읍면(`by_region`)·군(`gun`)별로 평균·중앙값·최댓값·2 km 초과 비율을 낸다(산식은
 methodology "집별 생활시설 거리"). 건물 단위 값은 derived 에도 남기지 않는다(지번 단위 자료라).
 
+**`ri_housing_age.json`** — 주거용 건물의 노후(사용승인 30년 이상) 비율. 리·읍면·군별로 `old_confirmed_pct`
+(확인, 하한), `old_with_estimate_pct`(빈칸+재래식 구조 추정 포함, 주 지표), `blank_pct`(추정 의존도).
+산식은 methodology "노후주택".
+
 공개하지 않는다: 리 단위 결과는 `build.py` 에 아직 연결하지 않았다(`public/data/` 에 없음).
 
 ---
