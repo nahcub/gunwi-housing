@@ -1,0 +1,3060 @@
+{
+  "_note": "주거용 건물(GIS건물통합정보 용도 단독·공동주택) 중심점에서 가장 가까운 시설까지 직선거리(m). 도로망 미사용이라 실제 이동거리보다 짧다. 용도 빈칸 건물(대장 미연계)은 집인지 알 수 없어 빠졌다. 사람 수가 아니라 집(건물) 수 기준이고 빈집도 포함된다. far_share_pct 의 기준 2000 m 는 프로젝트 임시값.",
+  "reference_dates": {
+    "buildings": "2026-09-09",
+    "hira": "2026-09"
+  },
+  "far_m": 2000,
+  "groups": {
+    "primary_care": {
+      "label": "1차 의료(보건기관+의원)",
+      "types": [
+        "health",
+        "clinic"
+      ],
+      "facilities": 35
+    },
+    "health": {
+      "label": "보건소·보건지소·보건진료소",
+      "types": [
+        "health"
+      ],
+      "facilities": 18
+    },
+    "clinic": {
+      "label": "의원·치과·한의원",
+      "types": [
+        "clinic"
+      ],
+      "facilities": 17
+    },
+    "pharmacy": {
+      "label": "약국",
+      "types": [
+        "pharmacy"
+      ],
+      "facilities": 7
+    }
+  },
+  "residential_uses": [
+    "단독주택",
+    "공동주택"
+  ],
+  "totals": {
+    "houses": 10264,
+    "houses_without_approval_date": 3522
+  },
+  "checks": {
+    "건물 법정동코드 vs 중심점 좌표": {
+      "n": 10264,
+      "mismatch": 11
+    }
+  },
+  "gun": {
+    "houses": 10264,
+    "primary_care": {
+      "mean_m": 1794,
+      "median_m": 1734,
+      "max_m": 6088,
+      "far_share_pct": 40.2
+    },
+    "health": {
+      "mean_m": 1915,
+      "median_m": 1815,
+      "max_m": 6398,
+      "far_share_pct": 43.1
+    },
+    "clinic": {
+      "mean_m": 4962,
+      "median_m": 4023,
+      "max_m": 15925,
+      "far_share_pct": 76.1
+    },
+    "pharmacy": {
+      "mean_m": 6506,
+      "median_m": 5377,
+      "max_m": 20572,
+      "far_share_pct": 82.8
+    }
+  },
+  "by_region": {
+    "2772025000": {
+      "houses": 2428,
+      "primary_care": {
+        "mean_m": 1939,
+        "median_m": 1694,
+        "max_m": 6088,
+        "far_share_pct": 43.8
+      },
+      "health": {
+        "mean_m": 2383,
+        "median_m": 2069,
+        "max_m": 6398,
+        "far_share_pct": 53.1
+      },
+      "clinic": {
+        "mean_m": 2341,
+        "median_m": 2398,
+        "max_m": 6088,
+        "far_share_pct": 54.2
+      },
+      "pharmacy": {
+        "mean_m": 2443,
+        "median_m": 2455,
+        "max_m": 6378,
+        "far_share_pct": 54.9
+      }
+    },
+    "2772031000": {
+      "houses": 1248,
+      "primary_care": {
+        "mean_m": 2313,
+        "median_m": 2257,
+        "max_m": 5108,
+        "far_share_pct": 58.0
+      },
+      "health": {
+        "mean_m": 2315,
+        "median_m": 2257,
+        "max_m": 5674,
+        "far_share_pct": 58.0
+      },
+      "clinic": {
+        "mean_m": 9134,
+        "median_m": 8745,
+        "max_m": 14060,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 9220,
+        "median_m": 8832,
+        "max_m": 14134,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032000": {
+      "houses": 1778,
+      "primary_care": {
+        "mean_m": 1766,
+        "median_m": 1874,
+        "max_m": 3614,
+        "far_share_pct": 44.2
+      },
+      "health": {
+        "mean_m": 1804,
+        "median_m": 1928,
+        "max_m": 3753,
+        "far_share_pct": 46.9
+      },
+      "clinic": {
+        "mean_m": 3896,
+        "median_m": 3831,
+        "max_m": 8921,
+        "far_share_pct": 84.8
+      },
+      "pharmacy": {
+        "mean_m": 3955,
+        "median_m": 3838,
+        "max_m": 9108,
+        "far_share_pct": 84.9
+      }
+    },
+    "2772033000": {
+      "houses": 1016,
+      "primary_care": {
+        "mean_m": 1511,
+        "median_m": 1574,
+        "max_m": 4353,
+        "far_share_pct": 28.1
+      },
+      "health": {
+        "mean_m": 1511,
+        "median_m": 1574,
+        "max_m": 4353,
+        "far_share_pct": 28.1
+      },
+      "clinic": {
+        "mean_m": 11258,
+        "median_m": 12067,
+        "max_m": 15925,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 11529,
+        "median_m": 12194,
+        "max_m": 16039,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772034000": {
+      "houses": 1059,
+      "primary_care": {
+        "mean_m": 1585,
+        "median_m": 1602,
+        "max_m": 4318,
+        "far_share_pct": 41.1
+      },
+      "health": {
+        "mean_m": 1595,
+        "median_m": 1624,
+        "max_m": 4318,
+        "far_share_pct": 41.5
+      },
+      "clinic": {
+        "mean_m": 2586,
+        "median_m": 2638,
+        "max_m": 6311,
+        "far_share_pct": 62.2
+      },
+      "pharmacy": {
+        "mean_m": 2916,
+        "median_m": 2635,
+        "max_m": 7302,
+        "far_share_pct": 62.5
+      }
+    },
+    "2772035000": {
+      "houses": 1269,
+      "primary_care": {
+        "mean_m": 1386,
+        "median_m": 1475,
+        "max_m": 3771,
+        "far_share_pct": 18.8
+      },
+      "health": {
+        "mean_m": 1426,
+        "median_m": 1496,
+        "max_m": 3771,
+        "far_share_pct": 19.3
+      },
+      "clinic": {
+        "mean_m": 2400,
+        "median_m": 2010,
+        "max_m": 5585,
+        "far_share_pct": 50.6
+      },
+      "pharmacy": {
+        "mean_m": 6747,
+        "median_m": 6836,
+        "max_m": 10569,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036000": {
+      "houses": 731,
+      "primary_care": {
+        "mean_m": 1352,
+        "median_m": 1499,
+        "max_m": 4072,
+        "far_share_pct": 17.6
+      },
+      "health": {
+        "mean_m": 1352,
+        "median_m": 1499,
+        "max_m": 4072,
+        "far_share_pct": 17.6
+      },
+      "clinic": {
+        "mean_m": 7774,
+        "median_m": 7484,
+        "max_m": 13532,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10647,
+        "median_m": 10392,
+        "max_m": 15204,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037000": {
+      "houses": 735,
+      "primary_care": {
+        "mean_m": 2336,
+        "median_m": 2336,
+        "max_m": 5619,
+        "far_share_pct": 63.5
+      },
+      "health": {
+        "mean_m": 2382,
+        "median_m": 2376,
+        "max_m": 5619,
+        "far_share_pct": 64.2
+      },
+      "clinic": {
+        "mean_m": 5452,
+        "median_m": 4704,
+        "max_m": 10962,
+        "far_share_pct": 94.7
+      },
+      "pharmacy": {
+        "mean_m": 15190,
+        "median_m": 15048,
+        "max_m": 20572,
+        "far_share_pct": 100.0
+      }
+    }
+  },
+  "by_ri": {
+    "2772025021": {
+      "ri_name": "동부리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 330,
+      "primary_care": {
+        "mean_m": 319,
+        "median_m": 334,
+        "max_m": 1098,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 629,
+        "median_m": 620,
+        "max_m": 1280,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 368,
+        "median_m": 349,
+        "max_m": 1596,
+        "far_share_pct": 0.0
+      },
+      "pharmacy": {
+        "mean_m": 392,
+        "median_m": 359,
+        "max_m": 1596,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025022": {
+      "ri_name": "서부리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 311,
+      "primary_care": {
+        "mean_m": 143,
+        "median_m": 119,
+        "max_m": 660,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 723,
+        "median_m": 684,
+        "max_m": 1598,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 156,
+        "median_m": 119,
+        "max_m": 1088,
+        "far_share_pct": 0.0
+      },
+      "pharmacy": {
+        "mean_m": 187,
+        "median_m": 144,
+        "max_m": 1088,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025023": {
+      "ri_name": "금구리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 146,
+      "primary_care": {
+        "mean_m": 2136,
+        "median_m": 1659,
+        "max_m": 3226,
+        "far_share_pct": 46.6
+      },
+      "health": {
+        "mean_m": 2136,
+        "median_m": 1659,
+        "max_m": 3226,
+        "far_share_pct": 46.6
+      },
+      "clinic": {
+        "mean_m": 2709,
+        "median_m": 2233,
+        "max_m": 3861,
+        "far_share_pct": 68.5
+      },
+      "pharmacy": {
+        "mean_m": 2709,
+        "median_m": 2233,
+        "max_m": 3861,
+        "far_share_pct": 68.5
+      }
+    },
+    "2772025024": {
+      "ri_name": "무성리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 176,
+      "primary_care": {
+        "mean_m": 3599,
+        "median_m": 3653,
+        "max_m": 4184,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3599,
+        "median_m": 3653,
+        "max_m": 4184,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4172,
+        "median_m": 4330,
+        "max_m": 4741,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4090,
+        "median_m": 4271,
+        "max_m": 4625,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025025": {
+      "ri_name": "수서리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 161,
+      "primary_care": {
+        "mean_m": 2712,
+        "median_m": 2210,
+        "max_m": 4447,
+        "far_share_pct": 87.6
+      },
+      "health": {
+        "mean_m": 2712,
+        "median_m": 2210,
+        "max_m": 4447,
+        "far_share_pct": 87.6
+      },
+      "clinic": {
+        "mean_m": 3066,
+        "median_m": 2566,
+        "max_m": 4678,
+        "far_share_pct": 96.9
+      },
+      "pharmacy": {
+        "mean_m": 3066,
+        "median_m": 2566,
+        "max_m": 4678,
+        "far_share_pct": 96.9
+      }
+    },
+    "2772025026": {
+      "ri_name": "사직리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 101,
+      "primary_care": {
+        "mean_m": 1577,
+        "median_m": 1642,
+        "max_m": 2266,
+        "far_share_pct": 11.9
+      },
+      "health": {
+        "mean_m": 1659,
+        "median_m": 1665,
+        "max_m": 2449,
+        "far_share_pct": 15.8
+      },
+      "clinic": {
+        "mean_m": 1595,
+        "median_m": 1676,
+        "max_m": 2266,
+        "far_share_pct": 11.9
+      },
+      "pharmacy": {
+        "mean_m": 1596,
+        "median_m": 1676,
+        "max_m": 2266,
+        "far_share_pct": 11.9
+      }
+    },
+    "2772025027": {
+      "ri_name": "내량리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 171,
+      "primary_care": {
+        "mean_m": 2300,
+        "median_m": 2425,
+        "max_m": 3352,
+        "far_share_pct": 54.4
+      },
+      "health": {
+        "mean_m": 3023,
+        "median_m": 3093,
+        "max_m": 4029,
+        "far_share_pct": 95.9
+      },
+      "clinic": {
+        "mean_m": 2300,
+        "median_m": 2425,
+        "max_m": 3352,
+        "far_share_pct": 54.4
+      },
+      "pharmacy": {
+        "mean_m": 2365,
+        "median_m": 2465,
+        "max_m": 3392,
+        "far_share_pct": 56.7
+      }
+    },
+    "2772025028": {
+      "ri_name": "외량리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 115,
+      "primary_care": {
+        "mean_m": 3268,
+        "median_m": 3183,
+        "max_m": 3996,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4238,
+        "median_m": 4051,
+        "max_m": 5143,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3268,
+        "median_m": 3183,
+        "max_m": 3996,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 3457,
+        "median_m": 3304,
+        "max_m": 4281,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025029": {
+      "ri_name": "삽령리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 46,
+      "primary_care": {
+        "mean_m": 3992,
+        "median_m": 4055,
+        "max_m": 4161,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4978,
+        "median_m": 5033,
+        "max_m": 5154,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3992,
+        "median_m": 4055,
+        "max_m": 4161,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4197,
+        "median_m": 4261,
+        "max_m": 4369,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025030": {
+      "ri_name": "대북리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 114,
+      "primary_care": {
+        "mean_m": 3009,
+        "median_m": 3197,
+        "max_m": 3851,
+        "far_share_pct": 95.6
+      },
+      "health": {
+        "mean_m": 4227,
+        "median_m": 4424,
+        "max_m": 5080,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3009,
+        "median_m": 3197,
+        "max_m": 3851,
+        "far_share_pct": 95.6
+      },
+      "pharmacy": {
+        "mean_m": 3357,
+        "median_m": 3559,
+        "max_m": 4200,
+        "far_share_pct": 98.2
+      }
+    },
+    "2772025031": {
+      "ri_name": "오곡리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 71,
+      "primary_care": {
+        "mean_m": 3882,
+        "median_m": 4022,
+        "max_m": 4278,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4965,
+        "median_m": 5030,
+        "max_m": 5454,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3882,
+        "median_m": 4022,
+        "max_m": 4278,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4247,
+        "median_m": 4383,
+        "max_m": 4647,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025032": {
+      "ri_name": "정리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 186,
+      "primary_care": {
+        "mean_m": 1116,
+        "median_m": 1056,
+        "max_m": 1719,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 2322,
+        "median_m": 2260,
+        "max_m": 2934,
+        "far_share_pct": 78.5
+      },
+      "clinic": {
+        "mean_m": 1116,
+        "median_m": 1056,
+        "max_m": 1719,
+        "far_share_pct": 0.0
+      },
+      "pharmacy": {
+        "mean_m": 1477,
+        "median_m": 1425,
+        "max_m": 2088,
+        "far_share_pct": 3.8
+      }
+    },
+    "2772025033": {
+      "ri_name": "하곡리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 103,
+      "primary_care": {
+        "mean_m": 1162,
+        "median_m": 1352,
+        "max_m": 1597,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1224,
+        "median_m": 1408,
+        "max_m": 1698,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 1915,
+        "median_m": 1666,
+        "max_m": 2705,
+        "far_share_pct": 40.8
+      },
+      "pharmacy": {
+        "mean_m": 1971,
+        "median_m": 1724,
+        "max_m": 2757,
+        "far_share_pct": 42.7
+      }
+    },
+    "2772025034": {
+      "ri_name": "용대리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 75,
+      "primary_care": {
+        "mean_m": 633,
+        "median_m": 351,
+        "max_m": 1922,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 633,
+        "median_m": 351,
+        "max_m": 1922,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 3426,
+        "median_m": 3122,
+        "max_m": 4934,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 3464,
+        "median_m": 3167,
+        "max_m": 4978,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025035": {
+      "ri_name": "상곡리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 86,
+      "primary_care": {
+        "mean_m": 2299,
+        "median_m": 2006,
+        "max_m": 3920,
+        "far_share_pct": 52.3
+      },
+      "health": {
+        "mean_m": 2300,
+        "median_m": 2006,
+        "max_m": 3920,
+        "far_share_pct": 52.3
+      },
+      "clinic": {
+        "mean_m": 3599,
+        "median_m": 3389,
+        "max_m": 4591,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 3789,
+        "median_m": 3568,
+        "max_m": 4855,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025036": {
+      "ri_name": "광현리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 128,
+      "primary_care": {
+        "mean_m": 2310,
+        "median_m": 2549,
+        "max_m": 3372,
+        "far_share_pct": 61.7
+      },
+      "health": {
+        "mean_m": 2310,
+        "median_m": 2549,
+        "max_m": 3372,
+        "far_share_pct": 61.7
+      },
+      "clinic": {
+        "mean_m": 4764,
+        "median_m": 4831,
+        "max_m": 5926,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4871,
+        "median_m": 4973,
+        "max_m": 6038,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772025037": {
+      "ri_name": "대흥리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 108,
+      "primary_care": {
+        "mean_m": 5350,
+        "median_m": 5449,
+        "max_m": 6088,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 5902,
+        "median_m": 5866,
+        "max_m": 6398,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5350,
+        "median_m": 5449,
+        "max_m": 6088,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 5618,
+        "median_m": 5709,
+        "max_m": 6378,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031021": {
+      "ri_name": "사리리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 71,
+      "primary_care": {
+        "mean_m": 1207,
+        "median_m": 881,
+        "max_m": 2070,
+        "far_share_pct": 14.1
+      },
+      "health": {
+        "mean_m": 1207,
+        "median_m": 881,
+        "max_m": 2070,
+        "far_share_pct": 14.1
+      },
+      "clinic": {
+        "mean_m": 12555,
+        "median_m": 12188,
+        "max_m": 13553,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 12756,
+        "median_m": 12384,
+        "max_m": 13755,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031022": {
+      "ri_name": "보현리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 87,
+      "primary_care": {
+        "mean_m": 2238,
+        "median_m": 1249,
+        "max_m": 3795,
+        "far_share_pct": 49.4
+      },
+      "health": {
+        "mean_m": 2238,
+        "median_m": 1249,
+        "max_m": 3795,
+        "far_share_pct": 49.4
+      },
+      "clinic": {
+        "mean_m": 12970,
+        "median_m": 12323,
+        "max_m": 14060,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 13088,
+        "median_m": 12472,
+        "max_m": 14134,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031023": {
+      "ri_name": "복성리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 72,
+      "primary_care": {
+        "mean_m": 943,
+        "median_m": 817,
+        "max_m": 2037,
+        "far_share_pct": 6.9
+      },
+      "health": {
+        "mean_m": 943,
+        "median_m": 817,
+        "max_m": 2037,
+        "far_share_pct": 6.9
+      },
+      "clinic": {
+        "mean_m": 10697,
+        "median_m": 10894,
+        "max_m": 11585,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10882,
+        "median_m": 11081,
+        "max_m": 11771,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031024": {
+      "ri_name": "위성리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 138,
+      "primary_care": {
+        "mean_m": 2651,
+        "median_m": 2572,
+        "max_m": 4030,
+        "far_share_pct": 97.1
+      },
+      "health": {
+        "mean_m": 2651,
+        "median_m": 2572,
+        "max_m": 4030,
+        "far_share_pct": 97.1
+      },
+      "clinic": {
+        "mean_m": 10614,
+        "median_m": 10397,
+        "max_m": 12801,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10690,
+        "median_m": 10487,
+        "max_m": 12849,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031025": {
+      "ri_name": "달산리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 146,
+      "primary_care": {
+        "mean_m": 2373,
+        "median_m": 1959,
+        "max_m": 4828,
+        "far_share_pct": 47.9
+      },
+      "health": {
+        "mean_m": 2373,
+        "median_m": 1959,
+        "max_m": 4828,
+        "far_share_pct": 47.9
+      },
+      "clinic": {
+        "mean_m": 10707,
+        "median_m": 10362,
+        "max_m": 13231,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10748,
+        "median_m": 10403,
+        "max_m": 13272,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031026": {
+      "ri_name": "송원리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 149,
+      "primary_care": {
+        "mean_m": 527,
+        "median_m": 444,
+        "max_m": 1710,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 527,
+        "median_m": 444,
+        "max_m": 1710,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 8122,
+        "median_m": 8096,
+        "max_m": 8799,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 8162,
+        "median_m": 8136,
+        "max_m": 8840,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031027": {
+      "ri_name": "신계리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 61,
+      "primary_care": {
+        "mean_m": 1515,
+        "median_m": 1539,
+        "max_m": 1705,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1515,
+        "median_m": 1539,
+        "max_m": 1705,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 7608,
+        "median_m": 7637,
+        "max_m": 8025,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 7648,
+        "median_m": 7677,
+        "max_m": 8065,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031028": {
+      "ri_name": "도산리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 118,
+      "primary_care": {
+        "mean_m": 2472,
+        "median_m": 2195,
+        "max_m": 3546,
+        "far_share_pct": 67.8
+      },
+      "health": {
+        "mean_m": 2472,
+        "median_m": 2195,
+        "max_m": 3546,
+        "far_share_pct": 67.8
+      },
+      "clinic": {
+        "mean_m": 9565,
+        "median_m": 9350,
+        "max_m": 11559,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 9605,
+        "median_m": 9390,
+        "max_m": 11599,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031029": {
+      "ri_name": "서경리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 69,
+      "primary_care": {
+        "mean_m": 2659,
+        "median_m": 2588,
+        "max_m": 3145,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 2659,
+        "median_m": 2588,
+        "max_m": 3145,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 6504,
+        "median_m": 6564,
+        "max_m": 6861,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 6543,
+        "median_m": 6604,
+        "max_m": 6901,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031030": {
+      "ri_name": "평호리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 60,
+      "primary_care": {
+        "mean_m": 3816,
+        "median_m": 3582,
+        "max_m": 4883,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3816,
+        "median_m": 3582,
+        "max_m": 4883,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 6778,
+        "median_m": 6692,
+        "max_m": 7772,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 6805,
+        "median_m": 6730,
+        "max_m": 7809,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031031": {
+      "ri_name": "산법리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 32,
+      "primary_care": {
+        "mean_m": 4678,
+        "median_m": 4620,
+        "max_m": 5054,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4720,
+        "median_m": 4629,
+        "max_m": 5150,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5051,
+        "median_m": 5056,
+        "max_m": 5198,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 5072,
+        "median_m": 5081,
+        "max_m": 5225,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031032": {
+      "ri_name": "내의리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 110,
+      "primary_care": {
+        "mean_m": 3205,
+        "median_m": 3146,
+        "max_m": 5108,
+        "far_share_pct": 98.2
+      },
+      "health": {
+        "mean_m": 3205,
+        "median_m": 3146,
+        "max_m": 5108,
+        "far_share_pct": 98.2
+      },
+      "clinic": {
+        "mean_m": 8143,
+        "median_m": 8204,
+        "max_m": 8839,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 8300,
+        "median_m": 8336,
+        "max_m": 8989,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031033": {
+      "ri_name": "봉황리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 94,
+      "primary_care": {
+        "mean_m": 2747,
+        "median_m": 2480,
+        "max_m": 3942,
+        "far_share_pct": 76.6
+      },
+      "health": {
+        "mean_m": 2747,
+        "median_m": 2480,
+        "max_m": 3942,
+        "far_share_pct": 76.6
+      },
+      "clinic": {
+        "mean_m": 6942,
+        "median_m": 6722,
+        "max_m": 7955,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 7037,
+        "median_m": 6808,
+        "max_m": 8018,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031034": {
+      "ri_name": "봉소리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 41,
+      "primary_care": {
+        "mean_m": 4643,
+        "median_m": 4735,
+        "max_m": 5071,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4677,
+        "median_m": 4735,
+        "max_m": 5674,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5209,
+        "median_m": 5349,
+        "max_m": 5609,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 5400,
+        "median_m": 5555,
+        "max_m": 5765,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032021": {
+      "ri_name": "노행리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 114,
+      "primary_care": {
+        "mean_m": 2345,
+        "median_m": 2502,
+        "max_m": 3152,
+        "far_share_pct": 53.5
+      },
+      "health": {
+        "mean_m": 2345,
+        "median_m": 2502,
+        "max_m": 3152,
+        "far_share_pct": 53.5
+      },
+      "clinic": {
+        "mean_m": 4056,
+        "median_m": 4129,
+        "max_m": 5039,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4037,
+        "median_m": 4107,
+        "max_m": 5039,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032022": {
+      "ri_name": "오천리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 62,
+      "primary_care": {
+        "mean_m": 284,
+        "median_m": 156,
+        "max_m": 687,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 284,
+        "median_m": 156,
+        "max_m": 687,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 4320,
+        "median_m": 4242,
+        "max_m": 4748,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4115,
+        "median_m": 4036,
+        "max_m": 4542,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032023": {
+      "ri_name": "성리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 110,
+      "primary_care": {
+        "mean_m": 1612,
+        "median_m": 1589,
+        "max_m": 2461,
+        "far_share_pct": 16.4
+      },
+      "health": {
+        "mean_m": 1612,
+        "median_m": 1589,
+        "max_m": 2461,
+        "far_share_pct": 16.4
+      },
+      "clinic": {
+        "mean_m": 3360,
+        "median_m": 3101,
+        "max_m": 4103,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 3169,
+        "median_m": 2911,
+        "max_m": 3906,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032024": {
+      "ri_name": "병수리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 113,
+      "primary_care": {
+        "mean_m": 1811,
+        "median_m": 1996,
+        "max_m": 2505,
+        "far_share_pct": 46.9
+      },
+      "health": {
+        "mean_m": 1811,
+        "median_m": 1996,
+        "max_m": 2505,
+        "far_share_pct": 46.9
+      },
+      "clinic": {
+        "mean_m": 2473,
+        "median_m": 2356,
+        "max_m": 3798,
+        "far_share_pct": 96.5
+      },
+      "pharmacy": {
+        "mean_m": 2286,
+        "median_m": 2176,
+        "max_m": 3596,
+        "far_share_pct": 89.4
+      }
+    },
+    "2772032025": {
+      "ri_name": "불로리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 55,
+      "primary_care": {
+        "mean_m": 2189,
+        "median_m": 2274,
+        "max_m": 2513,
+        "far_share_pct": 76.4
+      },
+      "health": {
+        "mean_m": 2189,
+        "median_m": 2274,
+        "max_m": 2513,
+        "far_share_pct": 76.4
+      },
+      "clinic": {
+        "mean_m": 2443,
+        "median_m": 2516,
+        "max_m": 2758,
+        "far_share_pct": 90.9
+      },
+      "pharmacy": {
+        "mean_m": 2400,
+        "median_m": 2487,
+        "max_m": 2726,
+        "far_share_pct": 89.1
+      }
+    },
+    "2772032026": {
+      "ri_name": "내리리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 67,
+      "primary_care": {
+        "mean_m": 2113,
+        "median_m": 2146,
+        "max_m": 2599,
+        "far_share_pct": 80.6
+      },
+      "health": {
+        "mean_m": 2113,
+        "median_m": 2146,
+        "max_m": 2599,
+        "far_share_pct": 80.6
+      },
+      "clinic": {
+        "mean_m": 2241,
+        "median_m": 2273,
+        "max_m": 2729,
+        "far_share_pct": 91.0
+      },
+      "pharmacy": {
+        "mean_m": 2301,
+        "median_m": 2336,
+        "max_m": 2789,
+        "far_share_pct": 91.0
+      }
+    },
+    "2772032027": {
+      "ri_name": "중구리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 125,
+      "primary_care": {
+        "mean_m": 350,
+        "median_m": 309,
+        "max_m": 1060,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 386,
+        "median_m": 323,
+        "max_m": 1067,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 434,
+        "median_m": 442,
+        "max_m": 1060,
+        "far_share_pct": 0.0
+      },
+      "pharmacy": {
+        "mean_m": 429,
+        "median_m": 354,
+        "max_m": 1191,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032028": {
+      "ri_name": "거매리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 82,
+      "primary_care": {
+        "mean_m": 1332,
+        "median_m": 1210,
+        "max_m": 1964,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1560,
+        "median_m": 1444,
+        "max_m": 2133,
+        "far_share_pct": 17.1
+      },
+      "clinic": {
+        "mean_m": 1332,
+        "median_m": 1210,
+        "max_m": 1964,
+        "far_share_pct": 0.0
+      },
+      "pharmacy": {
+        "mean_m": 1353,
+        "median_m": 1232,
+        "max_m": 1925,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032029": {
+      "ri_name": "장군리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 178,
+      "primary_care": {
+        "mean_m": 2889,
+        "median_m": 2971,
+        "max_m": 3614,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 2974,
+        "median_m": 2971,
+        "max_m": 3753,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3295,
+        "median_m": 3328,
+        "max_m": 4309,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 3500,
+        "median_m": 3532,
+        "max_m": 4511,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032030": {
+      "ri_name": "장기리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 134,
+      "primary_care": {
+        "mean_m": 2150,
+        "median_m": 2161,
+        "max_m": 3059,
+        "far_share_pct": 64.2
+      },
+      "health": {
+        "mean_m": 2344,
+        "median_m": 2193,
+        "max_m": 3148,
+        "far_share_pct": 89.6
+      },
+      "clinic": {
+        "mean_m": 2760,
+        "median_m": 2646,
+        "max_m": 4562,
+        "far_share_pct": 64.2
+      },
+      "pharmacy": {
+        "mean_m": 2942,
+        "median_m": 2839,
+        "max_m": 4725,
+        "far_share_pct": 72.4
+      }
+    },
+    "2772032031": {
+      "ri_name": "금매리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 117,
+      "primary_care": {
+        "mean_m": 2370,
+        "median_m": 2422,
+        "max_m": 2956,
+        "far_share_pct": 61.5
+      },
+      "health": {
+        "mean_m": 2404,
+        "median_m": 2547,
+        "max_m": 3080,
+        "far_share_pct": 61.5
+      },
+      "clinic": {
+        "mean_m": 3429,
+        "median_m": 3158,
+        "max_m": 4855,
+        "far_share_pct": 99.1
+      },
+      "pharmacy": {
+        "mean_m": 3490,
+        "median_m": 3219,
+        "max_m": 4955,
+        "far_share_pct": 99.1
+      }
+    },
+    "2772032032": {
+      "ri_name": "화계리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 118,
+      "primary_care": {
+        "mean_m": 744,
+        "median_m": 671,
+        "max_m": 2174,
+        "far_share_pct": 0.8
+      },
+      "health": {
+        "mean_m": 744,
+        "median_m": 671,
+        "max_m": 2174,
+        "far_share_pct": 0.8
+      },
+      "clinic": {
+        "mean_m": 6403,
+        "median_m": 6404,
+        "max_m": 7141,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 6459,
+        "median_m": 6456,
+        "max_m": 7196,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032033": {
+      "ri_name": "마시리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 176,
+      "primary_care": {
+        "mean_m": 2165,
+        "median_m": 2470,
+        "max_m": 2719,
+        "far_share_pct": 60.8
+      },
+      "health": {
+        "mean_m": 2165,
+        "median_m": 2470,
+        "max_m": 2719,
+        "far_share_pct": 60.8
+      },
+      "clinic": {
+        "mean_m": 5284,
+        "median_m": 4815,
+        "max_m": 6902,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 5419,
+        "median_m": 4962,
+        "max_m": 7034,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032034": {
+      "ri_name": "매곡리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 142,
+      "primary_care": {
+        "mean_m": 2035,
+        "median_m": 1951,
+        "max_m": 3009,
+        "far_share_pct": 47.2
+      },
+      "health": {
+        "mean_m": 2035,
+        "median_m": 1951,
+        "max_m": 3009,
+        "far_share_pct": 47.2
+      },
+      "clinic": {
+        "mean_m": 7819,
+        "median_m": 7778,
+        "max_m": 8921,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 7998,
+        "median_m": 7954,
+        "max_m": 9108,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032035": {
+      "ri_name": "고곡리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 185,
+      "primary_care": {
+        "mean_m": 1188,
+        "median_m": 1238,
+        "max_m": 2367,
+        "far_share_pct": 25.4
+      },
+      "health": {
+        "mean_m": 1188,
+        "median_m": 1238,
+        "max_m": 2367,
+        "far_share_pct": 25.4
+      },
+      "clinic": {
+        "mean_m": 5115,
+        "median_m": 4978,
+        "max_m": 6959,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 5312,
+        "median_m": 5176,
+        "max_m": 7151,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033021": {
+      "ri_name": "창평리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 199,
+      "primary_care": {
+        "mean_m": 898,
+        "median_m": 596,
+        "max_m": 2176,
+        "far_share_pct": 4.5
+      },
+      "health": {
+        "mean_m": 898,
+        "median_m": 596,
+        "max_m": 2176,
+        "far_share_pct": 4.5
+      },
+      "clinic": {
+        "mean_m": 9589,
+        "median_m": 9439,
+        "max_m": 10552,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10322,
+        "median_m": 9815,
+        "max_m": 12444,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033022": {
+      "ri_name": "가호리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 93,
+      "primary_care": {
+        "mean_m": 1972,
+        "median_m": 2210,
+        "max_m": 2904,
+        "far_share_pct": 60.2
+      },
+      "health": {
+        "mean_m": 1972,
+        "median_m": 2210,
+        "max_m": 2904,
+        "far_share_pct": 60.2
+      },
+      "clinic": {
+        "mean_m": 11301,
+        "median_m": 11075,
+        "max_m": 12350,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 11579,
+        "median_m": 11447,
+        "max_m": 12955,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033023": {
+      "ri_name": "춘산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 65,
+      "primary_care": {
+        "mean_m": 1673,
+        "median_m": 1650,
+        "max_m": 2676,
+        "far_share_pct": 20.0
+      },
+      "health": {
+        "mean_m": 1673,
+        "median_m": 1650,
+        "max_m": 2676,
+        "far_share_pct": 20.0
+      },
+      "clinic": {
+        "mean_m": 10127,
+        "median_m": 10068,
+        "max_m": 10859,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10223,
+        "median_m": 10151,
+        "max_m": 10966,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033024": {
+      "ri_name": "대율리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 224,
+      "primary_care": {
+        "mean_m": 370,
+        "median_m": 339,
+        "max_m": 1290,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 370,
+        "median_m": 339,
+        "max_m": 1290,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 12279,
+        "median_m": 12223,
+        "max_m": 13319,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 12399,
+        "median_m": 12346,
+        "max_m": 13430,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033025": {
+      "ri_name": "동산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 121,
+      "primary_care": {
+        "mean_m": 1677,
+        "median_m": 1545,
+        "max_m": 3790,
+        "far_share_pct": 10.7
+      },
+      "health": {
+        "mean_m": 1677,
+        "median_m": 1545,
+        "max_m": 3790,
+        "far_share_pct": 10.7
+      },
+      "clinic": {
+        "mean_m": 13492,
+        "median_m": 13372,
+        "max_m": 15925,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 13621,
+        "median_m": 13502,
+        "max_m": 16039,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033026": {
+      "ri_name": "남산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 175,
+      "primary_care": {
+        "mean_m": 3035,
+        "median_m": 3116,
+        "max_m": 4353,
+        "far_share_pct": 94.9
+      },
+      "health": {
+        "mean_m": 3035,
+        "median_m": 3116,
+        "max_m": 4353,
+        "far_share_pct": 94.9
+      },
+      "clinic": {
+        "mean_m": 13576,
+        "median_m": 13772,
+        "max_m": 15425,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 13725,
+        "median_m": 13919,
+        "max_m": 15575,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033027": {
+      "ri_name": "명산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 58,
+      "primary_care": {
+        "mean_m": 1959,
+        "median_m": 1999,
+        "max_m": 2166,
+        "far_share_pct": 50.0
+      },
+      "health": {
+        "mean_m": 1959,
+        "median_m": 1999,
+        "max_m": 2166,
+        "far_share_pct": 50.0
+      },
+      "clinic": {
+        "mean_m": 7417,
+        "median_m": 7452,
+        "max_m": 7671,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 7519,
+        "median_m": 7557,
+        "max_m": 7771,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033028": {
+      "ri_name": "신화리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 81,
+      "primary_care": {
+        "mean_m": 1650,
+        "median_m": 1720,
+        "max_m": 1915,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1650,
+        "median_m": 1720,
+        "max_m": 1915,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 7797,
+        "median_m": 7741,
+        "max_m": 8763,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 8085,
+        "median_m": 7899,
+        "max_m": 8962,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772034021": {
+      "ri_name": "나호리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 115,
+      "primary_care": {
+        "mean_m": 1953,
+        "median_m": 1993,
+        "max_m": 2824,
+        "far_share_pct": 48.7
+      },
+      "health": {
+        "mean_m": 1962,
+        "median_m": 1993,
+        "max_m": 2824,
+        "far_share_pct": 48.7
+      },
+      "clinic": {
+        "mean_m": 2456,
+        "median_m": 2654,
+        "max_m": 4236,
+        "far_share_pct": 55.7
+      },
+      "pharmacy": {
+        "mean_m": 2440,
+        "median_m": 2635,
+        "max_m": 4217,
+        "far_share_pct": 55.7
+      }
+    },
+    "2772034022": {
+      "ri_name": "이화리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 241,
+      "primary_care": {
+        "mean_m": 585,
+        "median_m": 358,
+        "max_m": 2451,
+        "far_share_pct": 4.6
+      },
+      "health": {
+        "mean_m": 601,
+        "median_m": 358,
+        "max_m": 2503,
+        "far_share_pct": 5.0
+      },
+      "clinic": {
+        "mean_m": 599,
+        "median_m": 369,
+        "max_m": 2451,
+        "far_share_pct": 4.6
+      },
+      "pharmacy": {
+        "mean_m": 602,
+        "median_m": 379,
+        "max_m": 2468,
+        "far_share_pct": 5.0
+      }
+    },
+    "2772034023": {
+      "ri_name": "두북리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 49,
+      "primary_care": {
+        "mean_m": 1871,
+        "median_m": 1970,
+        "max_m": 2518,
+        "far_share_pct": 44.9
+      },
+      "health": {
+        "mean_m": 1871,
+        "median_m": 1970,
+        "max_m": 2518,
+        "far_share_pct": 44.9
+      },
+      "clinic": {
+        "mean_m": 1923,
+        "median_m": 2024,
+        "max_m": 2570,
+        "far_share_pct": 55.1
+      },
+      "pharmacy": {
+        "mean_m": 1907,
+        "median_m": 2012,
+        "max_m": 2553,
+        "far_share_pct": 55.1
+      }
+    },
+    "2772034024": {
+      "ri_name": "선곡리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 118,
+      "primary_care": {
+        "mean_m": 1458,
+        "median_m": 1280,
+        "max_m": 2217,
+        "far_share_pct": 25.4
+      },
+      "health": {
+        "mean_m": 1459,
+        "median_m": 1289,
+        "max_m": 2217,
+        "far_share_pct": 25.4
+      },
+      "clinic": {
+        "mean_m": 1472,
+        "median_m": 1289,
+        "max_m": 2219,
+        "far_share_pct": 25.4
+      },
+      "pharmacy": {
+        "mean_m": 1485,
+        "median_m": 1305,
+        "max_m": 2236,
+        "far_share_pct": 27.1
+      }
+    },
+    "2772034025": {
+      "ri_name": "미성리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 121,
+      "primary_care": {
+        "mean_m": 2410,
+        "median_m": 2311,
+        "max_m": 2919,
+        "far_share_pct": 92.6
+      },
+      "health": {
+        "mean_m": 2447,
+        "median_m": 2365,
+        "max_m": 2942,
+        "far_share_pct": 95.9
+      },
+      "clinic": {
+        "mean_m": 2603,
+        "median_m": 2535,
+        "max_m": 3714,
+        "far_share_pct": 92.6
+      },
+      "pharmacy": {
+        "mean_m": 2609,
+        "median_m": 2543,
+        "max_m": 3720,
+        "far_share_pct": 92.6
+      }
+    },
+    "2772034026": {
+      "ri_name": "모산리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 83,
+      "primary_care": {
+        "mean_m": 496,
+        "median_m": 249,
+        "max_m": 2333,
+        "far_share_pct": 1.2
+      },
+      "health": {
+        "mean_m": 496,
+        "median_m": 249,
+        "max_m": 2333,
+        "far_share_pct": 1.2
+      },
+      "clinic": {
+        "mean_m": 3890,
+        "median_m": 3897,
+        "max_m": 4277,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 5499,
+        "median_m": 5438,
+        "max_m": 7014,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772034027": {
+      "ri_name": "문덕리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 115,
+      "primary_care": {
+        "mean_m": 675,
+        "median_m": 520,
+        "max_m": 1532,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 675,
+        "median_m": 520,
+        "max_m": 1532,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 4425,
+        "median_m": 4061,
+        "max_m": 5736,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 6320,
+        "median_m": 6131,
+        "max_m": 7302,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772034028": {
+      "ri_name": "달산리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 108,
+      "primary_care": {
+        "mean_m": 3279,
+        "median_m": 3585,
+        "max_m": 4318,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3287,
+        "median_m": 3593,
+        "max_m": 4318,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4437,
+        "median_m": 4262,
+        "max_m": 6311,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 4447,
+        "median_m": 4184,
+        "max_m": 6599,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772034029": {
+      "ri_name": "봉산리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 109,
+      "primary_care": {
+        "mean_m": 2612,
+        "median_m": 3033,
+        "max_m": 3461,
+        "far_share_pct": 87.2
+      },
+      "health": {
+        "mean_m": 2613,
+        "median_m": 3033,
+        "max_m": 3461,
+        "far_share_pct": 87.2
+      },
+      "clinic": {
+        "mean_m": 3838,
+        "median_m": 3866,
+        "max_m": 4221,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 3801,
+        "median_m": 3829,
+        "max_m": 4147,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035021": {
+      "ri_name": "읍내리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 241,
+      "primary_care": {
+        "mean_m": 218,
+        "median_m": 197,
+        "max_m": 1406,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 370,
+        "median_m": 368,
+        "max_m": 1572,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 220,
+        "median_m": 197,
+        "max_m": 1406,
+        "far_share_pct": 0.0
+      },
+      "pharmacy": {
+        "mean_m": 5252,
+        "median_m": 5248,
+        "max_m": 6201,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035022": {
+      "ri_name": "수북리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 148,
+      "primary_care": {
+        "mean_m": 1473,
+        "median_m": 1383,
+        "max_m": 2998,
+        "far_share_pct": 14.9
+      },
+      "health": {
+        "mean_m": 1479,
+        "median_m": 1383,
+        "max_m": 3053,
+        "far_share_pct": 14.9
+      },
+      "clinic": {
+        "mean_m": 1516,
+        "median_m": 1432,
+        "max_m": 2998,
+        "far_share_pct": 14.9
+      },
+      "pharmacy": {
+        "mean_m": 4169,
+        "median_m": 3825,
+        "max_m": 6523,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035023": {
+      "ri_name": "수서리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 76,
+      "primary_care": {
+        "mean_m": 1615,
+        "median_m": 1484,
+        "max_m": 2321,
+        "far_share_pct": 17.1
+      },
+      "health": {
+        "mean_m": 1616,
+        "median_m": 1484,
+        "max_m": 2321,
+        "far_share_pct": 17.1
+      },
+      "clinic": {
+        "mean_m": 1629,
+        "median_m": 1485,
+        "max_m": 2335,
+        "far_share_pct": 28.9
+      },
+      "pharmacy": {
+        "mean_m": 3495,
+        "median_m": 3738,
+        "max_m": 4285,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035024": {
+      "ri_name": "이지리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 117,
+      "primary_care": {
+        "mean_m": 1526,
+        "median_m": 1766,
+        "max_m": 2566,
+        "far_share_pct": 12.0
+      },
+      "health": {
+        "mean_m": 1566,
+        "median_m": 1787,
+        "max_m": 2566,
+        "far_share_pct": 17.1
+      },
+      "clinic": {
+        "mean_m": 1526,
+        "median_m": 1766,
+        "max_m": 2566,
+        "far_share_pct": 12.0
+      },
+      "pharmacy": {
+        "mean_m": 4359,
+        "median_m": 4029,
+        "max_m": 5548,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035025": {
+      "ri_name": "파전리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 77,
+      "primary_care": {
+        "mean_m": 1631,
+        "median_m": 1628,
+        "max_m": 1821,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1637,
+        "median_m": 1628,
+        "max_m": 1821,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 2070,
+        "median_m": 2091,
+        "max_m": 2649,
+        "far_share_pct": 54.5
+      },
+      "pharmacy": {
+        "mean_m": 7110,
+        "median_m": 7147,
+        "max_m": 7629,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035026": {
+      "ri_name": "신덕리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 82,
+      "primary_care": {
+        "mean_m": 2117,
+        "median_m": 1939,
+        "max_m": 3771,
+        "far_share_pct": 23.2
+      },
+      "health": {
+        "mean_m": 2117,
+        "median_m": 1939,
+        "max_m": 3771,
+        "far_share_pct": 23.2
+      },
+      "clinic": {
+        "mean_m": 3460,
+        "median_m": 3293,
+        "max_m": 5176,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 8238,
+        "median_m": 8083,
+        "max_m": 9652,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035027": {
+      "ri_name": "지호리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 105,
+      "primary_care": {
+        "mean_m": 2328,
+        "median_m": 2485,
+        "max_m": 2822,
+        "far_share_pct": 77.1
+      },
+      "health": {
+        "mean_m": 2328,
+        "median_m": 2485,
+        "max_m": 2822,
+        "far_share_pct": 77.1
+      },
+      "clinic": {
+        "mean_m": 5111,
+        "median_m": 5325,
+        "max_m": 5585,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10136,
+        "median_m": 10355,
+        "max_m": 10569,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035028": {
+      "ri_name": "연계리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 122,
+      "primary_care": {
+        "mean_m": 501,
+        "median_m": 525,
+        "max_m": 921,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 501,
+        "median_m": 525,
+        "max_m": 921,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 3516,
+        "median_m": 3593,
+        "max_m": 3989,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 8693,
+        "median_m": 8765,
+        "max_m": 9173,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035029": {
+      "ri_name": "매성리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 85,
+      "primary_care": {
+        "mean_m": 1666,
+        "median_m": 1799,
+        "max_m": 2126,
+        "far_share_pct": 1.2
+      },
+      "health": {
+        "mean_m": 1666,
+        "median_m": 1799,
+        "max_m": 2126,
+        "far_share_pct": 1.2
+      },
+      "clinic": {
+        "mean_m": 4439,
+        "median_m": 4521,
+        "max_m": 4698,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 9517,
+        "median_m": 9570,
+        "max_m": 9760,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035030": {
+      "ri_name": "원산리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 126,
+      "primary_care": {
+        "mean_m": 1586,
+        "median_m": 1676,
+        "max_m": 1798,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1650,
+        "median_m": 1703,
+        "max_m": 1895,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 2029,
+        "median_m": 1817,
+        "max_m": 2678,
+        "far_share_pct": 46.0
+      },
+      "pharmacy": {
+        "mean_m": 7077,
+        "median_m": 6902,
+        "max_m": 7681,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035031": {
+      "ri_name": "금양리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 90,
+      "primary_care": {
+        "mean_m": 2675,
+        "median_m": 2755,
+        "max_m": 3582,
+        "far_share_pct": 98.9
+      },
+      "health": {
+        "mean_m": 2675,
+        "median_m": 2755,
+        "max_m": 3582,
+        "far_share_pct": 98.9
+      },
+      "clinic": {
+        "mean_m": 4713,
+        "median_m": 4851,
+        "max_m": 5267,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 9508,
+        "median_m": 9644,
+        "max_m": 10056,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036021": {
+      "ri_name": "백학리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 85,
+      "primary_care": {
+        "mean_m": 2853,
+        "median_m": 3339,
+        "max_m": 4072,
+        "far_share_pct": 62.4
+      },
+      "health": {
+        "mean_m": 2853,
+        "median_m": 3339,
+        "max_m": 4072,
+        "far_share_pct": 62.4
+      },
+      "clinic": {
+        "mean_m": 11951,
+        "median_m": 12425,
+        "max_m": 13532,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 14139,
+        "median_m": 14488,
+        "max_m": 15204,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036022": {
+      "ri_name": "삼산리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 138,
+      "primary_care": {
+        "mean_m": 489,
+        "median_m": 459,
+        "max_m": 1440,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 489,
+        "median_m": 459,
+        "max_m": 1440,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 9242,
+        "median_m": 9132,
+        "max_m": 10527,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 12088,
+        "median_m": 11980,
+        "max_m": 13190,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036023": {
+      "ri_name": "봉림리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 92,
+      "primary_care": {
+        "mean_m": 1597,
+        "median_m": 1593,
+        "max_m": 2099,
+        "far_share_pct": 1.1
+      },
+      "health": {
+        "mean_m": 1597,
+        "median_m": 1593,
+        "max_m": 2099,
+        "far_share_pct": 1.1
+      },
+      "clinic": {
+        "mean_m": 9047,
+        "median_m": 9134,
+        "max_m": 9730,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 12467,
+        "median_m": 12447,
+        "max_m": 13045,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036024": {
+      "ri_name": "무암리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 81,
+      "primary_care": {
+        "mean_m": 1754,
+        "median_m": 1657,
+        "max_m": 2183,
+        "far_share_pct": 39.5
+      },
+      "health": {
+        "mean_m": 1754,
+        "median_m": 1657,
+        "max_m": 2183,
+        "far_share_pct": 39.5
+      },
+      "clinic": {
+        "mean_m": 7504,
+        "median_m": 7498,
+        "max_m": 8881,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 10652,
+        "median_m": 10490,
+        "max_m": 11786,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036025": {
+      "ri_name": "운산리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 81,
+      "primary_care": {
+        "mean_m": 1632,
+        "median_m": 1595,
+        "max_m": 1834,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1632,
+        "median_m": 1595,
+        "max_m": 1834,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 7321,
+        "median_m": 7304,
+        "max_m": 7920,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 9829,
+        "median_m": 9741,
+        "max_m": 10366,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036026": {
+      "ri_name": "화본리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 177,
+      "primary_care": {
+        "mean_m": 634,
+        "median_m": 362,
+        "max_m": 2570,
+        "far_share_pct": 1.7
+      },
+      "health": {
+        "mean_m": 634,
+        "median_m": 362,
+        "max_m": 2570,
+        "far_share_pct": 1.7
+      },
+      "clinic": {
+        "mean_m": 5846,
+        "median_m": 5829,
+        "max_m": 6382,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 8622,
+        "median_m": 8581,
+        "max_m": 9771,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036027": {
+      "ri_name": "화전리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 77,
+      "primary_care": {
+        "mean_m": 1879,
+        "median_m": 2024,
+        "max_m": 3064,
+        "far_share_pct": 51.9
+      },
+      "health": {
+        "mean_m": 1879,
+        "median_m": 2024,
+        "max_m": 3064,
+        "far_share_pct": 51.9
+      },
+      "clinic": {
+        "mean_m": 4208,
+        "median_m": 4205,
+        "max_m": 4808,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 7541,
+        "median_m": 7814,
+        "max_m": 8090,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037021": {
+      "ri_name": "화수리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 98,
+      "primary_care": {
+        "mean_m": 3655,
+        "median_m": 3465,
+        "max_m": 4180,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3655,
+        "median_m": 3465,
+        "max_m": 4180,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 7083,
+        "median_m": 6672,
+        "max_m": 8149,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 11752,
+        "median_m": 11468,
+        "max_m": 12592,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037022": {
+      "ri_name": "화북리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 143,
+      "primary_care": {
+        "mean_m": 1983,
+        "median_m": 2050,
+        "max_m": 3663,
+        "far_share_pct": 51.7
+      },
+      "health": {
+        "mean_m": 1983,
+        "median_m": 2050,
+        "max_m": 3663,
+        "far_share_pct": 51.7
+      },
+      "clinic": {
+        "mean_m": 8659,
+        "median_m": 8705,
+        "max_m": 10156,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 13564,
+        "median_m": 13725,
+        "max_m": 15126,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037023": {
+      "ri_name": "괴산리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 45,
+      "primary_care": {
+        "mean_m": 2396,
+        "median_m": 2376,
+        "max_m": 2664,
+        "far_share_pct": 95.6
+      },
+      "health": {
+        "mean_m": 2396,
+        "median_m": 2376,
+        "max_m": 2664,
+        "far_share_pct": 95.6
+      },
+      "clinic": {
+        "mean_m": 9821,
+        "median_m": 9713,
+        "max_m": 10962,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 16578,
+        "median_m": 16552,
+        "max_m": 16868,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037024": {
+      "ri_name": "학성리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 18,
+      "primary_care": {
+        "mean_m": 2263,
+        "median_m": 2976,
+        "max_m": 4236,
+        "far_share_pct": 61.1
+      },
+      "health": {
+        "mean_m": 2263,
+        "median_m": 2976,
+        "max_m": 4236,
+        "far_share_pct": 61.1
+      },
+      "clinic": {
+        "mean_m": 7883,
+        "median_m": 7275,
+        "max_m": 9169,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 12986,
+        "median_m": 12458,
+        "max_m": 14272,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037025": {
+      "ri_name": "장곡리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 10,
+      "primary_care": {
+        "mean_m": 3218,
+        "median_m": 3096,
+        "max_m": 3678,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3218,
+        "median_m": 3096,
+        "max_m": 3678,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 7937,
+        "median_m": 8171,
+        "max_m": 8342,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 16756,
+        "median_m": 16879,
+        "max_m": 16969,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037026": {
+      "ri_name": "인곡리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 31,
+      "primary_care": {
+        "mean_m": 3221,
+        "median_m": 2935,
+        "max_m": 3844,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3221,
+        "median_m": 2935,
+        "max_m": 3844,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5554,
+        "median_m": 5058,
+        "max_m": 6645,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 16167,
+        "median_m": 16469,
+        "max_m": 17158,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037027": {
+      "ri_name": "양지리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 78,
+      "primary_care": {
+        "mean_m": 2813,
+        "median_m": 2864,
+        "max_m": 3305,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 2813,
+        "median_m": 2864,
+        "max_m": 3305,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4607,
+        "median_m": 4620,
+        "max_m": 5196,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 14958,
+        "median_m": 14875,
+        "max_m": 15365,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037028": {
+      "ri_name": "낙전리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 50,
+      "primary_care": {
+        "mean_m": 4176,
+        "median_m": 3801,
+        "max_m": 5619,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4311,
+        "median_m": 4057,
+        "max_m": 5619,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4429,
+        "median_m": 4129,
+        "max_m": 5818,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 13996,
+        "median_m": 14155,
+        "max_m": 14920,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037029": {
+      "ri_name": "가암리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 92,
+      "primary_care": {
+        "mean_m": 1828,
+        "median_m": 1598,
+        "max_m": 3408,
+        "far_share_pct": 30.4
+      },
+      "health": {
+        "mean_m": 1982,
+        "median_m": 1598,
+        "max_m": 4405,
+        "far_share_pct": 30.4
+      },
+      "clinic": {
+        "mean_m": 2581,
+        "median_m": 2545,
+        "max_m": 3408,
+        "far_share_pct": 100.0
+      },
+      "pharmacy": {
+        "mean_m": 16006,
+        "median_m": 16013,
+        "max_m": 16357,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037030": {
+      "ri_name": "석산리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 93,
+      "primary_care": {
+        "mean_m": 378,
+        "median_m": 240,
+        "max_m": 1526,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 518,
+        "median_m": 304,
+        "max_m": 2147,
+        "far_share_pct": 5.4
+      },
+      "clinic": {
+        "mean_m": 2055,
+        "median_m": 2072,
+        "max_m": 3395,
+        "far_share_pct": 62.4
+      },
+      "pharmacy": {
+        "mean_m": 17186,
+        "median_m": 17327,
+        "max_m": 18292,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037031": {
+      "ri_name": "학암리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 77,
+      "primary_care": {
+        "mean_m": 2119,
+        "median_m": 2175,
+        "max_m": 3747,
+        "far_share_pct": 57.1
+      },
+      "health": {
+        "mean_m": 2119,
+        "median_m": 2175,
+        "max_m": 3747,
+        "far_share_pct": 57.1
+      },
+      "clinic": {
+        "mean_m": 2989,
+        "median_m": 3227,
+        "max_m": 4946,
+        "far_share_pct": 94.8
+      },
+      "pharmacy": {
+        "mean_m": 19318,
+        "median_m": 19268,
+        "max_m": 20572,
+        "far_share_pct": 100.0
+      }
+    }
+  }
+}

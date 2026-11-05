@@ -96,6 +96,7 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 (수서리: 군위읍·의흥면, 달산리: 소보면·우보면) — 반드시 `ri_code` 로 잇는다. 옛 경북 코드(47720)는
 편입 때 뒤 5자리가 76/100 바뀌어 앞자리만 바꾸면 틀린다. 시설의 리 배정 방법은 `prepare_ri.py` 한 곳에서
 정한다(좌표 → 리 경계 포함 판정, 상가 → 원자료 법정동코드, 폐교 → 주소의 읍면·리 이름).
+원자료 좌표가 틀린 것으로 확인된 시설은 `HIRA_COORD_FIXES` 에 근거와 함께만 보정한다(지금 대율보건진료소 1건).
 
 세 체계는 **일치하지 않는다.** `prepare_boundary()` 가 지역명으로 한 번만 맞춰서
 경계에 `region_code` 와 `source_adm_cd` 를 심는다. SGIS 통계는 그 `source_adm_cd`
@@ -122,6 +123,7 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 | 값 | 위치 | 의미 |
 |---|---|---|
 | `SENIOR_OLD_BEFORE_YEAR = 2000` | prepare.py | 이 해 이전 건립 경로당을 "노후"로 센다 |
+| `ACCESS_FAR_M = 2000` | prepare_ri.py | 집에서 가장 가까운 1차 의료·약국이 이보다 멀면 "먼 집"으로 센다 |
 | `SGIS_POP_TOLERANCE = 0.15` | prepare.py | SGIS·주민등록 인구 차이가 이보다 크면 코드 매핑이 뒤바뀐 것으로 보고 멈춤 |
 | `ANALYSIS_PERIOD = "2026-09"` | prepare.py (export_excel·figures 가 가져다 씀) | 분석 기준 시점 |
 

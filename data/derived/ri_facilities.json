@@ -63,6 +63,9 @@
       ]
     }
   },
+  "coord_fixes": [
+    "군위군부계면대율보건진료소"
+  ],
   "by_ri": {
     "2772025021": {
       "ri_name": "동부리",
@@ -760,7 +763,7 @@
       "region_name": "부계면",
       "counts": {
         "senior_center": 2,
-        "health": 2,
+        "health": 1,
         "clinic": 0,
         "pharmacy": 0,
         "school": 1,
@@ -805,7 +808,7 @@
       "region_name": "부계면",
       "counts": {
         "senior_center": 2,
-        "health": 0,
+        "health": 1,
         "clinic": 0,
         "pharmacy": 0,
         "school": 0,
@@ -11313,8 +11316,8 @@
     },
     {
       "type": "health",
-      "category": "보건진료소",
-      "name": "군위군부계면대율보건진료소",
+      "category": "보건지소",
+      "name": "군위군부계면보건지소",
       "lon": 128.664424,
       "lat": 36.1004998,
       "source_id": "HIRA_HOSPITAL_PHARMACY",
@@ -11324,12 +11327,13 @@
     },
     {
       "type": "health",
-      "category": "보건지소",
-      "name": "군위군부계면보건지소",
-      "lon": 128.664424,
-      "lat": 36.1004998,
+      "category": "보건진료소",
+      "name": "군위군부계면대율보건진료소",
+      "lon": 128.655518,
+      "lat": 36.0602357,
       "source_id": "HIRA_HOSPITAL_PHARMACY",
-      "ri_code": "2772033021",
+      "coord_fix": "HIRA 좌표 (128.664424, 36.1004998) 를 GIS건물통합정보 대구광역시 군위군 부계면 대율리 673-2 건물 중심점으로 보정",
+      "ri_code": "2772033024",
       "ri_method": "point_in_polygon",
       "region_code": "2772033000"
     },

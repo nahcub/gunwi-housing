@@ -96,3 +96,39 @@ def test_point_outside_all_ri_stops(ri):
     _, gj, _ = ri
     loc = prepare_ri.RiLocator(gj)
     assert loc.locate(126.9780, 37.5665) is None      # 서울시청
+
+
+# ------------------------------------------------------------- 집별 접근성
+
+@pytest.fixture(scope="module")
+def access(ri):
+    _, gj, fac = ri
+    return prepare_ri.prepare_access(prepare.RAW, prepare.read_meta, gj, fac)
+
+
+def test_access_counts_every_residential_building(access):
+    # GIS건물통합정보 2026-09-09 군위: 단독주택 10,189 + 공동주택 75
+    assert access["totals"]["houses"] == 10264
+    assert sum(v["houses"] for v in access["by_ri"].values()) == 10264
+    assert sum(v["houses"] for v in access["by_region"].values()) == 10264
+    assert all(v["houses"] > 0 for v in access["by_ri"].values())     # 92개 리 모두 집이 있다
+    assert access["checks"]["건물 법정동코드 vs 중심점 좌표"]["mismatch"] == 11
+
+
+def test_access_summary_is_consistent(access):
+    for v in [access["gun"], *access["by_region"].values(), *access["by_ri"].values()]:
+        for g in prepare_ri.ACCESS_GROUPS:
+            s = v[g]
+            assert 0 <= s["median_m"] <= s["max_m"] and 0 <= s["mean_m"] <= s["max_m"]
+            assert 0 <= s["far_share_pct"] <= 100
+            # 1차 의료는 보건기관과 의원을 합친 묶음이라 둘 중 가까운 쪽보다 멀 수 없다
+        assert v["primary_care"]["max_m"] <= max(v["health"]["max_m"], v["clinic"]["max_m"])
+
+
+def test_daeyul_clinic_coordinate_fixed(ri):
+    """HIRA 가 대율보건진료소를 부계면보건지소(창평리) 좌표로 넣은 오류를 바로잡았는지."""
+    _, _, fac = ri
+    assert fac["coord_fixes"] == ["군위군부계면대율보건진료소"]
+    p = next(p for p in fac["points"] if p["name"] == "군위군부계면대율보건진료소")
+    assert p["ri_code"] == "2772033024"          # 부계면 대율리
+    assert "coord_fix" in p

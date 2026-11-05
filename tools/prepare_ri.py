@@ -28,6 +28,28 @@ import shapely
 from shapely import STRtree
 from shapely.geometry import Point, shape
 
+BUILDING_FOLDER = "vworld-gis-building-gunwi-2026-09-09"
+RESIDENTIAL_USES = ("단독주택", "공동주택")   # 건축물용도명. 용도 빈칸(대장 미연계) 건물은 집인지 알 수 없어 뺀다
+# 집에서 가장 가까운 시설까지 직선거리를 잴 묶음. 기준이 정해지지 않은 버스·식료품점은 아직 없다
+ACCESS_GROUPS = {
+    "primary_care": ("health", "clinic"),     # 1차 의료: 보건소·보건지소·보건진료소 + 의원·치과·한의원
+    "health": ("health",),
+    "clinic": ("clinic",),
+    "pharmacy": ("pharmacy",),
+}
+ACCESS_LABELS = {"primary_care": "1차 의료(보건기관+의원)", "health": "보건소·보건지소·보건진료소",
+                 "clinic": "의원·치과·한의원", "pharmacy": "약국"}
+# '먼 집' 기준 거리. 공식 기준이 아니라 프로젝트 임시값이다 - 확정되면 여기만 바꾼다
+ACCESS_FAR_M = 2000
+
+# HIRA 좌표 보정. 원자료가 틀린 것으로 확인된 시설만, 근거와 함께 적는다.
+#  - 대율보건진료소: HIRA 2026-09 가 부계면보건지소(창평리)와 똑같은 주소·좌표로 넣었다. 보건복지부
+#    지역보건의료기관 목록의 주소는 '부계면 한티로 2146-1'(대율리)이다(2026-11-05 확인). GIS건물통합정보에
+#    같은 이름 건물이 대율리에 2동(673-2, 756, 약 120 m 간격) 있어 연면적이 큰 쪽 중심점을 쓴다.
+HIRA_COORD_FIXES = {
+    "군위군부계면대율보건진료소": {"building_name": "대율보건진료소", "ri_code": "2772033024"},
+}
+
 RI_FOLDER = "vworld-ri-boundary-2026-10-09"
 BJD_FOLDER = "bjd-code-2026-09-29"
 SIGUNGU = "27720"
@@ -325,7 +347,9 @@ def assign_facilities(raw: Path, read_meta, ri_gj: dict, seniors: dict) -> dict:
         "lon": c["lon"], "lat": c["lat"], "source_id": "DATAGOKR_GUNWI_SENIOR",
         "region_hint": c["region_code"],
     } for c in seniors["centers"]]
-    pts += _hira(raw, read_meta) + _schools(raw, read_meta) + _childcare(raw, read_meta)
+    hira = _hira(raw, read_meta)
+    fixes = _apply_hira_fixes(raw, read_meta, hira)
+    pts += hira + _schools(raw, read_meta) + _childcare(raw, read_meta)
     pts += _kindergartens(raw, read_meta) + _stores(raw, read_meta)
     bus_all = _bus(raw, read_meta)
     closed = _closed_schools(raw, read_meta, bjd)
@@ -391,6 +415,147 @@ def assign_facilities(raw: Path, read_meta, ri_gj: dict, seniors: dict) -> dict:
         "counted_types": COUNTED_TYPES,
         "totals": totals,
         "checks": checks,
+        "coord_fixes": fixes,
         "by_ri": by_ri,
         "points": out,
+    }
+
+
+# ------------------------------------------------------------- 집별 접근성
+
+_BUILDINGS_CACHE: dict = {}
+
+
+def _buildings(raw: Path, read_meta) -> list[tuple[dict, object]]:
+    """GIS건물통합정보 군위 54,977건 (속성, 도형 EPSG:5186). 한 번만 읽는다."""
+    key = str(raw)
+    if key in _BUILDINGS_CACHE:
+        return _BUILDINGS_CACHE[key]
+    meta = read_meta(BUILDING_FOLDER)
+    zpath = _meta_file(raw, BUILDING_FOLDER, meta, ".zip")
+    with zipfile.ZipFile(zpath) as z:
+        parts = {n.rsplit(".", 1)[1]: io.BytesIO(z.read(n)) for n in z.namelist()}
+    prj = parts["prj"].read().decode("ascii")
+    assert 'AUTHORITY["EPSG","5186"]' in prj, f"{BUILDING_FOLDER}: 좌표계가 EPSG:5186 이 아님"
+    reader = shapefile.Reader(shp=parts["shp"], shx=parts["shx"], dbf=parts["dbf"],
+                              encoding=meta["encoding"])
+    assert len(reader) == 54977, f"{BUILDING_FOLDER}: 건물 {len(reader)}건 (등록 시 54,977)"
+    out = []
+    for sr in reader.iterShapeRecords():
+        g = shape(sr.shape.__geo_interface__)
+        out.append((sr.record.as_dict(), g))
+    _BUILDINGS_CACHE[key] = out
+    return out
+
+
+def read_residential(raw: Path, read_meta) -> list[dict]:
+    """주거용 건물(단독·공동주택)의 중심점(EPSG:5186)과 법정리 코드."""
+    houses = []
+    for rec, g in _buildings(raw, read_meta):
+        if rec["A9"] not in RESIDENTIAL_USES:
+            continue
+        assert g.is_valid and not g.is_empty, f"{rec['A1']}: 도형 오류"
+        c = g.centroid
+        houses.append({"ri_code": rec["A3"], "use": rec["A9"],
+                       "x": round(c.x, 1), "y": round(c.y, 1),
+                       "approved": str(rec["A13"]).strip() or None})
+    return houses
+
+
+def _apply_hira_fixes(raw: Path, read_meta, pts: list[dict]) -> list[str]:
+    """HIRA_COORD_FIXES 의 시설 좌표를 GIS건물통합정보의 같은 이름 건물 중심점으로 바꾼다."""
+    to_wgs = Transformer.from_crs(5186, 4326, always_xy=True).transform
+    applied = []
+    for name, fix in HIRA_COORD_FIXES.items():
+        targets = [p for p in pts if p["source_id"] == "HIRA_HOSPITAL_PHARMACY" and p["name"] == name]
+        assert len(targets) == 1, f"보정 대상 {name} 이 {len(targets)}건 - 원자료가 바뀌었으면 보정을 다시 확인"
+        cands = [(rec, g) for rec, g in _buildings(raw, read_meta)
+                 if str(rec["A24"]).strip() == fix["building_name"] and rec["A3"] == fix["ri_code"]]
+        assert cands, f"{name}: 건물통합정보에 {fix['building_name']} 건물이 없다"
+        rec, g = max(cands, key=lambda c: (float(c[0]["A14"] or 0), c[0]["A1"]))
+        c = g.centroid
+        lon, lat = to_wgs(c.x, c.y)
+        p = targets[0]
+        p["coord_fix"] = (f"HIRA 좌표 ({p['lon']}, {p['lat']}) 를 GIS건물통합정보 "
+                          f"{rec['A4']} {rec['A5']} 건물 중심점으로 보정")
+        p["lon"], p["lat"] = lon, lat
+        applied.append(name)
+    return applied
+
+
+def _summary(dists: list[float]) -> dict:
+    if not dists:
+        return {"mean_m": None, "median_m": None, "max_m": None, "far_share_pct": None}
+    s = sorted(dists)
+    n = len(s)
+    median = s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2
+    return {"mean_m": round(sum(s) / n), "median_m": round(median), "max_m": round(s[-1]),
+            "far_share_pct": round(sum(d > ACCESS_FAR_M for d in s) / n * 100, 1)}
+
+
+def prepare_access(raw: Path, read_meta, ri_gj: dict, ri_fac: dict) -> dict:
+    """주거용 건물마다 가장 가까운 시설까지 직선거리(m)를 재고 리·읍면별로 요약한다.
+
+    리 배정은 건물의 법정동코드(지번 기준)를 쓴다. 좌표 판정과 다른 건수는 checks 에 남긴다.
+    도로망은 쓰지 않는다 - 실제 이동거리보다 짧게 나온다.
+    """
+    houses = read_residential(raw, read_meta)
+    ri_props = {f["properties"]["ri_code"]: f["properties"] for f in ri_gj["features"]}
+    assert {h["ri_code"] for h in houses} <= set(ri_props), "현행 법정리가 아닌 건물 코드"
+
+    # 좌표 판정 대조(건물 중심점 -> WGS84 -> 리 경계)
+    to_wgs = Transformer.from_crs(5186, 4326, always_xy=True).transform
+    loc = RiLocator(ri_gj)
+    mismatch = 0
+    for h in houses:
+        lon, lat = to_wgs(h["x"], h["y"])
+        if loc.locate(lon, lat) != h["ri_code"]:
+            mismatch += 1
+    assert mismatch <= len(houses) * 0.02, f"건물 법정동코드 vs 좌표 불일치 {mismatch}/{len(houses)}"
+
+    to_tm = Transformer.from_crs(4326, 5186, always_xy=True).transform
+    trees = {}
+    for g, types in ACCESS_GROUPS.items():
+        pts = [Point(*to_tm(p["lon"], p["lat"])) for p in ri_fac["points"]
+               if p["type"] in types and p["lon"] is not None]
+        assert pts, f"{g}: 시설이 없다"
+        trees[g] = (STRtree(pts), len(pts))
+    house_pts = [Point(h["x"], h["y"]) for h in houses]
+    for g, (tree, _) in trees.items():
+        _, dist = tree.query_nearest(house_pts, return_distance=True, all_matches=False)
+        assert len(dist) == len(houses)
+        for h, d in zip(houses, dist):
+            h[g] = float(d)
+
+    def summarize(group: list[dict]) -> dict:
+        return {"houses": len(group),
+                **{g: _summary([h[g] for h in group]) for g in ACCESS_GROUPS}}
+
+    by_ri = {}
+    for code, prop in sorted(ri_props.items()):
+        mine = [h for h in houses if h["ri_code"] == code]
+        by_ri[code] = {"ri_name": prop["ri_name"], "region_code": prop["region_code"],
+                       "region_name": prop["region_name"], **summarize(mine)}
+    by_region = {}
+    for rc in sorted({p["region_code"] for p in ri_props.values()}):
+        mine = [h for h in houses if h["ri_code"][:8] + "00" == rc]
+        by_region[rc] = summarize(mine)
+    assert sum(v["houses"] for v in by_ri.values()) == len(houses)
+
+    return {
+        "_note": ("주거용 건물(GIS건물통합정보 용도 단독·공동주택) 중심점에서 가장 가까운 시설까지 직선거리(m). "
+                  "도로망 미사용이라 실제 이동거리보다 짧다. 용도 빈칸 건물(대장 미연계)은 집인지 알 수 없어 "
+                  "빠졌다. 사람 수가 아니라 집(건물) 수 기준이고 빈집도 포함된다. far_share_pct 의 기준 "
+                  f"{ACCESS_FAR_M} m 는 프로젝트 임시값."),
+        "reference_dates": {"buildings": "2026-09-09", "hira": "2026-09"},
+        "far_m": ACCESS_FAR_M,
+        "groups": {g: {"label": ACCESS_LABELS[g], "types": list(t), "facilities": trees[g][1]}
+                   for g, t in ACCESS_GROUPS.items()},
+        "residential_uses": list(RESIDENTIAL_USES),
+        "totals": {"houses": len(houses),
+                   "houses_without_approval_date": sum(1 for h in houses if not h["approved"])},
+        "checks": {"건물 법정동코드 vs 중심점 좌표": {"n": len(houses), "mismatch": mismatch}},
+        "gun": summarize(houses),
+        "by_region": by_region,
+        "by_ri": by_ri,
     }

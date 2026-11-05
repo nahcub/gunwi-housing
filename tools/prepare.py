@@ -335,6 +335,7 @@ def main() -> None:
     import prepare_ri
     ri_boundary = prepare_ri.prepare_ri_boundary(RAW, read_meta, name_by_code)
     ri_facilities = prepare_ri.assign_facilities(RAW, read_meta, ri_boundary, seniors)
+    ri_access = prepare_ri.prepare_access(RAW, read_meta, ri_boundary, ri_facilities)
 
     def write(name: str, obj) -> None:
         path = DERIVED / name
@@ -356,6 +357,7 @@ def main() -> None:
     write("sgis_stats.json", sgis)
     write("ri_boundary.geojson", ri_boundary)
     write("ri_facilities.json", ri_facilities)
+    write("ri_access.json", ri_access)
 
     print(f"\n  인구 {len(population)}행")
     old = sum(v["old_count"] for v in seniors["by_region"].values())
@@ -368,6 +370,9 @@ def main() -> None:
                       for t, n in ri_facilities["totals"].items()))
     for k, v in ri_facilities["checks"].items():
         print(f"    대조 {k}: {v['n']}건 중 불일치 {v['mismatch']}")
+    g = ri_access["gun"]
+    print(f"  주거 건물 {g['houses']}채 → 1차 의료 평균 {g['primary_care']['mean_m']} m, "
+          f"{ri_access['far_m']} m 초과 {g['primary_care']['far_share_pct']}% (임시 기준)")
 
 if __name__ == "__main__":
     main()
