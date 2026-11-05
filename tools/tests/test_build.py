@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import build  # noqa: E402
+import prepare  # noqa: E402
 
 REGISTRY = json.loads((ROOT / "data" / "sources.json").read_text(encoding="utf-8"))
 
@@ -67,6 +68,24 @@ def test_elderly_ratio_is_consistent():
             assert 0 < r["elderly_ratio"] < 100
 
 
+def test_single_analysis_period_with_change_from_baseline():
+    """한 시점 진단: 화면 행은 분석 시점 하나, 인구 변화는 기준 시점 대비로 붙는다."""
+    out = build.build_regions()
+    assert list(out["regions"]) == [prepare.ANALYSIS_PERIOD]
+    assert out["meta"]["baseline_period"] == prepare.BASELINE_PERIOD
+    months = out["meta"]["change_months"]
+    for r in out["regions"][prepare.ANALYSIS_PERIOD]:
+        p0, p1 = r["population_baseline"], r["population"]
+        assert r["pop_change_rate"] == round((p1 - p0) / p0 * 100, 1)
+        annual = ((p1 / p0) ** (12 / months) - 1) * 100
+        assert abs(r["pop_change_rate_annual"] - annual) < 0.006
+        # 변화 방향은 두 지표가 같아야 한다
+        assert (r["pop_change_rate"] >= 0) == (r["pop_change_rate_annual"] >= 0) or p1 == p0
+    # 2023-12 군위읍 8,069 → 2026-09 7,844 (raw 값 고정)
+    gunwi = next(r for r in out["regions"][prepare.ANALYSIS_PERIOD] if r["region_code"] == "2772025000")
+    assert (gunwi["population_baseline"], gunwi["population"]) == (8069, 7844)
+
+
 def test_missing_indicators_have_no_values():
     """원자료가 없는 지표에 값이 채워져 있으면 안 된다."""
     out = build.build_regions()
@@ -98,7 +117,7 @@ def test_every_available_indicator_has_values():
 
 def test_facility_points_join_to_regions():
     fac = build.build_facilities()
-    codes = {r["region_code"] for r in build.build_regions()["regions"]["2025-12"]}
+    codes = {r["region_code"] for r in build.build_regions()["regions"][prepare.ANALYSIS_PERIOD]}
     assert len(fac["senior_centers"]["points"]) == 215
     for group in fac.values():
         for p in group["points"]:

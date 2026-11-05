@@ -98,7 +98,7 @@ def _patch_age(tmp_path, monkeypatch, corrupt):
         dst.mkdir(parents=True)
         (dst / "_meta.json").write_bytes((src / "_meta.json").read_bytes())
         rows = json.loads((src / "age.json").read_text(encoding="utf-8"))
-        if period == "2025-12":
+        if period == prepare.ANALYSIS_PERIOD:
             rows = corrupt(rows)
         (dst / "age.json").write_text(json.dumps(rows, ensure_ascii=False),
                                       encoding="utf-8")

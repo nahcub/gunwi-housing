@@ -14,6 +14,8 @@ import shutil
 from datetime import date
 from pathlib import Path
 
+from prepare import ANALYSIS_PERIOD, BASELINE_PERIOD
+
 ROOT = Path(__file__).resolve().parents[1]
 DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
@@ -33,7 +35,17 @@ INDICATORS = [
      "status": "available", "higher_is_worse": False},
     {"id": "elderly_ratio", "label": "고령화율", "unit": "%",
      "status": "available", "higher_is_worse": True},
-    # 아래 시설·SGIS 지표는 시점 전환과 무관한 값이다. 기준일은 reference 에 적는다
+    # 인구 변화: 시계열은 raw 에 두고, 분석 기준 시점(2026-09) 값으로는 기준 시점 대비 변화만 낸다
+    {"id": "pop_change_rate", "label": "인구 변화율", "unit": "%",
+     "status": "available", "higher_is_worse": False,
+     "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
+    {"id": "pop_change_rate_annual", "label": "연평균 인구 변화율", "unit": "%/년",
+     "status": "available", "higher_is_worse": False,
+     "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}, 연율 환산"},
+    {"id": "elderly_ratio_change", "label": "고령화율 변화", "unit": "%p",
+     "status": "available", "higher_is_worse": True,
+     "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
+    # 아래 시설·SGIS 지표는 조사 주기가 정해진 자료라 기준일이 다르다. reference 에 적는다
     {"id": "aging_index", "label": "노령화지수", "unit": "",
      "status": "available", "higher_is_worse": True, "reference": "SGIS 2024"},
     {"id": "density_per_km2", "label": "인구밀도", "unit": "명/㎢",
@@ -42,7 +54,7 @@ INDICATORS = [
      "status": "available", "higher_is_worse": False, "reference": "2025-12-19"},
     {"id": "senior_center_per_1k_elderly", "label": "고령인구 1천명당 경로당", "unit": "개소",
      "status": "available", "higher_is_worse": False,
-     "reference": "경로당 2025-12-19 / 고령인구는 선택 시점"},
+     "reference": f"경로당 2025-12-19 / 고령인구 {ANALYSIS_PERIOD}"},
     {"id": "senior_center_old_ratio", "label": "노후 경로당 비율", "unit": "%",
      "status": "available", "higher_is_worse": True,
      "reference": "2025-12-19 · 2000년 이전 건립(프로젝트 임시 기준)"},
@@ -56,28 +68,46 @@ def load(name: str):
     return json.loads((DERIVED / name).read_text(encoding="utf-8"))
 
 
-def build_regions() -> dict:
-    """읍면 8개 x 2시점. 군 합계 행은 내보내지 않는다(중복 합산 방지).
+def months_between(start: str, end: str) -> int:
+    """'YYYY-MM' 두 시점 사이 개월 수."""
+    (ys, ms), (ye, me) = (map(int, p.split("-")) for p in (start, end))
+    return (ye - ys) * 12 + (me - ms)
 
-    시설·SGIS 값은 시점과 무관하므로 두 시점 행에 같은 값을 붙인다.
-    고령인구 1천명당 경로당만 분모가 시점마다 달라진다.
+
+def build_regions() -> dict:
+    """분석 기준 시점(ANALYSIS_PERIOD) 읍면 8개. 군 합계 행은 내보내지 않는다(중복 합산 방지).
+
+    한 시점 진단이다(2026-11-05 결정). 기준 시점(BASELINE_PERIOD) 인구는 화면 행으로
+    내보내지 않고 변화율 계산에만 쓴다. 산식은 docs/methodology.md §1.
     """
     pop = load("population.json")
     sgis = load("sgis_stats.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
-    by_period: dict[str, list] = {}
+    eup = [r for r in pop["records"] if r["level"] == "eupmyeon"]
+    base = {r["region_code"]: r for r in eup if r["period"] == BASELINE_PERIOD}
+    cur = [r for r in eup if r["period"] == ANALYSIS_PERIOD]
+    assert len(base) == 8 and len(cur) == 8, "기준·분석 시점 읍면이 각 8개가 아님"
+    months = months_between(BASELINE_PERIOD, ANALYSIS_PERIOD)
+    assert months > 0
+    rows: list[dict] = []
 
-    for rec in pop["records"]:
-        if rec["level"] != "eupmyeon":
-            continue
+    for rec in cur:
         code = rec["region_code"]
-        ratio = round(rec["elderly"] / rec["population"] * 100, 1)
-        by_period.setdefault(rec["period"], []).append({
+        b = base[code]
+        ratio_now = rec["elderly"] / rec["population"] * 100
+        ratio_base = b["elderly"] / b["population"] * 100
+        rows.append({
             "region_code": code,
             "name": rec["region_name"],
             "population": rec["population"],
             "elderly": rec["elderly"],
-            "elderly_ratio": ratio,
+            "elderly_ratio": round(ratio_now, 1),
+            "population_baseline": b["population"],
+            "elderly_baseline": b["elderly"],
+            "pop_change_rate": round((rec["population"] - b["population"]) / b["population"] * 100, 1),
+            "pop_change_rate_annual": round(
+                ((rec["population"] / b["population"]) ** (12 / months) - 1) * 100, 2),
+            "elderly_ratio_change": round(ratio_now - ratio_base, 1),
             "aging_index": sgis[code]["aging_index"],
             "density_per_km2": sgis[code]["density_per_km2"],
             "senior_center_count": seniors[code]["count"],
@@ -88,22 +118,21 @@ def build_regions() -> dict:
                 seniors[code]["count"] / rec["elderly"] * 1000, 1),
         })
 
-    for period, rows in by_period.items():
-        assert len(rows) == 8, f"{period}: 읍면이 8개가 아님 ({len(rows)})"
-        rows.sort(key=lambda r: r["region_code"])
-
-    periods = pop["periods"]
+    rows.sort(key=lambda r: r["region_code"])
+    ref = {r["period"]: r["reference_date"] for r in pop["records"]}
     return {
         "meta": {
             "generated_at": date.today().isoformat(),
-            "periods": periods,
-            "default_period": periods[-1],
-            "reference_dates": {
-                r["period"]: r["reference_date"] for r in pop["records"]
-            },
+            "analysis_period": ANALYSIS_PERIOD,
+            "baseline_period": BASELINE_PERIOD,
+            "change_months": months,
+            "default_period": ANALYSIS_PERIOD,
+            "reference_dates": {ANALYSIS_PERIOD: ref[ANALYSIS_PERIOD],
+                                BASELINE_PERIOD: ref[BASELINE_PERIOD]},
         },
         "indicators": INDICATORS,
-        "regions": by_period,
+        # 키를 시점으로 두는 것은 figures·테스트와의 호환 때문이다. 시점은 하나뿐이다
+        "regions": {ANALYSIS_PERIOD: rows},
     }
 
 

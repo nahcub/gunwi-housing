@@ -16,9 +16,12 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 DERIVED = ROOT / "data" / "derived"
 
-# 주민등록 인구 파일이 제공하는 기준시점별 폴더
-# 2023-12·2024-12 는 분석에 쓰지 않아 raw 에서 삭제했다(커밋 38c9139 에서 복구 가능)
-MOIS_PERIODS = ["2025-12", "2026-08"]
+# 주민등록 인구 기준시점. raw 에는 2023-07~2026-09 매월 시점이 있지만 population.json 은 두 시점만 쓴다.
+# 2026-11-05 결정: 분석 기준 시점은 2026-09 하나로 맞춘다(생활시설 자료가 2026-09 최신본).
+# 2023-12 는 인구감소 비교의 출발 시점(대구 편입 후 첫 연말)이다.
+ANALYSIS_PERIOD = "2026-09"
+BASELINE_PERIOD = "2023-12"
+MOIS_PERIODS = [BASELINE_PERIOD, ANALYSIS_PERIOD]
 
 GUNWI_CODE = "2772000000"        # 군 합계 행. 읍면과 절대 함께 더하지 않는다
 ELDERLY_FROM_BUCKET = 13         # 5세 구간 인덱스 13 == 65세
@@ -296,9 +299,9 @@ def prepare_sgis_stats(boundary: dict, population: list) -> dict:
                 assert sum(parts) == gun[key], (
                     f"{name}: 읍면 합 {sum(parts)} != 군 합계 {gun[key]}")
 
-    # 매핑 검산: 분석 기준 시점(2025-12) 주민등록 인구와 크게 다르면 코드가 뒤바뀐 것
+    # 매핑 검산: 분석 기준 시점 주민등록 인구와 크게 다르면 코드가 뒤바뀐 것
     mois = {r["region_code"]: r["population"] for r in population
-            if r["period"] == "2025-12"}
+            if r["period"] == ANALYSIS_PERIOD}
     for code, v in by_region.items():
         gap = abs(v["population"] - mois[code]) / mois[code]
         assert gap <= SGIS_POP_TOLERANCE, (

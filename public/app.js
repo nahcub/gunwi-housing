@@ -78,16 +78,13 @@ function renderSubtitle() {
 
 /* ---------------------------------------------------------------- 사이드 */
 
-function renderPeriods() {
-  const box = $('period-tabs');
-  box.innerHTML = '';
-  store.regions.meta.periods.forEach((p) => {
-    const b = document.createElement('button');
-    b.textContent = p;
-    b.setAttribute('aria-pressed', String(p === state.period));
-    b.onclick = () => { state.period = p; redraw(); };
-    box.appendChild(b);
-  });
+// 한 시점 진단이다(분석 기준 시점 하나). 인구 변화 지표만 기준 시점 대비로 계산돼 있다
+function renderPeriodNote() {
+  const m = store.regions.meta;
+  $('period-note').textContent =
+    `분석 기준 ${m.reference_dates[m.analysis_period]} (주민등록 인구). ` +
+    `인구 변화 지표는 ${m.reference_dates[m.baseline_period]} 대비 ${m.change_months}개월 변화. ` +
+    '시설·통계 지표는 지표별 기준일을 따른다.';
 }
 
 function renderIndicators() {
@@ -153,7 +150,9 @@ function renderDetail() {
     '<dl>' +
     `<dt>총인구</dt><dd>${r.population.toLocaleString('ko-KR')} 명</dd>` +
     `<dt>65세 이상</dt><dd>${r.elderly.toLocaleString('ko-KR')} 명</dd>` +
-    `<dt>고령화율</dt><dd>${r.elderly_ratio} %</dd>` +
+    `<dt>고령화율</dt><dd>${r.elderly_ratio} % (${r.elderly_ratio_change >= 0 ? '+' : ''}${r.elderly_ratio_change}%p)</dd>` +
+    `<dt>인구 변화</dt><dd>${r.population_baseline.toLocaleString('ko-KR')} → ` +
+    `${r.population.toLocaleString('ko-KR')} 명 (${r.pop_change_rate}%, 연 ${r.pop_change_rate_annual}%)</dd>` +
     `<dt>노령화지수</dt><dd>${r.aging_index}</dd>` +
     `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (노후 ${r.senior_center_old_count}, ${r.senior_center_old_ratio}%)</dd>` +
     `<dt>고령 1천명당 경로당</dt><dd>${r.senior_center_per_1k_elderly} 개소</dd>` +
@@ -171,7 +170,7 @@ function renderLegend() {
     const round = (x) => (ind.unit === '명' ? Math.round(x).toLocaleString('ko-KR')
                                             : x.toFixed(1));
     return `<span><span class="swatch" style="background:${c}"></span>` +
-           `${round(lo)}–${round(hi)}</span>`;
+           `${round(lo)} ~ ${round(hi)}</span>`;  // 음수 구간에서 '–' 가 부호와 헷갈린다
   });
   $('legend').innerHTML =
     parts.join('') +
@@ -288,7 +287,6 @@ function select(code, fromList) {
 
 function redraw() {
   renderSubtitle();
-  renderPeriods();
   renderIndicators();
   renderLegend();
   renderRanking();
@@ -320,6 +318,7 @@ async function main() {
   state.indicator = regions.indicators.find((i) => i.status === 'available').id;
 
   renderBanner();
+  renderPeriodNote();
   initMap();
   renderSourceFilters();
   renderSources();

@@ -143,6 +143,6 @@ python tools/figures.py              # 또는 npm run figures
 
 - 출력: `outputs/figures/그림1~2_*.png` (+ 그림2 근거 CSV)
 - 값은 `build.py` `build_regions()` 를 그대로 쓴다 — 웹과 같은 숫자
-- 기준 시점은 `export_excel.py` 의 `ANALYSIS_PERIOD`(2025-12)
+- 기준 시점은 `prepare.py` 의 `ANALYSIS_PERIOD`(2026-09)
 - 한글 글꼴(맑은 고딕·AppleGothic·나눔고딕·Noto CJK) 중 하나가 있어야 한글이 안 깨진다
 - CI 는 그림을 만들지 않는다. 그림을 바꿨으면 직접 돌려서 커밋한다

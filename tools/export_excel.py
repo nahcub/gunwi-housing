@@ -18,9 +18,10 @@ ROOT = Path(__file__).resolve().parents[1]
 DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
 OUT = ROOT / "outputs"
-BASENAME = "군위군_주거환경취약지역_기초지표_2025"
+BASENAME = "군위군_주거환경취약지역_기초지표_2026-09"
 
-ANALYSIS_PERIOD = "2025-12"      # 인구 분모 기준 시점. 시설 자료 기준일과 가장 가깝다
+from prepare import ANALYSIS_PERIOD, BASELINE_PERIOD  # noqa: E402  기준 시점은 prepare.py 한 곳에서 정한다
+import build  # noqa: E402  인구 변화율 산식은 build.build_regions() 하나만 쓴다(웹과 같은 숫자)
 SIGUNGU = "군위군"
 
 # (컬럼명, 자료형, 단위, 설명) - 결과표 열 순서와 컬럼설명 시트를 한 곳에서 정한다
@@ -29,9 +30,13 @@ COLUMNS = [
     ("행정구역코드", "문자열", "", "행정안전부 행정기관코드 10자리. 조인키. 정수로 바꾸면 조인이 깨진다"),
     ("시군구명", "문자열", "", "군 이름"),
     ("읍면명", "문자열", "", "읍·면 이름"),
-    ("총인구", "정수", "명", "2025년 12월 말 주민등록 인구 (행정안전부)"),
+    ("총인구", "정수", "명", f"{ANALYSIS_PERIOD} 말 주민등록 인구 (행정안전부)"),
     ("고령인구", "정수", "명", "65세 이상 주민등록 인구"),
     ("고령화율", "실수", "%", "고령인구 / 총인구 × 100"),
+    ("기준시점인구", "정수", "명", f"{BASELINE_PERIOD} 말 주민등록 인구. 인구 변화율의 분모"),
+    ("인구변화율", "실수", "%", f"(총인구 - 기준시점인구) / 기준시점인구 × 100. {BASELINE_PERIOD} → {ANALYSIS_PERIOD}"),
+    ("연평균인구변화율", "실수", "%/년", "((총인구 / 기준시점인구)^(12 / 개월수) - 1) × 100. 기간이 1년 단위가 아니라 연율로 환산"),
+    ("고령화율변화", "실수", "%p", f"{ANALYSIS_PERIOD} 고령화율 - {BASELINE_PERIOD} 고령화율"),
     ("노령화지수", "실수", "", "유소년(0~14세) 100명당 고령인구. SGIS 2024년 (등록센서스)"),
     ("노년부양비", "실수", "", "생산연령(15~64세) 100명당 고령인구. SGIS 2024년"),
     ("평균나이", "실수", "세", "SGIS 2024년"),
@@ -85,9 +90,12 @@ def build_rows() -> list[dict]:
     shapes = {f["properties"]["region_code"]: f["geometry"]
               for f in load("eupmyeon.geojson")["features"]}
 
+    change = {r["region_code"]: r for r in build.build_regions()["regions"][ANALYSIS_PERIOD]}
+
     rows = []
     for p in sorted(pop, key=lambda r: r["region_code"]):
         code = p["region_code"]
+        c = change[code]
         lat, lon = centroid(shapes[code])
         rows.append({
             "종합점수": None,
@@ -97,6 +105,10 @@ def build_rows() -> list[dict]:
             "총인구": p["population"],
             "고령인구": p["elderly"],
             "고령화율": round(p["elderly"] / p["population"] * 100, 2),
+            "기준시점인구": c["population_baseline"],
+            "인구변화율": c["pop_change_rate"],
+            "연평균인구변화율": c["pop_change_rate_annual"],
+            "고령화율변화": c["elderly_ratio_change"],
             "노령화지수": sgis[code]["aging_index"],
             "노년부양비": sgis[code]["old_dependency"],
             "평균나이": sgis[code]["avg_age"],
@@ -122,7 +134,8 @@ def method_rows() -> list[tuple[str, str]]:
         ("■ 개요", ""),
         ("데이터셋", "대구광역시 군위군 읍면별 주거환경 취약지역 기초지표"),
         ("공간 단위", "읍·면 8곳 (군위읍, 소보·효령·부계·우보·의흥·산성·삼국유사면)"),
-        ("기준 시점", "인구 2025년 12월 말 / SGIS 2024년 / 경로당 2025-12-19"),
+        ("기준 시점", f"분석 기준 {ANALYSIS_PERIOD} 말(주민등록 인구). 인구 변화는 {BASELINE_PERIOD} 말 대비. "
+                     "조사 주기가 정해진 자료는 최근 조사분: SGIS 2024년 / 경로당 2025-12-19"),
         ("좌표계", "EPSG:4326 (WGS84)"),
         ("", ""),
         ("■ 산출식", ""),
@@ -130,6 +143,8 @@ def method_rows() -> list[tuple[str, str]]:
                      "없으므로 '종합점수' 열을 비워 두었다"),
         ("고령화율", "65세 이상 인구 ÷ 총인구 × 100"),
         ("고령인구1천명당_경로당수", "경로당수 ÷ 고령인구 × 1,000"),
+        ("인구변화율", f"(분석 시점 인구 - 기준 시점 인구) ÷ 기준 시점 인구 × 100 ({BASELINE_PERIOD} → {ANALYSIS_PERIOD})"),
+        ("연평균인구변화율", "((분석 시점 인구 ÷ 기준 시점 인구)^(12 ÷ 개월수) - 1) × 100"),
         ("노후경로당수", "건립연도 < 2000. 공식 기준이 아니라 프로젝트 임시 기준"),
         ("", ""),
         ("■ 자료 출처", ""),
@@ -142,7 +157,7 @@ def method_rows() -> list[tuple[str, str]]:
         ("", ""),
         ("■ 알아둘 점", ""),
         ("표본 수", "읍면이 8곳뿐이라 상관분석은 탐색적 수준이다. 유의성 해석에 주의"),
-        ("두 가지 인구", "총인구·고령인구는 주민등록(2025-12), 노령화지수·인구밀도 등은 SGIS 등록센서스"
+        ("두 가지 인구", "총인구·고령인구는 주민등록(" + ANALYSIS_PERIOD + "), 노령화지수·인구밀도 등은 SGIS 등록센서스"
                       "(2024)다. 정의가 달라 값이 다르므로 한 지표 안에서 섞지 말 것"),
         ("경계 출처", "읍면 경계는 통계청 SGIS 행정구역 경계 2025년 2분기(기준일 2025-06-30). "
                     "2026-10-15 SGIS 원본과 8개 읍면 도형 일치 확인"),
