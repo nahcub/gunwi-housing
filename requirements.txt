@@ -1,3 +1,7 @@
 pytest
 openpyxl
 matplotlib
+# 리 경계(SHP, EPSG:5186) 읽기·재투영·포함 판정. derived 바이트가 CI 와 같아야 하므로 버전을 고정한다
+pyshp==3.1.6
+pyproj==3.8.0
+shapely==2.2.0

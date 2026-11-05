@@ -58,6 +58,7 @@ raw 의 `mois-age-*` 월별 39개·`mois-household-*` 39개는 당장 쓰지 않
 tools/add_source.py    새 원자료를 data/raw/<새 폴더>/ 에 등록 (_meta.json·sha256 자동)
 tools/fetch_binzibe.py 빈집애 지도 내부 API 수집기 (군위군 읍면별 빈집 수, 키 불필요)
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
+tools/prepare_ri.py    prepare.py 가 부른다. 법정리 경계 정리 + 시설을 리에 배정 (shapely·pyproj·pyshp)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
 tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV)
 tools/figures.py       data/derived -> outputs/figures (보고서 삽화. matplotlib 필요)
@@ -88,7 +89,13 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 주민등록 행정기관코드 : 2772025000 (군위읍), 군 합계 2772000000   <- 프로젝트 표준 = region_code
 경계 ADM_CD / SGIS    : 22520111   (군위읍), 군 합계 22520        <- 경계 원본·SGIS 통계가 같은 체계
 통계청 최신 코드       : 27720 계열                               <- SGIS 파일에서 이걸로 찾으면 0행
+법정리 코드(10자리)    : 2772025021 (군위읍 동부리)               <- 리 단위 키 = ri_code. 앞 8자리+00 = region_code
 ```
+
+리 단위 분석의 공간단위는 **법정리 92개**다(행정리 경계는 공개 자료가 없다). 리 이름은 겹친다
+(수서리: 군위읍·의흥면, 달산리: 소보면·우보면) — 반드시 `ri_code` 로 잇는다. 옛 경북 코드(47720)는
+편입 때 뒤 5자리가 76/100 바뀌어 앞자리만 바꾸면 틀린다. 시설의 리 배정 방법은 `prepare_ri.py` 한 곳에서
+정한다(좌표 → 리 경계 포함 판정, 상가 → 원자료 법정동코드, 폐교 → 주소의 읍면·리 이름).
 
 세 체계는 **일치하지 않는다.** `prepare_boundary()` 가 지역명으로 한 번만 맞춰서
 경계에 `region_code` 와 `source_adm_cd` 를 심는다. SGIS 통계는 그 `source_adm_cd`

@@ -331,6 +331,10 @@ def main() -> None:
     boundary = prepare_boundary(name_by_code)
     seniors = prepare_senior_centers(name_by_code)
     sgis = prepare_sgis_stats(boundary, population)
+    # 리 단위(법정리 92개). shapely·pyproj·pyshp 가 필요하다(requirements.txt)
+    import prepare_ri
+    ri_boundary = prepare_ri.prepare_ri_boundary(RAW, read_meta, name_by_code)
+    ri_facilities = prepare_ri.assign_facilities(RAW, read_meta, ri_boundary, seniors)
 
     def write(name: str, obj) -> None:
         path = DERIVED / name
@@ -350,6 +354,8 @@ def main() -> None:
     write("eupmyeon.geojson", boundary)
     write("senior_centers.json", seniors)
     write("sgis_stats.json", sgis)
+    write("ri_boundary.geojson", ri_boundary)
+    write("ri_facilities.json", ri_facilities)
 
     print(f"\n  인구 {len(population)}행")
     old = sum(v["old_count"] for v in seniors["by_region"].values())
@@ -357,6 +363,11 @@ def main() -> None:
           f"(노후 {old}곳, {SENIOR_OLD_BEFORE_YEAR}년 이전 - 임시 기준)")
     print(f"  SGIS 2024 항목 {len(sgis['items'])}개 x 읍면 {len(sgis['by_region'])}개 "
           f"(N/A {len(sgis['na_cells'])}칸)")
+    print(f"  법정리 {len(ri_boundary['features'])}개 경계, 시설 배정 "
+          + ", ".join(f"{ri_facilities['type_labels'][t]} {n}"
+                      for t, n in ri_facilities["totals"].items()))
+    for k, v in ri_facilities["checks"].items():
+        print(f"    대조 {k}: {v['n']}건 중 불일치 {v['mismatch']}")
 
 if __name__ == "__main__":
     main()
