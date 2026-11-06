@@ -1,0 +1,19 @@
+{
+  "source_id": "BJD_CODE",
+  "name": "국토교통부_법정동코드",
+  "provider": "국토교통부 (원천: 행정표준코드관리시스템)",
+  "url": "https://www.data.go.kr/data/15123287/fileData.do",
+  "reference_date": "2026-09-29 (수정일)",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 리 단위 조사, 서브에이전트 다운로드)",
+  "license": "이용허락범위 제한 없음",
+  "provenance": "verified",
+  "notes": "포털 원본 CSV 그대로(전국 53,387행, 열: 법정동코드·법정동명·폐지여부). 군위 27720 존재 101행 = 군1 + 읍면8 + 법정리 92. 47720 은 전부 폐지. 편입 때 뒤 5자리 76/100 이 바뀌었으므로 옛 47720 자료는 이름으로만 잇는다.",
+  "files": {
+    "국토교통부_법정동코드_(2026).csv": {
+      "sha256": "c9a5db5b21cab5cbf783e2f3e0ddd3f025750dba0c2a86f5f4840f2dac03ff18",
+      "bytes": 2471662
+    }
+  },
+  "encoding": "cp949"
+}

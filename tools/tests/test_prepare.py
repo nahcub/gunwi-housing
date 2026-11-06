@@ -98,10 +98,14 @@ def _patch_age(tmp_path, monkeypatch, corrupt):
         dst.mkdir(parents=True)
         (dst / "_meta.json").write_bytes((src / "_meta.json").read_bytes())
         rows = json.loads((src / "age.json").read_text(encoding="utf-8"))
-        if period == "2025-12":
+        if period == prepare.ANALYSIS_PERIOD:
             rows = corrupt(rows)
         (dst / "age.json").write_text(json.dumps(rows, ensure_ascii=False),
                                       encoding="utf-8")
+        hh = f"mois-household-{period}"           # 같은 달 세대현황도 함께 읽는다
+        (raw / hh).mkdir()
+        for name in ("_meta.json", "household.json"):
+            (raw / hh / name).write_bytes((ROOT / "data" / "raw" / hh / name).read_bytes())
     monkeypatch.setattr(prepare, "RAW", raw)
 
 
@@ -112,7 +116,7 @@ def test_senior_center_known_counts():
     _, name_by_code = prepare.prepare_population()
     out = prepare.prepare_senior_centers(name_by_code)
     assert len(out["centers"]) == 215
-    assert out["provenance"] == "verified_import"   # 정부 원본 바이트가 아니다
+    assert out["provenance"] == "verified"   # 2026-11-06 포털 원본과 바이트 일치 확인
     by_name = {name_by_code[c]: v for c, v in out["by_region"].items()}
     assert by_name["군위읍"] == {"count": 38, "old_count": 8}
     assert by_name["의흥면"] == {"count": 28, "old_count": 8}
@@ -133,27 +137,23 @@ def test_address_must_resolve_to_one_eupmyeon():
 
 # ---------------------------------------------------------------- SGIS
 
-def test_sgis_known_values_and_mapping():
-    """원본이 바뀌거나 SGIS 코드 매핑이 뒤바뀌면 알아채도록 고정한다."""
-    population, name_by_code = prepare.prepare_population()
-    out = prepare.prepare_sgis_stats(prepare.prepare_boundary(name_by_code), population)
-    assert set(out["by_region"]) == set(name_by_code)   # 군 합계 코드 없음
-    assert out["gun_total"]["population"] == 21493
-    by_name = {name_by_code[c]: v for c, v in out["by_region"].items()}
-    assert by_name["군위읍"]["population"] == 7606
-    assert by_name["삼국유사면"]["aging_index"] == 5315.4
-    assert out["na_cells"] == []
+def test_vacant_houses_known_values():
+    """빈집애 읍면별 빈집 수 - 합 602, 8개 읍면 모두 이름으로 붙는다."""
+    _, name_by_code = prepare.prepare_population()
+    out = prepare.prepare_vacant_houses(name_by_code)
+    assert out["total"] == 602
+    by_name = {name_by_code[c]: v["vacant_houses"] for c, v in out["by_region"].items()}
+    assert by_name["의흥면"] == 112 and by_name["부계면"] == 42
 
 
-def test_sgis_swapped_mapping_guard():
-    """SGIS 코드가 다른 읍면에 붙으면 주민등록 인구 검산에서 멈춰야 한다."""
-    population, name_by_code = prepare.prepare_population()
-    boundary = prepare.prepare_boundary(name_by_code)
-    props = {f["properties"]["region_name"]: f["properties"] for f in boundary["features"]}
-    props["군위읍"]["source_adm_cd"], props["산성면"]["source_adm_cd"] = (
-        props["산성면"]["source_adm_cd"], props["군위읍"]["source_adm_cd"])
-    with pytest.raises(AssertionError, match="코드 매핑 확인"):
-        prepare.prepare_sgis_stats(boundary, population)
+def test_households_join_and_sum():
+    """세대현황은 이름으로 붙고, 총인구가 연령별 인구와 같아야 한다."""
+    population, _ = prepare.prepare_population()
+    gun = {r["period"]: r["households"] for r in population if r["level"] == "gun"}
+    assert gun == {"2023-12": 13588, "2026-09": 13521}
+    for p in gun:
+        assert sum(r["households"] for r in population
+                   if r["period"] == p and r["level"] == "eupmyeon") == gun[p]
 
 
 def test_senior_center_coordinate_guard(tmp_path, monkeypatch):

@@ -1,0 +1,5524 @@
+{
+  "_note": "주거용 건물(GIS건물통합정보 용도 단독·공동주택) 중심점에서 가장 가까운 시설까지 직선거리(m). 도로망 미사용이라 실제 이동거리보다 짧다. 용도 빈칸 건물(대장 미연계)은 집인지 알 수 없어 빠졌다. 사람 수가 아니라 집(건물) 수 기준이고 빈집도 포함된다. far_share_pct 의 기준 2000 m 는 프로젝트 기준(모든 묶음 공통, 2026-11-06 확인). 버스정류장은 운행 횟수가 없어 거리가 가까워도 서비스 수준을 뜻하지 않는다. 읍면사무소는 좌표 자료가 없어 뺐다.",
+  "reference_dates": {
+    "buildings": "2026-09-09",
+    "hira": "2026-09",
+    "bus_stops": "2026-10-20",
+    "schools": "2026-09-20",
+    "childcare": "2026-09"
+  },
+  "far_m": 2000,
+  "far_m_note": "모든 묶음에 같은 기준(2026-11-06 사용자 확인). 법정 기준 아님",
+  "groups": {
+    "primary_care": {
+      "label": "1차 의료(보건기관+의원)",
+      "types": [
+        "health",
+        "clinic"
+      ],
+      "filter": null,
+      "facilities": 35
+    },
+    "health": {
+      "label": "보건소·보건지소·보건진료소",
+      "types": [
+        "health"
+      ],
+      "filter": null,
+      "facilities": 18
+    },
+    "clinic": {
+      "label": "의원·치과·한의원",
+      "types": [
+        "clinic"
+      ],
+      "filter": null,
+      "facilities": 17
+    },
+    "bus_stop": {
+      "label": "버스정류장(미정차 제외)",
+      "types": [
+        "bus_stop"
+      ],
+      "filter": "정류장명에 '미정차' 가 든 행 제외",
+      "facilities": 717
+    },
+    "school_elementary": {
+      "label": "초등학교",
+      "types": [
+        "school"
+      ],
+      "filter": "학교급 초등학교",
+      "facilities": 4
+    },
+    "school_secondary": {
+      "label": "중·고등학교",
+      "types": [
+        "school"
+      ],
+      "filter": "학교급 중학교·고등학교",
+      "facilities": 4
+    },
+    "childcare": {
+      "label": "어린이집",
+      "types": [
+        "childcare"
+      ],
+      "filter": null,
+      "facilities": 4
+    },
+    "grocery": {
+      "label": "식료품점(슈퍼마켓·편의점)",
+      "types": [
+        "store"
+      ],
+      "filter": "슈퍼마켓(G20404)·편의점(G20405) 중 GROCERY_EXCLUDE 15곳 제외",
+      "facilities": 60
+    }
+  },
+  "residential_uses": [
+    "단독주택",
+    "공동주택"
+  ],
+  "totals": {
+    "houses": 10264,
+    "houses_without_approval_date": 3522
+  },
+  "checks": {
+    "건물 법정동코드 vs 중심점 좌표": {
+      "n": 10264,
+      "mismatch": 11
+    }
+  },
+  "gun": {
+    "houses": 10264,
+    "primary_care": {
+      "mean_m": 1794,
+      "median_m": 1734,
+      "max_m": 6088,
+      "far_share_pct": 40.2
+    },
+    "health": {
+      "mean_m": 1915,
+      "median_m": 1815,
+      "max_m": 6398,
+      "far_share_pct": 43.1
+    },
+    "clinic": {
+      "mean_m": 4962,
+      "median_m": 4023,
+      "max_m": 15925,
+      "far_share_pct": 76.1
+    },
+    "bus_stop": {
+      "mean_m": 349,
+      "median_m": 211,
+      "max_m": 3038,
+      "far_share_pct": 0.9
+    },
+    "school_elementary": {
+      "mean_m": 4825,
+      "median_m": 4329,
+      "max_m": 15475,
+      "far_share_pct": 79.3
+    },
+    "school_secondary": {
+      "mean_m": 6635,
+      "median_m": 5212,
+      "max_m": 22976,
+      "far_share_pct": 86.4
+    },
+    "childcare": {
+      "mean_m": 6177,
+      "median_m": 5203,
+      "max_m": 18298,
+      "far_share_pct": 80.7
+    },
+    "grocery": {
+      "mean_m": 1748,
+      "median_m": 1457,
+      "max_m": 8600,
+      "far_share_pct": 33.9
+    }
+  },
+  "by_region": {
+    "2772025000": {
+      "houses": 2428,
+      "primary_care": {
+        "mean_m": 1939,
+        "median_m": 1694,
+        "max_m": 6088,
+        "far_share_pct": 43.8
+      },
+      "health": {
+        "mean_m": 2383,
+        "median_m": 2069,
+        "max_m": 6398,
+        "far_share_pct": 53.1
+      },
+      "clinic": {
+        "mean_m": 2341,
+        "median_m": 2398,
+        "max_m": 6088,
+        "far_share_pct": 54.2
+      },
+      "bus_stop": {
+        "mean_m": 336,
+        "median_m": 228,
+        "max_m": 2121,
+        "far_share_pct": 0.2
+      },
+      "school_elementary": {
+        "mean_m": 2647,
+        "median_m": 2680,
+        "max_m": 6475,
+        "far_share_pct": 58.4
+      },
+      "school_secondary": {
+        "mean_m": 2670,
+        "median_m": 2803,
+        "max_m": 5839,
+        "far_share_pct": 61.1
+      },
+      "childcare": {
+        "mean_m": 2453,
+        "median_m": 2412,
+        "max_m": 6269,
+        "far_share_pct": 55.6
+      },
+      "grocery": {
+        "mean_m": 1039,
+        "median_m": 974,
+        "max_m": 3360,
+        "far_share_pct": 13.5
+      }
+    },
+    "2772031000": {
+      "houses": 1248,
+      "primary_care": {
+        "mean_m": 2313,
+        "median_m": 2257,
+        "max_m": 5108,
+        "far_share_pct": 58.0
+      },
+      "health": {
+        "mean_m": 2315,
+        "median_m": 2257,
+        "max_m": 5674,
+        "far_share_pct": 58.0
+      },
+      "clinic": {
+        "mean_m": 9134,
+        "median_m": 8745,
+        "max_m": 14060,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 311,
+        "median_m": 183,
+        "max_m": 2952,
+        "far_share_pct": 2.1
+      },
+      "school_elementary": {
+        "mean_m": 9274,
+        "median_m": 8843,
+        "max_m": 14139,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 9211,
+        "median_m": 8736,
+        "max_m": 13965,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3239,
+        "median_m": 3009,
+        "max_m": 7684,
+        "far_share_pct": 73.4
+      },
+      "grocery": {
+        "mean_m": 2981,
+        "median_m": 2549,
+        "max_m": 7617,
+        "far_share_pct": 68.7
+      }
+    },
+    "2772032000": {
+      "houses": 1778,
+      "primary_care": {
+        "mean_m": 1766,
+        "median_m": 1874,
+        "max_m": 3614,
+        "far_share_pct": 44.2
+      },
+      "health": {
+        "mean_m": 1804,
+        "median_m": 1928,
+        "max_m": 3753,
+        "far_share_pct": 46.9
+      },
+      "clinic": {
+        "mean_m": 3896,
+        "median_m": 3831,
+        "max_m": 8921,
+        "far_share_pct": 84.8
+      },
+      "bus_stop": {
+        "mean_m": 305,
+        "median_m": 218,
+        "max_m": 1670,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4429,
+        "median_m": 4435,
+        "max_m": 7983,
+        "far_share_pct": 86.3
+      },
+      "school_secondary": {
+        "mean_m": 3727,
+        "median_m": 3842,
+        "max_m": 7240,
+        "far_share_pct": 82.8
+      },
+      "childcare": {
+        "mean_m": 10102,
+        "median_m": 10133,
+        "max_m": 16322,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1814,
+        "median_m": 1761,
+        "max_m": 4332,
+        "far_share_pct": 39.7
+      }
+    },
+    "2772033000": {
+      "houses": 1016,
+      "primary_care": {
+        "mean_m": 1511,
+        "median_m": 1574,
+        "max_m": 4353,
+        "far_share_pct": 28.1
+      },
+      "health": {
+        "mean_m": 1511,
+        "median_m": 1574,
+        "max_m": 4353,
+        "far_share_pct": 28.1
+      },
+      "clinic": {
+        "mean_m": 11258,
+        "median_m": 12067,
+        "max_m": 15925,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 378,
+        "median_m": 233,
+        "max_m": 3038,
+        "far_share_pct": 0.6
+      },
+      "school_elementary": {
+        "mean_m": 3998,
+        "median_m": 4422,
+        "max_m": 8971,
+        "far_share_pct": 72.4
+      },
+      "school_secondary": {
+        "mean_m": 2967,
+        "median_m": 2729,
+        "max_m": 6428,
+        "far_share_pct": 85.4
+      },
+      "childcare": {
+        "mean_m": 12997,
+        "median_m": 13763,
+        "max_m": 18298,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 907,
+        "median_m": 803,
+        "max_m": 2587,
+        "far_share_pct": 7.4
+      }
+    },
+    "2772034000": {
+      "houses": 1059,
+      "primary_care": {
+        "mean_m": 1585,
+        "median_m": 1602,
+        "max_m": 4318,
+        "far_share_pct": 41.1
+      },
+      "health": {
+        "mean_m": 1595,
+        "median_m": 1624,
+        "max_m": 4318,
+        "far_share_pct": 41.5
+      },
+      "clinic": {
+        "mean_m": 2586,
+        "median_m": 2638,
+        "max_m": 6311,
+        "far_share_pct": 62.2
+      },
+      "bus_stop": {
+        "mean_m": 393,
+        "median_m": 200,
+        "max_m": 2089,
+        "far_share_pct": 0.3
+      },
+      "school_elementary": {
+        "mean_m": 5471,
+        "median_m": 5250,
+        "max_m": 8444,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 8014,
+        "median_m": 8228,
+        "max_m": 11285,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5403,
+        "median_m": 5140,
+        "max_m": 7966,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1759,
+        "median_m": 1597,
+        "max_m": 4460,
+        "far_share_pct": 42.7
+      }
+    },
+    "2772035000": {
+      "houses": 1269,
+      "primary_care": {
+        "mean_m": 1386,
+        "median_m": 1475,
+        "max_m": 3771,
+        "far_share_pct": 18.8
+      },
+      "health": {
+        "mean_m": 1426,
+        "median_m": 1496,
+        "max_m": 3771,
+        "far_share_pct": 19.3
+      },
+      "clinic": {
+        "mean_m": 2400,
+        "median_m": 2010,
+        "max_m": 5585,
+        "far_share_pct": 50.6
+      },
+      "bus_stop": {
+        "mean_m": 316,
+        "median_m": 210,
+        "max_m": 2349,
+        "far_share_pct": 1.7
+      },
+      "school_elementary": {
+        "mean_m": 2414,
+        "median_m": 2237,
+        "max_m": 5421,
+        "far_share_pct": 53.8
+      },
+      "school_secondary": {
+        "mean_m": 12109,
+        "median_m": 11854,
+        "max_m": 16003,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2463,
+        "median_m": 2177,
+        "max_m": 5576,
+        "far_share_pct": 55.0
+      },
+      "grocery": {
+        "mean_m": 1653,
+        "median_m": 1536,
+        "max_m": 4464,
+        "far_share_pct": 37.7
+      }
+    },
+    "2772036000": {
+      "houses": 731,
+      "primary_care": {
+        "mean_m": 1352,
+        "median_m": 1499,
+        "max_m": 4072,
+        "far_share_pct": 17.6
+      },
+      "health": {
+        "mean_m": 1352,
+        "median_m": 1499,
+        "max_m": 4072,
+        "far_share_pct": 17.6
+      },
+      "clinic": {
+        "mean_m": 7774,
+        "median_m": 7484,
+        "max_m": 13532,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 302,
+        "median_m": 163,
+        "max_m": 1742,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4380,
+        "median_m": 4213,
+        "max_m": 6259,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 5888,
+        "median_m": 5981,
+        "max_m": 9272,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 7862,
+        "median_m": 7566,
+        "max_m": 13612,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1002,
+        "median_m": 1172,
+        "max_m": 3014,
+        "far_share_pct": 5.3
+      }
+    },
+    "2772037000": {
+      "houses": 735,
+      "primary_care": {
+        "mean_m": 2336,
+        "median_m": 2336,
+        "max_m": 5619,
+        "far_share_pct": 63.5
+      },
+      "health": {
+        "mean_m": 2382,
+        "median_m": 2376,
+        "max_m": 5619,
+        "far_share_pct": 64.2
+      },
+      "clinic": {
+        "mean_m": 5452,
+        "median_m": 4704,
+        "max_m": 10962,
+        "far_share_pct": 94.7
+      },
+      "bus_stop": {
+        "mean_m": 560,
+        "median_m": 224,
+        "max_m": 2794,
+        "far_share_pct": 4.9
+      },
+      "school_elementary": {
+        "mean_m": 10239,
+        "median_m": 10127,
+        "max_m": 15475,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 16762,
+        "median_m": 18224,
+        "max_m": 22976,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 10390,
+        "median_m": 10283,
+        "max_m": 15632,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3890,
+        "median_m": 3690,
+        "max_m": 8600,
+        "far_share_pct": 74.3
+      }
+    }
+  },
+  "by_ri": {
+    "2772025021": {
+      "ri_name": "동부리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 330,
+      "primary_care": {
+        "mean_m": 319,
+        "median_m": 334,
+        "max_m": 1098,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 629,
+        "median_m": 620,
+        "max_m": 1280,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 368,
+        "median_m": 349,
+        "max_m": 1596,
+        "far_share_pct": 0.0
+      },
+      "bus_stop": {
+        "mean_m": 164,
+        "median_m": 157,
+        "max_m": 696,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 569,
+        "median_m": 520,
+        "max_m": 2102,
+        "far_share_pct": 0.6
+      },
+      "school_secondary": {
+        "mean_m": 1209,
+        "median_m": 1168,
+        "max_m": 2818,
+        "far_share_pct": 3.6
+      },
+      "childcare": {
+        "mean_m": 285,
+        "median_m": 264,
+        "max_m": 1483,
+        "far_share_pct": 0.0
+      },
+      "grocery": {
+        "mean_m": 193,
+        "median_m": 143,
+        "max_m": 1137,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025022": {
+      "ri_name": "서부리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 311,
+      "primary_care": {
+        "mean_m": 143,
+        "median_m": 119,
+        "max_m": 660,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 723,
+        "median_m": 684,
+        "max_m": 1598,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 156,
+        "median_m": 119,
+        "max_m": 1088,
+        "far_share_pct": 0.0
+      },
+      "bus_stop": {
+        "mean_m": 147,
+        "median_m": 152,
+        "max_m": 333,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 516,
+        "median_m": 557,
+        "max_m": 1600,
+        "far_share_pct": 0.0
+      },
+      "school_secondary": {
+        "mean_m": 1190,
+        "median_m": 1260,
+        "max_m": 2318,
+        "far_share_pct": 0.3
+      },
+      "childcare": {
+        "mean_m": 494,
+        "median_m": 498,
+        "max_m": 1019,
+        "far_share_pct": 0.0
+      },
+      "grocery": {
+        "mean_m": 114,
+        "median_m": 109,
+        "max_m": 734,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025023": {
+      "ri_name": "금구리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 146,
+      "primary_care": {
+        "mean_m": 2136,
+        "median_m": 1659,
+        "max_m": 3226,
+        "far_share_pct": 46.6
+      },
+      "health": {
+        "mean_m": 2136,
+        "median_m": 1659,
+        "max_m": 3226,
+        "far_share_pct": 46.6
+      },
+      "clinic": {
+        "mean_m": 2709,
+        "median_m": 2233,
+        "max_m": 3861,
+        "far_share_pct": 68.5
+      },
+      "bus_stop": {
+        "mean_m": 569,
+        "median_m": 478,
+        "max_m": 1100,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3188,
+        "median_m": 2705,
+        "max_m": 4335,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3885,
+        "median_m": 3408,
+        "max_m": 5025,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2520,
+        "median_m": 2041,
+        "max_m": 3655,
+        "far_share_pct": 51.4
+      },
+      "grocery": {
+        "mean_m": 1387,
+        "median_m": 1328,
+        "max_m": 1821,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025024": {
+      "ri_name": "무성리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 176,
+      "primary_care": {
+        "mean_m": 3599,
+        "median_m": 3653,
+        "max_m": 4184,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3599,
+        "median_m": 3653,
+        "max_m": 4184,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4172,
+        "median_m": 4330,
+        "max_m": 4741,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 553,
+        "median_m": 620,
+        "max_m": 1013,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5550,
+        "median_m": 5580,
+        "max_m": 6475,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4009,
+        "median_m": 4114,
+        "max_m": 5034,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4902,
+        "median_m": 4953,
+        "max_m": 5803,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 882,
+        "median_m": 905,
+        "max_m": 1600,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025025": {
+      "ri_name": "수서리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 161,
+      "primary_care": {
+        "mean_m": 2712,
+        "median_m": 2210,
+        "max_m": 4447,
+        "far_share_pct": 87.6
+      },
+      "health": {
+        "mean_m": 2712,
+        "median_m": 2210,
+        "max_m": 4447,
+        "far_share_pct": 87.6
+      },
+      "clinic": {
+        "mean_m": 3066,
+        "median_m": 2566,
+        "max_m": 4678,
+        "far_share_pct": 96.9
+      },
+      "bus_stop": {
+        "mean_m": 462,
+        "median_m": 218,
+        "max_m": 2121,
+        "far_share_pct": 2.5
+      },
+      "school_elementary": {
+        "mean_m": 3580,
+        "median_m": 3084,
+        "max_m": 5171,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4275,
+        "median_m": 3798,
+        "max_m": 5839,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3067,
+        "median_m": 2554,
+        "max_m": 4769,
+        "far_share_pct": 98.8
+      },
+      "grocery": {
+        "mean_m": 773,
+        "median_m": 439,
+        "max_m": 2355,
+        "far_share_pct": 9.9
+      }
+    },
+    "2772025026": {
+      "ri_name": "사직리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 101,
+      "primary_care": {
+        "mean_m": 1577,
+        "median_m": 1642,
+        "max_m": 2266,
+        "far_share_pct": 11.9
+      },
+      "health": {
+        "mean_m": 1659,
+        "median_m": 1665,
+        "max_m": 2449,
+        "far_share_pct": 15.8
+      },
+      "clinic": {
+        "mean_m": 1595,
+        "median_m": 1676,
+        "max_m": 2266,
+        "far_share_pct": 11.9
+      },
+      "bus_stop": {
+        "mean_m": 412,
+        "median_m": 407,
+        "max_m": 1277,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2022,
+        "median_m": 2138,
+        "max_m": 2698,
+        "far_share_pct": 57.4
+      },
+      "school_secondary": {
+        "mean_m": 2642,
+        "median_m": 2800,
+        "max_m": 3307,
+        "far_share_pct": 95.0
+      },
+      "childcare": {
+        "mean_m": 1822,
+        "median_m": 1857,
+        "max_m": 2491,
+        "far_share_pct": 35.6
+      },
+      "grocery": {
+        "mean_m": 1249,
+        "median_m": 1301,
+        "max_m": 2134,
+        "far_share_pct": 2.0
+      }
+    },
+    "2772025027": {
+      "ri_name": "내량리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 171,
+      "primary_care": {
+        "mean_m": 2300,
+        "median_m": 2425,
+        "max_m": 3352,
+        "far_share_pct": 54.4
+      },
+      "health": {
+        "mean_m": 3023,
+        "median_m": 3093,
+        "max_m": 4029,
+        "far_share_pct": 95.9
+      },
+      "clinic": {
+        "mean_m": 2300,
+        "median_m": 2425,
+        "max_m": 3352,
+        "far_share_pct": 54.4
+      },
+      "bus_stop": {
+        "mean_m": 503,
+        "median_m": 458,
+        "max_m": 1236,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2405,
+        "median_m": 2539,
+        "max_m": 3434,
+        "far_share_pct": 54.4
+      },
+      "school_secondary": {
+        "mean_m": 2448,
+        "median_m": 2643,
+        "max_m": 3477,
+        "far_share_pct": 73.1
+      },
+      "childcare": {
+        "mean_m": 2821,
+        "median_m": 2952,
+        "max_m": 3883,
+        "far_share_pct": 80.7
+      },
+      "grocery": {
+        "mean_m": 2210,
+        "median_m": 2356,
+        "max_m": 3232,
+        "far_share_pct": 53.8
+      }
+    },
+    "2772025028": {
+      "ri_name": "외량리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 115,
+      "primary_care": {
+        "mean_m": 3268,
+        "median_m": 3183,
+        "max_m": 3996,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4238,
+        "median_m": 4051,
+        "max_m": 5143,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3268,
+        "median_m": 3183,
+        "max_m": 3996,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 192,
+        "median_m": 185,
+        "max_m": 611,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3380,
+        "median_m": 3272,
+        "max_m": 4143,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3081,
+        "median_m": 3121,
+        "max_m": 3638,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3735,
+        "median_m": 3699,
+        "max_m": 4386,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2364,
+        "median_m": 2425,
+        "max_m": 3038,
+        "far_share_pct": 73.9
+      }
+    },
+    "2772025029": {
+      "ri_name": "삽령리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 46,
+      "primary_care": {
+        "mean_m": 3992,
+        "median_m": 4055,
+        "max_m": 4161,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4978,
+        "median_m": 5033,
+        "max_m": 5154,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3992,
+        "median_m": 4055,
+        "max_m": 4161,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 273,
+        "median_m": 264,
+        "max_m": 486,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4107,
+        "median_m": 4174,
+        "max_m": 4278,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3784,
+        "median_m": 3853,
+        "max_m": 3961,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4465,
+        "median_m": 4529,
+        "max_m": 4632,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1637,
+        "median_m": 1656,
+        "max_m": 2159,
+        "far_share_pct": 6.5
+      }
+    },
+    "2772025030": {
+      "ri_name": "대북리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 114,
+      "primary_care": {
+        "mean_m": 3009,
+        "median_m": 3197,
+        "max_m": 3851,
+        "far_share_pct": 95.6
+      },
+      "health": {
+        "mean_m": 4227,
+        "median_m": 4424,
+        "max_m": 5080,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3009,
+        "median_m": 3197,
+        "max_m": 3851,
+        "far_share_pct": 95.6
+      },
+      "bus_stop": {
+        "mean_m": 278,
+        "median_m": 206,
+        "max_m": 768,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3174,
+        "median_m": 3366,
+        "max_m": 4018,
+        "far_share_pct": 97.4
+      },
+      "school_secondary": {
+        "mean_m": 2523,
+        "median_m": 2674,
+        "max_m": 3360,
+        "far_share_pct": 79.8
+      },
+      "childcare": {
+        "mean_m": 3247,
+        "median_m": 3383,
+        "max_m": 4096,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1550,
+        "median_m": 1394,
+        "max_m": 2372,
+        "far_share_pct": 19.3
+      }
+    },
+    "2772025031": {
+      "ri_name": "오곡리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 71,
+      "primary_care": {
+        "mean_m": 3882,
+        "median_m": 4022,
+        "max_m": 4278,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4965,
+        "median_m": 5030,
+        "max_m": 5454,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3882,
+        "median_m": 4022,
+        "max_m": 4278,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 212,
+        "median_m": 171,
+        "max_m": 762,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4042,
+        "median_m": 4178,
+        "max_m": 4442,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3331,
+        "median_m": 3472,
+        "max_m": 3724,
+        "far_share_pct": 97.2
+      },
+      "childcare": {
+        "mean_m": 3894,
+        "median_m": 4001,
+        "max_m": 4329,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 598,
+        "median_m": 672,
+        "max_m": 1985,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025032": {
+      "ri_name": "정리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 186,
+      "primary_care": {
+        "mean_m": 1116,
+        "median_m": 1056,
+        "max_m": 1719,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 2322,
+        "median_m": 2260,
+        "max_m": 2934,
+        "far_share_pct": 78.5
+      },
+      "clinic": {
+        "mean_m": 1116,
+        "median_m": 1056,
+        "max_m": 1719,
+        "far_share_pct": 0.0
+      },
+      "bus_stop": {
+        "mean_m": 375,
+        "median_m": 376,
+        "max_m": 545,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1281,
+        "median_m": 1223,
+        "max_m": 1883,
+        "far_share_pct": 0.0
+      },
+      "school_secondary": {
+        "mean_m": 608,
+        "median_m": 518,
+        "max_m": 1209,
+        "far_share_pct": 0.0
+      },
+      "childcare": {
+        "mean_m": 1318,
+        "median_m": 1210,
+        "max_m": 1955,
+        "far_share_pct": 0.0
+      },
+      "grocery": {
+        "mean_m": 1090,
+        "median_m": 1035,
+        "max_m": 1692,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025033": {
+      "ri_name": "하곡리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 103,
+      "primary_care": {
+        "mean_m": 1162,
+        "median_m": 1352,
+        "max_m": 1597,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1224,
+        "median_m": 1408,
+        "max_m": 1698,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 1915,
+        "median_m": 1666,
+        "max_m": 2705,
+        "far_share_pct": 40.8
+      },
+      "bus_stop": {
+        "mean_m": 198,
+        "median_m": 125,
+        "max_m": 809,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1926,
+        "median_m": 1660,
+        "max_m": 2710,
+        "far_share_pct": 40.8
+      },
+      "school_secondary": {
+        "mean_m": 2031,
+        "median_m": 1726,
+        "max_m": 2789,
+        "far_share_pct": 46.6
+      },
+      "childcare": {
+        "mean_m": 1444,
+        "median_m": 1161,
+        "max_m": 2217,
+        "far_share_pct": 22.3
+      },
+      "grocery": {
+        "mean_m": 1037,
+        "median_m": 1211,
+        "max_m": 1457,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772025034": {
+      "ri_name": "용대리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 75,
+      "primary_care": {
+        "mean_m": 633,
+        "median_m": 351,
+        "max_m": 1922,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 633,
+        "median_m": 351,
+        "max_m": 1922,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 3426,
+        "median_m": 3122,
+        "max_m": 4934,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 460,
+        "median_m": 237,
+        "max_m": 1577,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3478,
+        "median_m": 3163,
+        "max_m": 4972,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3648,
+        "median_m": 3331,
+        "max_m": 5104,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2997,
+        "median_m": 2707,
+        "max_m": 4508,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 698,
+        "median_m": 321,
+        "max_m": 2098,
+        "far_share_pct": 9.3
+      }
+    },
+    "2772025035": {
+      "ri_name": "상곡리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 86,
+      "primary_care": {
+        "mean_m": 2299,
+        "median_m": 2006,
+        "max_m": 3920,
+        "far_share_pct": 52.3
+      },
+      "health": {
+        "mean_m": 2300,
+        "median_m": 2006,
+        "max_m": 3920,
+        "far_share_pct": 52.3
+      },
+      "clinic": {
+        "mean_m": 3599,
+        "median_m": 3389,
+        "max_m": 4591,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 480,
+        "median_m": 183,
+        "max_m": 1949,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3654,
+        "median_m": 3436,
+        "max_m": 4686,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3322,
+        "median_m": 3146,
+        "max_m": 4183,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3177,
+        "median_m": 2951,
+        "max_m": 4262,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2078,
+        "median_m": 1858,
+        "max_m": 3310,
+        "far_share_pct": 25.6
+      }
+    },
+    "2772025036": {
+      "ri_name": "광현리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 128,
+      "primary_care": {
+        "mean_m": 2310,
+        "median_m": 2549,
+        "max_m": 3372,
+        "far_share_pct": 61.7
+      },
+      "health": {
+        "mean_m": 2310,
+        "median_m": 2549,
+        "max_m": 3372,
+        "far_share_pct": 61.7
+      },
+      "clinic": {
+        "mean_m": 4764,
+        "median_m": 4831,
+        "max_m": 5926,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 428,
+        "median_m": 437,
+        "max_m": 1707,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4786,
+        "median_m": 4867,
+        "max_m": 5944,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4619,
+        "median_m": 4615,
+        "max_m": 5744,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4286,
+        "median_m": 4371,
+        "max_m": 5438,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2275,
+        "median_m": 2519,
+        "max_m": 3360,
+        "far_share_pct": 61.7
+      }
+    },
+    "2772025037": {
+      "ri_name": "대흥리",
+      "region_code": "2772025000",
+      "region_name": "군위읍",
+      "houses": 108,
+      "primary_care": {
+        "mean_m": 5350,
+        "median_m": 5449,
+        "max_m": 6088,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 5902,
+        "median_m": 5866,
+        "max_m": 6398,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5350,
+        "median_m": 5449,
+        "max_m": 6088,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 286,
+        "median_m": 236,
+        "max_m": 1102,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5490,
+        "median_m": 5586,
+        "max_m": 6237,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 5015,
+        "median_m": 5119,
+        "max_m": 5709,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5525,
+        "median_m": 5501,
+        "max_m": 6269,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 352,
+        "median_m": 289,
+        "max_m": 1086,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772031021": {
+      "ri_name": "사리리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 71,
+      "primary_care": {
+        "mean_m": 1207,
+        "median_m": 881,
+        "max_m": 2070,
+        "far_share_pct": 14.1
+      },
+      "health": {
+        "mean_m": 1207,
+        "median_m": 881,
+        "max_m": 2070,
+        "far_share_pct": 14.1
+      },
+      "clinic": {
+        "mean_m": 12555,
+        "median_m": 12188,
+        "max_m": 13553,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 300,
+        "median_m": 295,
+        "max_m": 607,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 12671,
+        "median_m": 12298,
+        "max_m": 13669,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 12318,
+        "median_m": 11974,
+        "max_m": 13313,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 6848,
+        "median_m": 6553,
+        "max_m": 7684,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 6781,
+        "median_m": 6484,
+        "max_m": 7617,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031022": {
+      "ri_name": "보현리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 87,
+      "primary_care": {
+        "mean_m": 2238,
+        "median_m": 1249,
+        "max_m": 3795,
+        "far_share_pct": 49.4
+      },
+      "health": {
+        "mean_m": 2238,
+        "median_m": 1249,
+        "max_m": 3795,
+        "far_share_pct": 49.4
+      },
+      "clinic": {
+        "mean_m": 12970,
+        "median_m": 12323,
+        "max_m": 14060,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 166,
+        "median_m": 113,
+        "max_m": 624,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 13061,
+        "median_m": 12422,
+        "max_m": 14139,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 12829,
+        "median_m": 12152,
+        "max_m": 13965,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5970,
+        "median_m": 5739,
+        "max_m": 6451,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 5902,
+        "median_m": 5675,
+        "max_m": 6378,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031023": {
+      "ri_name": "복성리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 72,
+      "primary_care": {
+        "mean_m": 943,
+        "median_m": 817,
+        "max_m": 2037,
+        "far_share_pct": 6.9
+      },
+      "health": {
+        "mean_m": 943,
+        "median_m": 817,
+        "max_m": 2037,
+        "far_share_pct": 6.9
+      },
+      "clinic": {
+        "mean_m": 10697,
+        "median_m": 10894,
+        "max_m": 11585,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 444,
+        "median_m": 385,
+        "max_m": 1387,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 10806,
+        "median_m": 11005,
+        "max_m": 11694,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 10486,
+        "median_m": 10666,
+        "max_m": 11373,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5085,
+        "median_m": 5155,
+        "max_m": 5749,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 4989,
+        "median_m": 5086,
+        "max_m": 5680,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031024": {
+      "ri_name": "위성리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 138,
+      "primary_care": {
+        "mean_m": 2651,
+        "median_m": 2572,
+        "max_m": 4030,
+        "far_share_pct": 97.1
+      },
+      "health": {
+        "mean_m": 2651,
+        "median_m": 2572,
+        "max_m": 4030,
+        "far_share_pct": 97.1
+      },
+      "clinic": {
+        "mean_m": 10614,
+        "median_m": 10397,
+        "max_m": 12801,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 235,
+        "median_m": 141,
+        "max_m": 1201,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 10692,
+        "median_m": 10478,
+        "max_m": 12872,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 10523,
+        "median_m": 10299,
+        "max_m": 12734,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3452,
+        "median_m": 3338,
+        "max_m": 5040,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3384,
+        "median_m": 3274,
+        "max_m": 4966,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031025": {
+      "ri_name": "달산리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 146,
+      "primary_care": {
+        "mean_m": 2373,
+        "median_m": 1959,
+        "max_m": 4828,
+        "far_share_pct": 47.9
+      },
+      "health": {
+        "mean_m": 2373,
+        "median_m": 1959,
+        "max_m": 4828,
+        "far_share_pct": 47.9
+      },
+      "clinic": {
+        "mean_m": 10707,
+        "median_m": 10362,
+        "max_m": 13231,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 175,
+        "median_m": 120,
+        "max_m": 969,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 10834,
+        "median_m": 10502,
+        "max_m": 13365,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 10824,
+        "median_m": 10520,
+        "max_m": 13363,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2624,
+        "median_m": 2250,
+        "max_m": 5109,
+        "far_share_pct": 53.4
+      },
+      "grocery": {
+        "mean_m": 2543,
+        "median_m": 2168,
+        "max_m": 5027,
+        "far_share_pct": 52.7
+      }
+    },
+    "2772031026": {
+      "ri_name": "송원리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 149,
+      "primary_care": {
+        "mean_m": 527,
+        "median_m": 444,
+        "max_m": 1710,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 527,
+        "median_m": 444,
+        "max_m": 1710,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 8122,
+        "median_m": 8096,
+        "max_m": 8799,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 181,
+        "median_m": 120,
+        "max_m": 624,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 8248,
+        "median_m": 8215,
+        "max_m": 8867,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 8249,
+        "median_m": 8206,
+        "max_m": 8752,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 397,
+        "median_m": 372,
+        "max_m": 1635,
+        "far_share_pct": 0.0
+      },
+      "grocery": {
+        "mean_m": 359,
+        "median_m": 317,
+        "max_m": 1566,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772031027": {
+      "ri_name": "신계리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 61,
+      "primary_care": {
+        "mean_m": 1515,
+        "median_m": 1539,
+        "max_m": 1705,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1515,
+        "median_m": 1539,
+        "max_m": 1705,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 7608,
+        "median_m": 7637,
+        "max_m": 8025,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 276,
+        "median_m": 279,
+        "max_m": 701,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7803,
+        "median_m": 7829,
+        "max_m": 8189,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 7944,
+        "median_m": 7973,
+        "max_m": 8266,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 1494,
+        "median_m": 1515,
+        "max_m": 1685,
+        "far_share_pct": 0.0
+      },
+      "grocery": {
+        "mean_m": 1525,
+        "median_m": 1547,
+        "max_m": 1717,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772031028": {
+      "ri_name": "도산리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 118,
+      "primary_care": {
+        "mean_m": 2472,
+        "median_m": 2195,
+        "max_m": 3546,
+        "far_share_pct": 67.8
+      },
+      "health": {
+        "mean_m": 2472,
+        "median_m": 2195,
+        "max_m": 3546,
+        "far_share_pct": 67.8
+      },
+      "clinic": {
+        "mean_m": 9565,
+        "median_m": 9350,
+        "max_m": 11559,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 215,
+        "median_m": 138,
+        "max_m": 651,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 9777,
+        "median_m": 9567,
+        "max_m": 11753,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 9943,
+        "median_m": 9731,
+        "max_m": 11876,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2688,
+        "median_m": 2398,
+        "max_m": 3860,
+        "far_share_pct": 83.1
+      },
+      "grocery": {
+        "mean_m": 2661,
+        "median_m": 2381,
+        "max_m": 3792,
+        "far_share_pct": 82.2
+      }
+    },
+    "2772031029": {
+      "ri_name": "서경리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 69,
+      "primary_care": {
+        "mean_m": 2659,
+        "median_m": 2588,
+        "max_m": 3145,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 2659,
+        "median_m": 2588,
+        "max_m": 3145,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 6504,
+        "median_m": 6564,
+        "max_m": 6861,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 336,
+        "median_m": 147,
+        "max_m": 1440,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6725,
+        "median_m": 6794,
+        "max_m": 7081,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6929,
+        "median_m": 7015,
+        "max_m": 7278,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2533,
+        "median_m": 2468,
+        "max_m": 3017,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2551,
+        "median_m": 2489,
+        "max_m": 3034,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031030": {
+      "ri_name": "평호리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 60,
+      "primary_care": {
+        "mean_m": 3816,
+        "median_m": 3582,
+        "max_m": 4883,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3816,
+        "median_m": 3582,
+        "max_m": 4883,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 6778,
+        "median_m": 6692,
+        "max_m": 7772,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 215,
+        "median_m": 208,
+        "max_m": 670,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7062,
+        "median_m": 6956,
+        "max_m": 8046,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 7401,
+        "median_m": 7294,
+        "max_m": 8356,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3769,
+        "median_m": 3575,
+        "max_m": 4812,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3795,
+        "median_m": 3603,
+        "max_m": 4836,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031031": {
+      "ri_name": "산법리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 32,
+      "primary_care": {
+        "mean_m": 4678,
+        "median_m": 4620,
+        "max_m": 5054,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4720,
+        "median_m": 4629,
+        "max_m": 5150,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5051,
+        "median_m": 5056,
+        "max_m": 5198,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 380,
+        "median_m": 375,
+        "max_m": 1129,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5350,
+        "median_m": 5360,
+        "max_m": 5494,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 5735,
+        "median_m": 5749,
+        "max_m": 5869,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4571,
+        "median_m": 4473,
+        "max_m": 5005,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 4110,
+        "median_m": 4059,
+        "max_m": 4419,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772031032": {
+      "ri_name": "내의리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 110,
+      "primary_care": {
+        "mean_m": 3205,
+        "median_m": 3146,
+        "max_m": 5108,
+        "far_share_pct": 98.2
+      },
+      "health": {
+        "mean_m": 3205,
+        "median_m": 3146,
+        "max_m": 5108,
+        "far_share_pct": 98.2
+      },
+      "clinic": {
+        "mean_m": 8143,
+        "median_m": 8204,
+        "max_m": 8839,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 869,
+        "median_m": 351,
+        "max_m": 2952,
+        "far_share_pct": 23.6
+      },
+      "school_elementary": {
+        "mean_m": 8246,
+        "median_m": 8297,
+        "max_m": 8915,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 7963,
+        "median_m": 8062,
+        "max_m": 8763,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3508,
+        "median_m": 2950,
+        "max_m": 6092,
+        "far_share_pct": 98.2
+      },
+      "grocery": {
+        "mean_m": 2696,
+        "median_m": 2757,
+        "max_m": 3561,
+        "far_share_pct": 93.6
+      }
+    },
+    "2772031033": {
+      "ri_name": "봉황리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 94,
+      "primary_care": {
+        "mean_m": 2747,
+        "median_m": 2480,
+        "max_m": 3942,
+        "far_share_pct": 76.6
+      },
+      "health": {
+        "mean_m": 2747,
+        "median_m": 2480,
+        "max_m": 3942,
+        "far_share_pct": 76.6
+      },
+      "clinic": {
+        "mean_m": 6942,
+        "median_m": 6722,
+        "max_m": 7955,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 260,
+        "median_m": 235,
+        "max_m": 1931,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7025,
+        "median_m": 6805,
+        "max_m": 8029,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6848,
+        "median_m": 6652,
+        "max_m": 7887,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2470,
+        "median_m": 2175,
+        "max_m": 3642,
+        "far_share_pct": 66.0
+      },
+      "grocery": {
+        "mean_m": 1962,
+        "median_m": 2060,
+        "max_m": 3068,
+        "far_share_pct": 54.3
+      }
+    },
+    "2772031034": {
+      "ri_name": "봉소리",
+      "region_code": "2772031000",
+      "region_name": "소보면",
+      "houses": 41,
+      "primary_care": {
+        "mean_m": 4643,
+        "median_m": 4735,
+        "max_m": 5071,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4677,
+        "median_m": 4735,
+        "max_m": 5674,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5209,
+        "median_m": 5349,
+        "max_m": 5609,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 622,
+        "median_m": 640,
+        "max_m": 867,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5320,
+        "median_m": 5466,
+        "max_m": 5708,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 5009,
+        "median_m": 5134,
+        "max_m": 5458,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4363,
+        "median_m": 4428,
+        "max_m": 5281,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1244,
+        "median_m": 1050,
+        "max_m": 1940,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032021": {
+      "ri_name": "노행리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 114,
+      "primary_care": {
+        "mean_m": 2345,
+        "median_m": 2502,
+        "max_m": 3152,
+        "far_share_pct": 53.5
+      },
+      "health": {
+        "mean_m": 2345,
+        "median_m": 2502,
+        "max_m": 3152,
+        "far_share_pct": 53.5
+      },
+      "clinic": {
+        "mean_m": 4056,
+        "median_m": 4129,
+        "max_m": 5039,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 323,
+        "median_m": 163,
+        "max_m": 1229,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6145,
+        "median_m": 6235,
+        "max_m": 6956,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6249,
+        "median_m": 6287,
+        "max_m": 7240,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5595,
+        "median_m": 5690,
+        "max_m": 6446,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3599,
+        "median_m": 3505,
+        "max_m": 4174,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032022": {
+      "ri_name": "오천리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 62,
+      "primary_care": {
+        "mean_m": 284,
+        "median_m": 156,
+        "max_m": 687,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 284,
+        "median_m": 156,
+        "max_m": 687,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 4320,
+        "median_m": 4242,
+        "max_m": 4748,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 255,
+        "median_m": 151,
+        "max_m": 706,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6493,
+        "median_m": 6535,
+        "max_m": 7166,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4627,
+        "median_m": 4564,
+        "max_m": 5015,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5823,
+        "median_m": 5860,
+        "max_m": 6501,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3066,
+        "median_m": 3011,
+        "max_m": 3583,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032023": {
+      "ri_name": "성리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 110,
+      "primary_care": {
+        "mean_m": 1612,
+        "median_m": 1589,
+        "max_m": 2461,
+        "far_share_pct": 16.4
+      },
+      "health": {
+        "mean_m": 1612,
+        "median_m": 1589,
+        "max_m": 2461,
+        "far_share_pct": 16.4
+      },
+      "clinic": {
+        "mean_m": 3360,
+        "median_m": 3101,
+        "max_m": 4103,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 411,
+        "median_m": 197,
+        "max_m": 1102,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6398,
+        "median_m": 6539,
+        "max_m": 6951,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3431,
+        "median_m": 3179,
+        "max_m": 4204,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5704,
+        "median_m": 5844,
+        "max_m": 6256,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1594,
+        "median_m": 1703,
+        "max_m": 1965,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032024": {
+      "ri_name": "병수리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 113,
+      "primary_care": {
+        "mean_m": 1811,
+        "median_m": 1996,
+        "max_m": 2505,
+        "far_share_pct": 46.9
+      },
+      "health": {
+        "mean_m": 1811,
+        "median_m": 1996,
+        "max_m": 2505,
+        "far_share_pct": 46.9
+      },
+      "clinic": {
+        "mean_m": 2473,
+        "median_m": 2356,
+        "max_m": 3798,
+        "far_share_pct": 96.5
+      },
+      "bus_stop": {
+        "mean_m": 254,
+        "median_m": 214,
+        "max_m": 910,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7351,
+        "median_m": 7323,
+        "max_m": 7922,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 2580,
+        "median_m": 2386,
+        "max_m": 4222,
+        "far_share_pct": 96.5
+      },
+      "childcare": {
+        "mean_m": 6660,
+        "median_m": 6634,
+        "max_m": 7227,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1987,
+        "median_m": 1797,
+        "max_m": 3468,
+        "far_share_pct": 23.9
+      }
+    },
+    "2772032025": {
+      "ri_name": "불로리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 55,
+      "primary_care": {
+        "mean_m": 2189,
+        "median_m": 2274,
+        "max_m": 2513,
+        "far_share_pct": 76.4
+      },
+      "health": {
+        "mean_m": 2189,
+        "median_m": 2274,
+        "max_m": 2513,
+        "far_share_pct": 76.4
+      },
+      "clinic": {
+        "mean_m": 2443,
+        "median_m": 2516,
+        "max_m": 2758,
+        "far_share_pct": 90.9
+      },
+      "bus_stop": {
+        "mean_m": 260,
+        "median_m": 228,
+        "max_m": 717,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7879,
+        "median_m": 7908,
+        "max_m": 7983,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 1878,
+        "median_m": 1924,
+        "max_m": 2153,
+        "far_share_pct": 25.5
+      },
+      "childcare": {
+        "mean_m": 7294,
+        "median_m": 7292,
+        "max_m": 7534,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2127,
+        "median_m": 2235,
+        "max_m": 2350,
+        "far_share_pct": 74.5
+      }
+    },
+    "2772032026": {
+      "ri_name": "내리리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 67,
+      "primary_care": {
+        "mean_m": 2113,
+        "median_m": 2146,
+        "max_m": 2599,
+        "far_share_pct": 80.6
+      },
+      "health": {
+        "mean_m": 2113,
+        "median_m": 2146,
+        "max_m": 2599,
+        "far_share_pct": 80.6
+      },
+      "clinic": {
+        "mean_m": 2241,
+        "median_m": 2273,
+        "max_m": 2729,
+        "far_share_pct": 91.0
+      },
+      "bus_stop": {
+        "mean_m": 338,
+        "median_m": 308,
+        "max_m": 744,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6957,
+        "median_m": 7001,
+        "max_m": 7567,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 1513,
+        "median_m": 1539,
+        "max_m": 1991,
+        "far_share_pct": 0.0
+      },
+      "childcare": {
+        "mean_m": 8443,
+        "median_m": 8392,
+        "max_m": 9060,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2092,
+        "median_m": 2125,
+        "max_m": 2577,
+        "far_share_pct": 77.6
+      }
+    },
+    "2772032027": {
+      "ri_name": "중구리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 125,
+      "primary_care": {
+        "mean_m": 350,
+        "median_m": 309,
+        "max_m": 1060,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 386,
+        "median_m": 323,
+        "max_m": 1067,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 434,
+        "median_m": 442,
+        "max_m": 1060,
+        "far_share_pct": 0.0
+      },
+      "bus_stop": {
+        "mean_m": 181,
+        "median_m": 139,
+        "max_m": 663,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6468,
+        "median_m": 6516,
+        "max_m": 6855,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 588,
+        "median_m": 576,
+        "max_m": 1025,
+        "far_share_pct": 0.0
+      },
+      "childcare": {
+        "mean_m": 8732,
+        "median_m": 8697,
+        "max_m": 9202,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 352,
+        "median_m": 289,
+        "max_m": 1050,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032028": {
+      "ri_name": "거매리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 82,
+      "primary_care": {
+        "mean_m": 1332,
+        "median_m": 1210,
+        "max_m": 1964,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1560,
+        "median_m": 1444,
+        "max_m": 2133,
+        "far_share_pct": 17.1
+      },
+      "clinic": {
+        "mean_m": 1332,
+        "median_m": 1210,
+        "max_m": 1964,
+        "far_share_pct": 0.0
+      },
+      "bus_stop": {
+        "mean_m": 280,
+        "median_m": 137,
+        "max_m": 991,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6001,
+        "median_m": 6076,
+        "max_m": 6553,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 2027,
+        "median_m": 1884,
+        "max_m": 2706,
+        "far_share_pct": 30.5
+      },
+      "childcare": {
+        "mean_m": 9670,
+        "median_m": 9624,
+        "max_m": 10215,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1399,
+        "median_m": 1279,
+        "max_m": 1972,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032029": {
+      "ri_name": "장군리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 178,
+      "primary_care": {
+        "mean_m": 2889,
+        "median_m": 2971,
+        "max_m": 3614,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 2974,
+        "median_m": 2971,
+        "max_m": 3753,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 3295,
+        "median_m": 3328,
+        "max_m": 4309,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 410,
+        "median_m": 274,
+        "max_m": 1670,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3416,
+        "median_m": 3327,
+        "max_m": 4113,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3169,
+        "median_m": 3197,
+        "max_m": 4063,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11829,
+        "median_m": 11889,
+        "max_m": 12727,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 899,
+        "median_m": 809,
+        "max_m": 1662,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032030": {
+      "ri_name": "장기리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 134,
+      "primary_care": {
+        "mean_m": 2150,
+        "median_m": 2161,
+        "max_m": 3059,
+        "far_share_pct": 64.2
+      },
+      "health": {
+        "mean_m": 2344,
+        "median_m": 2193,
+        "max_m": 3148,
+        "far_share_pct": 89.6
+      },
+      "clinic": {
+        "mean_m": 2760,
+        "median_m": 2646,
+        "max_m": 4562,
+        "far_share_pct": 64.2
+      },
+      "bus_stop": {
+        "mean_m": 439,
+        "median_m": 492,
+        "max_m": 1254,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3657,
+        "median_m": 3695,
+        "max_m": 5215,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 2959,
+        "median_m": 2775,
+        "max_m": 4855,
+        "far_share_pct": 91.8
+      },
+      "childcare": {
+        "mean_m": 11572,
+        "median_m": 11487,
+        "max_m": 12966,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1371,
+        "median_m": 1446,
+        "max_m": 2124,
+        "far_share_pct": 18.7
+      }
+    },
+    "2772032031": {
+      "ri_name": "금매리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 117,
+      "primary_care": {
+        "mean_m": 2370,
+        "median_m": 2422,
+        "max_m": 2956,
+        "far_share_pct": 61.5
+      },
+      "health": {
+        "mean_m": 2404,
+        "median_m": 2547,
+        "max_m": 3080,
+        "far_share_pct": 61.5
+      },
+      "clinic": {
+        "mean_m": 3429,
+        "median_m": 3158,
+        "max_m": 4855,
+        "far_share_pct": 99.1
+      },
+      "bus_stop": {
+        "mean_m": 324,
+        "median_m": 276,
+        "max_m": 739,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5031,
+        "median_m": 5064,
+        "max_m": 5448,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4057,
+        "median_m": 3789,
+        "max_m": 5384,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 10209,
+        "median_m": 10288,
+        "max_m": 10945,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3497,
+        "median_m": 3265,
+        "max_m": 4332,
+        "far_share_pct": 99.1
+      }
+    },
+    "2772032032": {
+      "ri_name": "화계리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 118,
+      "primary_care": {
+        "mean_m": 744,
+        "median_m": 671,
+        "max_m": 2174,
+        "far_share_pct": 0.8
+      },
+      "health": {
+        "mean_m": 744,
+        "median_m": 671,
+        "max_m": 2174,
+        "far_share_pct": 0.8
+      },
+      "clinic": {
+        "mean_m": 6403,
+        "median_m": 6404,
+        "max_m": 7141,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 154,
+        "median_m": 125,
+        "max_m": 629,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2706,
+        "median_m": 2824,
+        "max_m": 3411,
+        "far_share_pct": 78.8
+      },
+      "school_secondary": {
+        "mean_m": 4448,
+        "median_m": 4563,
+        "max_m": 5022,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 9385,
+        "median_m": 9566,
+        "max_m": 10065,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2677,
+        "median_m": 2810,
+        "max_m": 3375,
+        "far_share_pct": 78.0
+      }
+    },
+    "2772032033": {
+      "ri_name": "마시리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 176,
+      "primary_care": {
+        "mean_m": 2165,
+        "median_m": 2470,
+        "max_m": 2719,
+        "far_share_pct": 60.8
+      },
+      "health": {
+        "mean_m": 2165,
+        "median_m": 2470,
+        "max_m": 2719,
+        "far_share_pct": 60.8
+      },
+      "clinic": {
+        "mean_m": 5284,
+        "median_m": 4815,
+        "max_m": 6902,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 365,
+        "median_m": 261,
+        "max_m": 1488,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2957,
+        "median_m": 2776,
+        "max_m": 4145,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4717,
+        "median_m": 4975,
+        "max_m": 5485,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11853,
+        "median_m": 12165,
+        "max_m": 12490,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2809,
+        "median_m": 2656,
+        "max_m": 4047,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772032034": {
+      "ri_name": "매곡리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 142,
+      "primary_care": {
+        "mean_m": 2035,
+        "median_m": 1951,
+        "max_m": 3009,
+        "far_share_pct": 47.2
+      },
+      "health": {
+        "mean_m": 2035,
+        "median_m": 1951,
+        "max_m": 3009,
+        "far_share_pct": 47.2
+      },
+      "clinic": {
+        "mean_m": 7819,
+        "median_m": 7778,
+        "max_m": 8921,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 272,
+        "median_m": 208,
+        "max_m": 1435,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1864,
+        "median_m": 1765,
+        "max_m": 2846,
+        "far_share_pct": 40.8
+      },
+      "school_secondary": {
+        "mean_m": 5454,
+        "median_m": 5574,
+        "max_m": 6248,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 14979,
+        "median_m": 14986,
+        "max_m": 16322,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 552,
+        "median_m": 475,
+        "max_m": 1544,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772032035": {
+      "ri_name": "고곡리",
+      "region_code": "2772032000",
+      "region_name": "효령면",
+      "houses": 185,
+      "primary_care": {
+        "mean_m": 1188,
+        "median_m": 1238,
+        "max_m": 2367,
+        "far_share_pct": 25.4
+      },
+      "health": {
+        "mean_m": 1188,
+        "median_m": 1238,
+        "max_m": 2367,
+        "far_share_pct": 25.4
+      },
+      "clinic": {
+        "mean_m": 5115,
+        "median_m": 4978,
+        "max_m": 6959,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 229,
+        "median_m": 212,
+        "max_m": 985,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1335,
+        "median_m": 1424,
+        "max_m": 2552,
+        "far_share_pct": 27.0
+      },
+      "school_secondary": {
+        "mean_m": 5132,
+        "median_m": 4996,
+        "max_m": 6671,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 13838,
+        "median_m": 13727,
+        "max_m": 15326,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 905,
+        "median_m": 772,
+        "max_m": 1833,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772033021": {
+      "ri_name": "창평리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 199,
+      "primary_care": {
+        "mean_m": 898,
+        "median_m": 596,
+        "max_m": 2176,
+        "far_share_pct": 4.5
+      },
+      "health": {
+        "mean_m": 898,
+        "median_m": 596,
+        "max_m": 2176,
+        "far_share_pct": 4.5
+      },
+      "clinic": {
+        "mean_m": 9589,
+        "median_m": 9439,
+        "max_m": 10552,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 224,
+        "median_m": 191,
+        "max_m": 931,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1287,
+        "median_m": 743,
+        "max_m": 3370,
+        "far_share_pct": 27.6
+      },
+      "school_secondary": {
+        "mean_m": 2679,
+        "median_m": 2676,
+        "max_m": 3551,
+        "far_share_pct": 99.0
+      },
+      "childcare": {
+        "mean_m": 9804,
+        "median_m": 9630,
+        "max_m": 10652,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 578,
+        "median_m": 422,
+        "max_m": 1139,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772033022": {
+      "ri_name": "가호리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 93,
+      "primary_care": {
+        "mean_m": 1972,
+        "median_m": 2210,
+        "max_m": 2904,
+        "far_share_pct": 60.2
+      },
+      "health": {
+        "mean_m": 1972,
+        "median_m": 2210,
+        "max_m": 2904,
+        "far_share_pct": 60.2
+      },
+      "clinic": {
+        "mean_m": 11301,
+        "median_m": 11075,
+        "max_m": 12350,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 266,
+        "median_m": 137,
+        "max_m": 1140,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2745,
+        "median_m": 2523,
+        "max_m": 4008,
+        "far_share_pct": 68.8
+      },
+      "school_secondary": {
+        "mean_m": 1938,
+        "median_m": 1769,
+        "max_m": 2916,
+        "far_share_pct": 48.4
+      },
+      "childcare": {
+        "mean_m": 11517,
+        "median_m": 11212,
+        "max_m": 12452,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1636,
+        "median_m": 1808,
+        "max_m": 2057,
+        "far_share_pct": 4.3
+      }
+    },
+    "2772033023": {
+      "ri_name": "춘산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 65,
+      "primary_care": {
+        "mean_m": 1673,
+        "median_m": 1650,
+        "max_m": 2676,
+        "far_share_pct": 20.0
+      },
+      "health": {
+        "mean_m": 1673,
+        "median_m": 1650,
+        "max_m": 2676,
+        "far_share_pct": 20.0
+      },
+      "clinic": {
+        "mean_m": 10127,
+        "median_m": 10068,
+        "max_m": 10859,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 392,
+        "median_m": 241,
+        "max_m": 1653,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2248,
+        "median_m": 2722,
+        "max_m": 3327,
+        "far_share_pct": 56.9
+      },
+      "school_secondary": {
+        "mean_m": 824,
+        "median_m": 1002,
+        "max_m": 1644,
+        "far_share_pct": 0.0
+      },
+      "childcare": {
+        "mean_m": 11729,
+        "median_m": 12207,
+        "max_m": 12829,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1544,
+        "median_m": 1496,
+        "max_m": 2567,
+        "far_share_pct": 9.2
+      }
+    },
+    "2772033024": {
+      "ri_name": "대율리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 224,
+      "primary_care": {
+        "mean_m": 370,
+        "median_m": 339,
+        "max_m": 1290,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 370,
+        "median_m": 339,
+        "max_m": 1290,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 12279,
+        "median_m": 12223,
+        "max_m": 13319,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 230,
+        "median_m": 175,
+        "max_m": 1138,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4822,
+        "median_m": 4830,
+        "max_m": 5793,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 2331,
+        "median_m": 2316,
+        "max_m": 3310,
+        "far_share_pct": 90.2
+      },
+      "childcare": {
+        "mean_m": 14137,
+        "median_m": 14163,
+        "max_m": 15082,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 280,
+        "median_m": 248,
+        "max_m": 1044,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772033025": {
+      "ri_name": "동산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 121,
+      "primary_care": {
+        "mean_m": 1677,
+        "median_m": 1545,
+        "max_m": 3790,
+        "far_share_pct": 10.7
+      },
+      "health": {
+        "mean_m": 1677,
+        "median_m": 1545,
+        "max_m": 3790,
+        "far_share_pct": 10.7
+      },
+      "clinic": {
+        "mean_m": 13492,
+        "median_m": 13372,
+        "max_m": 15925,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 536,
+        "median_m": 353,
+        "max_m": 3038,
+        "far_share_pct": 5.0
+      },
+      "school_elementary": {
+        "mean_m": 6231,
+        "median_m": 6136,
+        "max_m": 7797,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 3759,
+        "median_m": 3650,
+        "max_m": 5681,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 15446,
+        "median_m": 15437,
+        "max_m": 16197,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 595,
+        "median_m": 520,
+        "max_m": 2492,
+        "far_share_pct": 4.1
+      }
+    },
+    "2772033026": {
+      "ri_name": "남산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 175,
+      "primary_care": {
+        "mean_m": 3035,
+        "median_m": 3116,
+        "max_m": 4353,
+        "far_share_pct": 94.9
+      },
+      "health": {
+        "mean_m": 3035,
+        "median_m": 3116,
+        "max_m": 4353,
+        "far_share_pct": 94.9
+      },
+      "clinic": {
+        "mean_m": 13576,
+        "median_m": 13772,
+        "max_m": 15425,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 548,
+        "median_m": 463,
+        "max_m": 1554,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7383,
+        "median_m": 7590,
+        "max_m": 8971,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4862,
+        "median_m": 5042,
+        "max_m": 6428,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 16864,
+        "median_m": 17049,
+        "max_m": 18298,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 828,
+        "median_m": 867,
+        "max_m": 1492,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772033027": {
+      "ri_name": "명산리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 58,
+      "primary_care": {
+        "mean_m": 1959,
+        "median_m": 1999,
+        "max_m": 2166,
+        "far_share_pct": 50.0
+      },
+      "health": {
+        "mean_m": 1959,
+        "median_m": 1999,
+        "max_m": 2166,
+        "far_share_pct": 50.0
+      },
+      "clinic": {
+        "mean_m": 7417,
+        "median_m": 7452,
+        "max_m": 7671,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 148,
+        "median_m": 137,
+        "max_m": 439,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 2495,
+        "median_m": 2504,
+        "max_m": 2637,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 2916,
+        "median_m": 2881,
+        "max_m": 3366,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11124,
+        "median_m": 11112,
+        "max_m": 11367,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2446,
+        "median_m": 2454,
+        "max_m": 2587,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772033028": {
+      "ri_name": "신화리",
+      "region_code": "2772033000",
+      "region_name": "부계면",
+      "houses": 81,
+      "primary_care": {
+        "mean_m": 1650,
+        "median_m": 1720,
+        "max_m": 1915,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1650,
+        "median_m": 1720,
+        "max_m": 1915,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 7797,
+        "median_m": 7741,
+        "max_m": 8763,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 845,
+        "median_m": 586,
+        "max_m": 1718,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1657,
+        "median_m": 1675,
+        "max_m": 2110,
+        "far_share_pct": 2.5
+      },
+      "school_secondary": {
+        "mean_m": 3091,
+        "median_m": 2803,
+        "max_m": 4378,
+        "far_share_pct": 86.4
+      },
+      "childcare": {
+        "mean_m": 9733,
+        "median_m": 10183,
+        "max_m": 11134,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1630,
+        "median_m": 1637,
+        "max_m": 2069,
+        "far_share_pct": 2.5
+      }
+    },
+    "2772034021": {
+      "ri_name": "나호리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 115,
+      "primary_care": {
+        "mean_m": 1953,
+        "median_m": 1993,
+        "max_m": 2824,
+        "far_share_pct": 48.7
+      },
+      "health": {
+        "mean_m": 1962,
+        "median_m": 1993,
+        "max_m": 2824,
+        "far_share_pct": 48.7
+      },
+      "clinic": {
+        "mean_m": 2456,
+        "median_m": 2654,
+        "max_m": 4236,
+        "far_share_pct": 55.7
+      },
+      "bus_stop": {
+        "mean_m": 406,
+        "median_m": 366,
+        "max_m": 814,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6952,
+        "median_m": 7421,
+        "max_m": 8051,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6700,
+        "median_m": 6498,
+        "max_m": 8306,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 6677,
+        "median_m": 7155,
+        "max_m": 7639,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2401,
+        "median_m": 2613,
+        "max_m": 4197,
+        "far_share_pct": 54.8
+      }
+    },
+    "2772034022": {
+      "ri_name": "이화리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 241,
+      "primary_care": {
+        "mean_m": 585,
+        "median_m": 358,
+        "max_m": 2451,
+        "far_share_pct": 4.6
+      },
+      "health": {
+        "mean_m": 601,
+        "median_m": 358,
+        "max_m": 2503,
+        "far_share_pct": 5.0
+      },
+      "clinic": {
+        "mean_m": 599,
+        "median_m": 369,
+        "max_m": 2451,
+        "far_share_pct": 4.6
+      },
+      "bus_stop": {
+        "mean_m": 141,
+        "median_m": 114,
+        "max_m": 1547,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5047,
+        "median_m": 5267,
+        "max_m": 6174,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 9202,
+        "median_m": 9238,
+        "max_m": 11027,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4881,
+        "median_m": 5100,
+        "max_m": 6008,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 586,
+        "median_m": 365,
+        "max_m": 2404,
+        "far_share_pct": 4.6
+      }
+    },
+    "2772034023": {
+      "ri_name": "두북리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 49,
+      "primary_care": {
+        "mean_m": 1871,
+        "median_m": 1970,
+        "max_m": 2518,
+        "far_share_pct": 44.9
+      },
+      "health": {
+        "mean_m": 1871,
+        "median_m": 1970,
+        "max_m": 2518,
+        "far_share_pct": 44.9
+      },
+      "clinic": {
+        "mean_m": 1923,
+        "median_m": 2024,
+        "max_m": 2570,
+        "far_share_pct": 55.1
+      },
+      "bus_stop": {
+        "mean_m": 1546,
+        "median_m": 1674,
+        "max_m": 2089,
+        "far_share_pct": 6.1
+      },
+      "school_elementary": {
+        "mean_m": 7026,
+        "median_m": 6967,
+        "max_m": 7567,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 8326,
+        "median_m": 8566,
+        "max_m": 9001,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 6778,
+        "median_m": 6802,
+        "max_m": 7325,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1952,
+        "median_m": 2055,
+        "max_m": 2599,
+        "far_share_pct": 63.3
+      }
+    },
+    "2772034024": {
+      "ri_name": "선곡리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 118,
+      "primary_care": {
+        "mean_m": 1458,
+        "median_m": 1280,
+        "max_m": 2217,
+        "far_share_pct": 25.4
+      },
+      "health": {
+        "mean_m": 1459,
+        "median_m": 1289,
+        "max_m": 2217,
+        "far_share_pct": 25.4
+      },
+      "clinic": {
+        "mean_m": 1472,
+        "median_m": 1289,
+        "max_m": 2219,
+        "far_share_pct": 25.4
+      },
+      "bus_stop": {
+        "mean_m": 904,
+        "median_m": 730,
+        "max_m": 1557,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4897,
+        "median_m": 5078,
+        "max_m": 5538,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 10480,
+        "median_m": 10296,
+        "max_m": 11285,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4735,
+        "median_m": 4913,
+        "max_m": 5372,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1481,
+        "median_m": 1294,
+        "max_m": 2221,
+        "far_share_pct": 25.4
+      }
+    },
+    "2772034025": {
+      "ri_name": "미성리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 121,
+      "primary_care": {
+        "mean_m": 2410,
+        "median_m": 2311,
+        "max_m": 2919,
+        "far_share_pct": 92.6
+      },
+      "health": {
+        "mean_m": 2447,
+        "median_m": 2365,
+        "max_m": 2942,
+        "far_share_pct": 95.9
+      },
+      "clinic": {
+        "mean_m": 2603,
+        "median_m": 2535,
+        "max_m": 3714,
+        "far_share_pct": 92.6
+      },
+      "bus_stop": {
+        "mean_m": 308,
+        "median_m": 229,
+        "max_m": 653,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4333,
+        "median_m": 4242,
+        "max_m": 4926,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 8593,
+        "median_m": 8635,
+        "max_m": 9064,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4190,
+        "median_m": 4099,
+        "max_m": 4772,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2252,
+        "median_m": 2238,
+        "max_m": 2664,
+        "far_share_pct": 81.8
+      }
+    },
+    "2772034026": {
+      "ri_name": "모산리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 83,
+      "primary_care": {
+        "mean_m": 496,
+        "median_m": 249,
+        "max_m": 2333,
+        "far_share_pct": 1.2
+      },
+      "health": {
+        "mean_m": 496,
+        "median_m": 249,
+        "max_m": 2333,
+        "far_share_pct": 1.2
+      },
+      "clinic": {
+        "mean_m": 3890,
+        "median_m": 3897,
+        "max_m": 4277,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 196,
+        "median_m": 189,
+        "max_m": 1094,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4128,
+        "median_m": 4142,
+        "max_m": 4385,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 8263,
+        "median_m": 8234,
+        "max_m": 9196,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4079,
+        "median_m": 4087,
+        "max_m": 4397,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 451,
+        "median_m": 248,
+        "max_m": 2005,
+        "far_share_pct": 1.2
+      }
+    },
+    "2772034027": {
+      "ri_name": "문덕리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 115,
+      "primary_care": {
+        "mean_m": 675,
+        "median_m": 520,
+        "max_m": 1532,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 675,
+        "median_m": 520,
+        "max_m": 1532,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 4425,
+        "median_m": 4061,
+        "max_m": 5736,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 437,
+        "median_m": 158,
+        "max_m": 1486,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4165,
+        "median_m": 4174,
+        "max_m": 4776,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 7538,
+        "median_m": 7880,
+        "max_m": 8208,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4588,
+        "median_m": 4223,
+        "max_m": 5894,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 906,
+        "median_m": 855,
+        "max_m": 1496,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772034028": {
+      "ri_name": "달산리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 108,
+      "primary_care": {
+        "mean_m": 3279,
+        "median_m": 3585,
+        "max_m": 4318,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3287,
+        "median_m": 3593,
+        "max_m": 4318,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4437,
+        "median_m": 4262,
+        "max_m": 6311,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 228,
+        "median_m": 112,
+        "max_m": 1631,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 6173,
+        "median_m": 6376,
+        "max_m": 7336,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6378,
+        "median_m": 6421,
+        "max_m": 7292,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 6520,
+        "median_m": 6367,
+        "max_m": 7886,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3252,
+        "median_m": 3524,
+        "max_m": 4460,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772034029": {
+      "ri_name": "봉산리",
+      "region_code": "2772034000",
+      "region_name": "우보면",
+      "houses": 109,
+      "primary_care": {
+        "mean_m": 2612,
+        "median_m": 3033,
+        "max_m": 3461,
+        "far_share_pct": 87.2
+      },
+      "health": {
+        "mean_m": 2613,
+        "median_m": 3033,
+        "max_m": 3461,
+        "far_share_pct": 87.2
+      },
+      "clinic": {
+        "mean_m": 3838,
+        "median_m": 3866,
+        "max_m": 4221,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 226,
+        "median_m": 226,
+        "max_m": 573,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7741,
+        "median_m": 7645,
+        "max_m": 8444,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 5252,
+        "median_m": 5343,
+        "max_m": 5989,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 7425,
+        "median_m": 7399,
+        "max_m": 7966,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3759,
+        "median_m": 3770,
+        "max_m": 4113,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035021": {
+      "ri_name": "읍내리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 241,
+      "primary_care": {
+        "mean_m": 218,
+        "median_m": 197,
+        "max_m": 1406,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 370,
+        "median_m": 368,
+        "max_m": 1572,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 220,
+        "median_m": 197,
+        "max_m": 1406,
+        "far_share_pct": 0.0
+      },
+      "bus_stop": {
+        "mean_m": 179,
+        "median_m": 132,
+        "max_m": 840,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 265,
+        "median_m": 248,
+        "max_m": 1254,
+        "far_share_pct": 0.0
+      },
+      "school_secondary": {
+        "mean_m": 11965,
+        "median_m": 11915,
+        "max_m": 13082,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 262,
+        "median_m": 246,
+        "max_m": 1363,
+        "far_share_pct": 0.0
+      },
+      "grocery": {
+        "mean_m": 163,
+        "median_m": 103,
+        "max_m": 1011,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772035022": {
+      "ri_name": "수북리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 148,
+      "primary_care": {
+        "mean_m": 1473,
+        "median_m": 1383,
+        "max_m": 2998,
+        "far_share_pct": 14.9
+      },
+      "health": {
+        "mean_m": 1479,
+        "median_m": 1383,
+        "max_m": 3053,
+        "far_share_pct": 14.9
+      },
+      "clinic": {
+        "mean_m": 1516,
+        "median_m": 1432,
+        "max_m": 2998,
+        "far_share_pct": 14.9
+      },
+      "bus_stop": {
+        "mean_m": 818,
+        "median_m": 581,
+        "max_m": 2349,
+        "far_share_pct": 14.9
+      },
+      "school_elementary": {
+        "mean_m": 1748,
+        "median_m": 1753,
+        "max_m": 2895,
+        "far_share_pct": 15.5
+      },
+      "school_secondary": {
+        "mean_m": 12221,
+        "median_m": 11891,
+        "max_m": 14924,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 1618,
+        "median_m": 1596,
+        "max_m": 2926,
+        "far_share_pct": 14.9
+      },
+      "grocery": {
+        "mean_m": 1560,
+        "median_m": 1529,
+        "max_m": 2412,
+        "far_share_pct": 14.9
+      }
+    },
+    "2772035023": {
+      "ri_name": "수서리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 76,
+      "primary_care": {
+        "mean_m": 1615,
+        "median_m": 1484,
+        "max_m": 2321,
+        "far_share_pct": 17.1
+      },
+      "health": {
+        "mean_m": 1616,
+        "median_m": 1484,
+        "max_m": 2321,
+        "far_share_pct": 17.1
+      },
+      "clinic": {
+        "mean_m": 1629,
+        "median_m": 1485,
+        "max_m": 2335,
+        "far_share_pct": 28.9
+      },
+      "bus_stop": {
+        "mean_m": 327,
+        "median_m": 321,
+        "max_m": 543,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1997,
+        "median_m": 1861,
+        "max_m": 2711,
+        "far_share_pct": 43.4
+      },
+      "school_secondary": {
+        "mean_m": 11005,
+        "median_m": 11007,
+        "max_m": 11379,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 1843,
+        "median_m": 1712,
+        "max_m": 2553,
+        "far_share_pct": 43.4
+      },
+      "grocery": {
+        "mean_m": 1707,
+        "median_m": 1556,
+        "max_m": 2416,
+        "far_share_pct": 42.1
+      }
+    },
+    "2772035024": {
+      "ri_name": "이지리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 117,
+      "primary_care": {
+        "mean_m": 1526,
+        "median_m": 1766,
+        "max_m": 2566,
+        "far_share_pct": 12.0
+      },
+      "health": {
+        "mean_m": 1566,
+        "median_m": 1787,
+        "max_m": 2566,
+        "far_share_pct": 17.1
+      },
+      "clinic": {
+        "mean_m": 1526,
+        "median_m": 1766,
+        "max_m": 2566,
+        "far_share_pct": 12.0
+      },
+      "bus_stop": {
+        "mean_m": 359,
+        "median_m": 408,
+        "max_m": 712,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1822,
+        "median_m": 2118,
+        "max_m": 2940,
+        "far_share_pct": 53.0
+      },
+      "school_secondary": {
+        "mean_m": 10704,
+        "median_m": 10702,
+        "max_m": 11279,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 1730,
+        "median_m": 1995,
+        "max_m": 2794,
+        "far_share_pct": 49.6
+      },
+      "grocery": {
+        "mean_m": 1527,
+        "median_m": 1814,
+        "max_m": 2578,
+        "far_share_pct": 17.9
+      }
+    },
+    "2772035025": {
+      "ri_name": "파전리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 77,
+      "primary_care": {
+        "mean_m": 1631,
+        "median_m": 1628,
+        "max_m": 1821,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1637,
+        "median_m": 1628,
+        "max_m": 1821,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 2070,
+        "median_m": 2091,
+        "max_m": 2649,
+        "far_share_pct": 54.5
+      },
+      "bus_stop": {
+        "mean_m": 322,
+        "median_m": 295,
+        "max_m": 652,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1906,
+        "median_m": 1927,
+        "max_m": 2484,
+        "far_share_pct": 29.9
+      },
+      "school_secondary": {
+        "mean_m": 13022,
+        "median_m": 12991,
+        "max_m": 13539,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2058,
+        "median_m": 2081,
+        "max_m": 2631,
+        "far_share_pct": 54.5
+      },
+      "grocery": {
+        "mean_m": 231,
+        "median_m": 228,
+        "max_m": 607,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772035026": {
+      "ri_name": "신덕리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 82,
+      "primary_care": {
+        "mean_m": 2117,
+        "median_m": 1939,
+        "max_m": 3771,
+        "far_share_pct": 23.2
+      },
+      "health": {
+        "mean_m": 2117,
+        "median_m": 1939,
+        "max_m": 3771,
+        "far_share_pct": 23.2
+      },
+      "clinic": {
+        "mean_m": 3460,
+        "median_m": 3293,
+        "max_m": 5176,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 374,
+        "median_m": 144,
+        "max_m": 1900,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3298,
+        "median_m": 3130,
+        "max_m": 5017,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 14335,
+        "median_m": 14193,
+        "max_m": 16003,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3433,
+        "median_m": 3266,
+        "max_m": 5140,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1467,
+        "median_m": 1287,
+        "max_m": 3234,
+        "far_share_pct": 13.4
+      }
+    },
+    "2772035027": {
+      "ri_name": "지호리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 105,
+      "primary_care": {
+        "mean_m": 2328,
+        "median_m": 2485,
+        "max_m": 2822,
+        "far_share_pct": 77.1
+      },
+      "health": {
+        "mean_m": 2328,
+        "median_m": 2485,
+        "max_m": 2822,
+        "far_share_pct": 77.1
+      },
+      "clinic": {
+        "mean_m": 5111,
+        "median_m": 5325,
+        "max_m": 5585,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 255,
+        "median_m": 211,
+        "max_m": 655,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4948,
+        "median_m": 5161,
+        "max_m": 5421,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 14643,
+        "median_m": 14748,
+        "max_m": 15091,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5105,
+        "median_m": 5319,
+        "max_m": 5576,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3011,
+        "median_m": 3225,
+        "max_m": 3475,
+        "far_share_pct": 99.0
+      }
+    },
+    "2772035028": {
+      "ri_name": "연계리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 122,
+      "primary_care": {
+        "mean_m": 501,
+        "median_m": 525,
+        "max_m": 921,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 501,
+        "median_m": 525,
+        "max_m": 921,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 3516,
+        "median_m": 3593,
+        "max_m": 3989,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 232,
+        "median_m": 195,
+        "max_m": 779,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3373,
+        "median_m": 3450,
+        "max_m": 3846,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 12478,
+        "median_m": 12455,
+        "max_m": 13431,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 3540,
+        "median_m": 3617,
+        "max_m": 4014,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1870,
+        "median_m": 2015,
+        "max_m": 2315,
+        "far_share_pct": 51.6
+      }
+    },
+    "2772035029": {
+      "ri_name": "매성리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 85,
+      "primary_care": {
+        "mean_m": 1666,
+        "median_m": 1799,
+        "max_m": 2126,
+        "far_share_pct": 1.2
+      },
+      "health": {
+        "mean_m": 1666,
+        "median_m": 1799,
+        "max_m": 2126,
+        "far_share_pct": 1.2
+      },
+      "clinic": {
+        "mean_m": 4439,
+        "median_m": 4521,
+        "max_m": 4698,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 169,
+        "median_m": 165,
+        "max_m": 496,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4323,
+        "median_m": 4410,
+        "max_m": 4584,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 11582,
+        "median_m": 11531,
+        "max_m": 11933,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4483,
+        "median_m": 4568,
+        "max_m": 4743,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3188,
+        "median_m": 3314,
+        "max_m": 3563,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772035030": {
+      "ri_name": "원산리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 126,
+      "primary_care": {
+        "mean_m": 1586,
+        "median_m": 1676,
+        "max_m": 1798,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1650,
+        "median_m": 1703,
+        "max_m": 1895,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 2029,
+        "median_m": 1817,
+        "max_m": 2678,
+        "far_share_pct": 46.0
+      },
+      "bus_stop": {
+        "mean_m": 176,
+        "median_m": 172,
+        "max_m": 750,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 1930,
+        "median_m": 1714,
+        "max_m": 2596,
+        "far_share_pct": 46.0
+      },
+      "school_secondary": {
+        "mean_m": 11346,
+        "median_m": 11416,
+        "max_m": 12216,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 2080,
+        "median_m": 1868,
+        "max_m": 2738,
+        "far_share_pct": 46.8
+      },
+      "grocery": {
+        "mean_m": 1684,
+        "median_m": 1530,
+        "max_m": 2298,
+        "far_share_pct": 39.7
+      }
+    },
+    "2772035031": {
+      "ri_name": "금양리",
+      "region_code": "2772035000",
+      "region_name": "의흥면",
+      "houses": 90,
+      "primary_care": {
+        "mean_m": 2675,
+        "median_m": 2755,
+        "max_m": 3582,
+        "far_share_pct": 98.9
+      },
+      "health": {
+        "mean_m": 2675,
+        "median_m": 2755,
+        "max_m": 3582,
+        "far_share_pct": 98.9
+      },
+      "clinic": {
+        "mean_m": 4713,
+        "median_m": 4851,
+        "max_m": 5267,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 257,
+        "median_m": 202,
+        "max_m": 1171,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4633,
+        "median_m": 4770,
+        "max_m": 5184,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 10376,
+        "median_m": 10380,
+        "max_m": 11354,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4774,
+        "median_m": 4911,
+        "max_m": 5327,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3934,
+        "median_m": 4076,
+        "max_m": 4464,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772036021": {
+      "ri_name": "백학리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 85,
+      "primary_care": {
+        "mean_m": 2853,
+        "median_m": 3339,
+        "max_m": 4072,
+        "far_share_pct": 62.4
+      },
+      "health": {
+        "mean_m": 2853,
+        "median_m": 3339,
+        "max_m": 4072,
+        "far_share_pct": 62.4
+      },
+      "clinic": {
+        "mean_m": 11951,
+        "median_m": 12425,
+        "max_m": 13532,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 205,
+        "median_m": 189,
+        "max_m": 883,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5094,
+        "median_m": 5440,
+        "max_m": 6259,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4421,
+        "median_m": 4431,
+        "max_m": 4964,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 12032,
+        "median_m": 12506,
+        "max_m": 13612,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 987,
+        "median_m": 1339,
+        "max_m": 2435,
+        "far_share_pct": 2.4
+      }
+    },
+    "2772036022": {
+      "ri_name": "삼산리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 138,
+      "primary_care": {
+        "mean_m": 489,
+        "median_m": 459,
+        "max_m": 1440,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 489,
+        "median_m": 459,
+        "max_m": 1440,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 9242,
+        "median_m": 9132,
+        "max_m": 10527,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 115,
+        "median_m": 108,
+        "max_m": 277,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4070,
+        "median_m": 4095,
+        "max_m": 4370,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 4855,
+        "median_m": 4795,
+        "max_m": 5354,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 9323,
+        "median_m": 9213,
+        "max_m": 10608,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 449,
+        "median_m": 428,
+        "max_m": 1003,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772036023": {
+      "ri_name": "봉림리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 92,
+      "primary_care": {
+        "mean_m": 1597,
+        "median_m": 1593,
+        "max_m": 2099,
+        "far_share_pct": 1.1
+      },
+      "health": {
+        "mean_m": 1597,
+        "median_m": 1593,
+        "max_m": 2099,
+        "far_share_pct": 1.1
+      },
+      "clinic": {
+        "mean_m": 9047,
+        "median_m": 9134,
+        "max_m": 9730,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 400,
+        "median_m": 381,
+        "max_m": 1018,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 5462,
+        "median_m": 5483,
+        "max_m": 5791,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6311,
+        "median_m": 6295,
+        "max_m": 6922,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 9126,
+        "median_m": 9213,
+        "max_m": 9809,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1309,
+        "median_m": 1314,
+        "max_m": 1724,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772036024": {
+      "ri_name": "무암리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 81,
+      "primary_care": {
+        "mean_m": 1754,
+        "median_m": 1657,
+        "max_m": 2183,
+        "far_share_pct": 39.5
+      },
+      "health": {
+        "mean_m": 1754,
+        "median_m": 1657,
+        "max_m": 2183,
+        "far_share_pct": 39.5
+      },
+      "clinic": {
+        "mean_m": 7504,
+        "median_m": 7498,
+        "max_m": 8881,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 509,
+        "median_m": 285,
+        "max_m": 1094,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4457,
+        "median_m": 4397,
+        "max_m": 5454,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6016,
+        "median_m": 5778,
+        "max_m": 6869,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 7584,
+        "median_m": 7577,
+        "max_m": 8962,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1497,
+        "median_m": 1520,
+        "max_m": 1826,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772036025": {
+      "ri_name": "운산리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 81,
+      "primary_care": {
+        "mean_m": 1632,
+        "median_m": 1595,
+        "max_m": 1834,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 1632,
+        "median_m": 1595,
+        "max_m": 1834,
+        "far_share_pct": 0.0
+      },
+      "clinic": {
+        "mean_m": 7321,
+        "median_m": 7304,
+        "max_m": 7920,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 165,
+        "median_m": 135,
+        "max_m": 713,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 3209,
+        "median_m": 3173,
+        "max_m": 3551,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 5136,
+        "median_m": 5154,
+        "max_m": 5329,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 7416,
+        "median_m": 7402,
+        "max_m": 8013,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1271,
+        "median_m": 1196,
+        "max_m": 1730,
+        "far_share_pct": 0.0
+      }
+    },
+    "2772036026": {
+      "ri_name": "화본리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 177,
+      "primary_care": {
+        "mean_m": 634,
+        "median_m": 362,
+        "max_m": 2570,
+        "far_share_pct": 1.7
+      },
+      "health": {
+        "mean_m": 634,
+        "median_m": 362,
+        "max_m": 2570,
+        "far_share_pct": 1.7
+      },
+      "clinic": {
+        "mean_m": 5846,
+        "median_m": 5829,
+        "max_m": 6382,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 242,
+        "median_m": 119,
+        "max_m": 1742,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4271,
+        "median_m": 4087,
+        "max_m": 5921,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 6490,
+        "median_m": 6416,
+        "max_m": 7854,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 5944,
+        "median_m": 5932,
+        "max_m": 6500,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 576,
+        "median_m": 174,
+        "max_m": 2578,
+        "far_share_pct": 1.7
+      }
+    },
+    "2772036027": {
+      "ri_name": "화전리",
+      "region_code": "2772036000",
+      "region_name": "산성면",
+      "houses": 77,
+      "primary_care": {
+        "mean_m": 1879,
+        "median_m": 2024,
+        "max_m": 3064,
+        "far_share_pct": 51.9
+      },
+      "health": {
+        "mean_m": 1879,
+        "median_m": 2024,
+        "max_m": 3064,
+        "far_share_pct": 51.9
+      },
+      "clinic": {
+        "mean_m": 4208,
+        "median_m": 4205,
+        "max_m": 4808,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 694,
+        "median_m": 1004,
+        "max_m": 1241,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 4256,
+        "median_m": 4218,
+        "max_m": 4863,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 8130,
+        "median_m": 8293,
+        "max_m": 9272,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 4302,
+        "median_m": 4288,
+        "max_m": 4899,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1815,
+        "median_m": 1969,
+        "max_m": 3014,
+        "far_share_pct": 44.2
+      }
+    },
+    "2772037021": {
+      "ri_name": "화수리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 98,
+      "primary_care": {
+        "mean_m": 3655,
+        "median_m": 3465,
+        "max_m": 4180,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3655,
+        "median_m": 3465,
+        "max_m": 4180,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 7083,
+        "median_m": 6672,
+        "max_m": 8149,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 156,
+        "median_m": 154,
+        "max_m": 503,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7005,
+        "median_m": 6586,
+        "max_m": 8086,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 10144,
+        "median_m": 10454,
+        "max_m": 11000,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 7144,
+        "median_m": 6730,
+        "max_m": 8216,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 4994,
+        "median_m": 5369,
+        "max_m": 5617,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037022": {
+      "ri_name": "화북리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 143,
+      "primary_care": {
+        "mean_m": 1983,
+        "median_m": 2050,
+        "max_m": 3663,
+        "far_share_pct": 51.7
+      },
+      "health": {
+        "mean_m": 1983,
+        "median_m": 2050,
+        "max_m": 3663,
+        "far_share_pct": 51.7
+      },
+      "clinic": {
+        "mean_m": 8659,
+        "median_m": 8705,
+        "max_m": 10156,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 977,
+        "median_m": 935,
+        "max_m": 2524,
+        "far_share_pct": 13.3
+      },
+      "school_elementary": {
+        "mean_m": 8550,
+        "median_m": 8601,
+        "max_m": 10046,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 11856,
+        "median_m": 11822,
+        "max_m": 12927,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 8710,
+        "median_m": 8757,
+        "max_m": 10204,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 6471,
+        "median_m": 6311,
+        "max_m": 7769,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037023": {
+      "ri_name": "괴산리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 45,
+      "primary_care": {
+        "mean_m": 2396,
+        "median_m": 2376,
+        "max_m": 2664,
+        "far_share_pct": 95.6
+      },
+      "health": {
+        "mean_m": 2396,
+        "median_m": 2376,
+        "max_m": 2664,
+        "far_share_pct": 95.6
+      },
+      "clinic": {
+        "mean_m": 9821,
+        "median_m": 9713,
+        "max_m": 10962,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 331,
+        "median_m": 173,
+        "max_m": 1718,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 11332,
+        "median_m": 11295,
+        "max_m": 11607,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 15121,
+        "median_m": 15231,
+        "max_m": 15443,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11496,
+        "median_m": 11461,
+        "max_m": 11772,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 7687,
+        "median_m": 7600,
+        "max_m": 8600,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037024": {
+      "ri_name": "학성리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 18,
+      "primary_care": {
+        "mean_m": 2263,
+        "median_m": 2976,
+        "max_m": 4236,
+        "far_share_pct": 61.1
+      },
+      "health": {
+        "mean_m": 2263,
+        "median_m": 2976,
+        "max_m": 4236,
+        "far_share_pct": 61.1
+      },
+      "clinic": {
+        "mean_m": 7883,
+        "median_m": 7275,
+        "max_m": 9169,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 1125,
+        "median_m": 1586,
+        "max_m": 1939,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 7747,
+        "median_m": 7126,
+        "max_m": 9044,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 14630,
+        "median_m": 14524,
+        "max_m": 16285,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 7910,
+        "median_m": 7294,
+        "max_m": 9208,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 6039,
+        "median_m": 5368,
+        "max_m": 7605,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037025": {
+      "ri_name": "장곡리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 10,
+      "primary_care": {
+        "mean_m": 3218,
+        "median_m": 3096,
+        "max_m": 3678,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3218,
+        "median_m": 3096,
+        "max_m": 3678,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 7937,
+        "median_m": 8171,
+        "max_m": 8342,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 1736,
+        "median_m": 1567,
+        "max_m": 2253,
+        "far_share_pct": 40.0
+      },
+      "school_elementary": {
+        "mean_m": 11431,
+        "median_m": 11559,
+        "max_m": 11637,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 16645,
+        "median_m": 16441,
+        "max_m": 17164,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11598,
+        "median_m": 11727,
+        "max_m": 11805,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 5830,
+        "median_m": 6062,
+        "max_m": 6234,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037026": {
+      "ri_name": "인곡리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 31,
+      "primary_care": {
+        "mean_m": 3221,
+        "median_m": 2935,
+        "max_m": 3844,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 3221,
+        "median_m": 2935,
+        "max_m": 3844,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 5554,
+        "median_m": 5058,
+        "max_m": 6645,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 1735,
+        "median_m": 1717,
+        "max_m": 2794,
+        "far_share_pct": 12.9
+      },
+      "school_elementary": {
+        "mean_m": 10896,
+        "median_m": 11223,
+        "max_m": 11858,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 17983,
+        "median_m": 18468,
+        "max_m": 18971,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11060,
+        "median_m": 11386,
+        "max_m": 12024,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 3462,
+        "median_m": 2941,
+        "max_m": 4657,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037027": {
+      "ri_name": "양지리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 78,
+      "primary_care": {
+        "mean_m": 2813,
+        "median_m": 2864,
+        "max_m": 3305,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 2813,
+        "median_m": 2864,
+        "max_m": 3305,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4607,
+        "median_m": 4620,
+        "max_m": 5196,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 244,
+        "median_m": 244,
+        "max_m": 367,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 9831,
+        "median_m": 9751,
+        "max_m": 10239,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 18237,
+        "median_m": 18213,
+        "max_m": 18558,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 9987,
+        "median_m": 9908,
+        "max_m": 10396,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2799,
+        "median_m": 2848,
+        "max_m": 3294,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037028": {
+      "ri_name": "낙전리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 50,
+      "primary_care": {
+        "mean_m": 4176,
+        "median_m": 3801,
+        "max_m": 5619,
+        "far_share_pct": 100.0
+      },
+      "health": {
+        "mean_m": 4311,
+        "median_m": 4057,
+        "max_m": 5619,
+        "far_share_pct": 100.0
+      },
+      "clinic": {
+        "mean_m": 4429,
+        "median_m": 4129,
+        "max_m": 5818,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 919,
+        "median_m": 1037,
+        "max_m": 2259,
+        "far_share_pct": 12.0
+      },
+      "school_elementary": {
+        "mean_m": 9559,
+        "median_m": 9559,
+        "max_m": 10682,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 19928,
+        "median_m": 19692,
+        "max_m": 21476,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 9682,
+        "median_m": 9689,
+        "max_m": 10790,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 4282,
+        "median_m": 4028,
+        "max_m": 5590,
+        "far_share_pct": 100.0
+      }
+    },
+    "2772037029": {
+      "ri_name": "가암리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 92,
+      "primary_care": {
+        "mean_m": 1828,
+        "median_m": 1598,
+        "max_m": 3408,
+        "far_share_pct": 30.4
+      },
+      "health": {
+        "mean_m": 1982,
+        "median_m": 1598,
+        "max_m": 4405,
+        "far_share_pct": 30.4
+      },
+      "clinic": {
+        "mean_m": 2581,
+        "median_m": 2545,
+        "max_m": 3408,
+        "far_share_pct": 100.0
+      },
+      "bus_stop": {
+        "mean_m": 191,
+        "median_m": 129,
+        "max_m": 1380,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 11238,
+        "median_m": 11233,
+        "max_m": 11886,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 20599,
+        "median_m": 20309,
+        "max_m": 22139,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 11378,
+        "median_m": 11377,
+        "max_m": 12013,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 1955,
+        "median_m": 1569,
+        "max_m": 4379,
+        "far_share_pct": 26.1
+      }
+    },
+    "2772037030": {
+      "ri_name": "석산리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 93,
+      "primary_care": {
+        "mean_m": 378,
+        "median_m": 240,
+        "max_m": 1526,
+        "far_share_pct": 0.0
+      },
+      "health": {
+        "mean_m": 518,
+        "median_m": 304,
+        "max_m": 2147,
+        "far_share_pct": 5.4
+      },
+      "clinic": {
+        "mean_m": 2055,
+        "median_m": 2072,
+        "max_m": 3395,
+        "far_share_pct": 62.4
+      },
+      "bus_stop": {
+        "mean_m": 315,
+        "median_m": 166,
+        "max_m": 2116,
+        "far_share_pct": 3.2
+      },
+      "school_elementary": {
+        "mean_m": 12244,
+        "median_m": 12374,
+        "max_m": 13596,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 20937,
+        "median_m": 21005,
+        "max_m": 22861,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 12393,
+        "median_m": 12523,
+        "max_m": 13734,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 502,
+        "median_m": 288,
+        "max_m": 2141,
+        "far_share_pct": 5.4
+      }
+    },
+    "2772037031": {
+      "ri_name": "학암리",
+      "region_code": "2772037000",
+      "region_name": "삼국유사면",
+      "houses": 77,
+      "primary_care": {
+        "mean_m": 2119,
+        "median_m": 2175,
+        "max_m": 3747,
+        "far_share_pct": 57.1
+      },
+      "health": {
+        "mean_m": 2119,
+        "median_m": 2175,
+        "max_m": 3747,
+        "far_share_pct": 57.1
+      },
+      "clinic": {
+        "mean_m": 2989,
+        "median_m": 3227,
+        "max_m": 4946,
+        "far_share_pct": 94.8
+      },
+      "bus_stop": {
+        "mean_m": 497,
+        "median_m": 447,
+        "max_m": 1735,
+        "far_share_pct": 0.0
+      },
+      "school_elementary": {
+        "mean_m": 14258,
+        "median_m": 14163,
+        "max_m": 15475,
+        "far_share_pct": 100.0
+      },
+      "school_secondary": {
+        "mean_m": 22105,
+        "median_m": 22189,
+        "max_m": 22976,
+        "far_share_pct": 100.0
+      },
+      "childcare": {
+        "mean_m": 14413,
+        "median_m": 14319,
+        "max_m": 15632,
+        "far_share_pct": 100.0
+      },
+      "grocery": {
+        "mean_m": 2146,
+        "median_m": 2205,
+        "max_m": 3777,
+        "far_share_pct": 57.1
+      }
+    }
+  }
+}

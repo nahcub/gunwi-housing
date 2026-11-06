@@ -1,0 +1,19 @@
+{
+  "source_id": "CLOSED_SCHOOLS",
+  "name": "학교알리미 폐교 정보",
+  "provider": "교육부 / 한국교육학술정보원",
+  "url": "https://www.data.go.kr/data/15154585/fileData.do",
+  "reference_date": "2025-09-30",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "확인 필요",
+  "provenance": "verified",
+  "notes": "포털 원본 CSV. 주소만. 군위 11곳(1992~2017 폐교). 참고용(거점·마을재생 후보).",
+  "files": {
+    "폐교 정보.csv": {
+      "sha256": "7cf0e9fb831ecb2dde1d5ae5c2d0aa95b224881cfda0a9f4f20fc4f5b1d5fdbf",
+      "bytes": 81698
+    }
+  },
+  "encoding": "cp949"
+}

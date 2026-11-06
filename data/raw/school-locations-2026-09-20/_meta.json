@@ -1,0 +1,19 @@
+{
+  "source_id": "SCHOOL_LOCATIONS",
+  "name": "한국교육시설안전원_초중등학교위치_20260920",
+  "provider": "한국교육시설안전원",
+  "url": "https://www.data.go.kr/data/15159184/fileData.do",
+  "reference_date": "2026-09-20",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "이용허락범위 제한 없음",
+  "provenance": "verified",
+  "notes": "포털 원본 CSV. 위도·경도 WGS84, 운영상태·본교분교구분. 군위 8행 모두 '운영'. 2026 학교 통합으로 다른 원천(대구교육청 학교현황 15곳)과 목록이 다르다 — '운영 학교' 정의는 methodology 에서 정한다.",
+  "files": {
+    "한국교육시설안전원_초중등학교위치_20260920.csv": {
+      "sha256": "07a6ebff20a596bb7996b44912b5b77103eff4dcea07a1733f516223ede83183",
+      "bytes": 3684122
+    }
+  },
+  "encoding": "utf-8-sig"
+}

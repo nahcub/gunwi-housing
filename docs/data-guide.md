@@ -17,12 +17,24 @@ public/data/*.json        웹 화면용
 
 | raw 폴더 | 원자료 | 기준일 | → derived | 상태 |
 |---|---|---|---|---|
-| `mois-age-2025-12` | 행안부 연령별 주민등록인구 | 2025-12-31 | `population.json` | 사용 |
-| `mois-age-2026-08` | 〃 | 2026-08-31 | `population.json` | 사용 |
+| `mois-age-2023-12` | 행안부 연령별 주민등록인구 | 2023-12-31 | `population.json` | 사용 (인구감소 비교 기준) |
+| `mois-age-2026-09` | 〃 | 2026-09-30 | `population.json` | 사용 (분석 기준 시점) |
 | `boundary-eupmyeon-2025-06-30` | 읍면 경계 GeoJSON (SGIS 2025 2Q) | 2025-06-30 | `eupmyeon.geojson` | 사용 (2026-10-15 출처 확인) |
 | `datagokr-gunwi-senior-2025-12-19` | 경로당 표준데이터(군위 215곳) | 2025-12-19 | `senior_centers.json` | 사용 |
-| `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | `sgis_stats.json` | 19개 CSV 중 10개 사용 |
-| `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | — | 등록만(prepare.py 미연결) |
+| `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | `vacant_houses.json` | 사용 |
+| `mois-age-2023-07` ~ `mois-age-2026-09` (위 2개 제외 37개) | 행안부 연령별 주민등록인구 월별 | 매월 말일 | — | 등록만(prepare.py 미연결). 2026-11-05 gunwi 저장소에서 이관 |
+| `mois-household-2023-07` ~ `mois-household-2026-09` (39개) | 행안부 주민등록 인구 및 세대현황 월별 | 매월 말일 | `population.json` `households` | 2023-12·2026-09 사용. 이름으로 붙이고 총인구 일치 검증 |
+| `hira-2026-09` | HIRA 병의원·약국 (보건소·지소·진료소 포함, 전국 zip) | 2026-09 | — | 등록만. 군위 = '대구군위군' 42행 |
+| `bus-stops-2026-10-20` | 국토부 전국 버스정류장 (CP949) | 2026-10-20 | — | 등록만. 군위는 좌표로 판정 |
+| `sbiz-stores-gunwi-2026-09` | 상가(상권)정보 대구 CSV 중 군위 1,155행 (전국 zip 은 저장소 밖) | 2026-09 | — | 등록만 |
+| `school-locations-2026-09-20` | 초중등학교위치 | 2026-09-20 | — | 등록만 |
+| `childcare-basic-2026-09` | 어린이집 기본정보 (포털 HTML 응답) | 2026-09 | — | 등록만 |
+| `kindergarten-general-2026-2` | 유치원알리미 일반현황 (대구) | 2026년 2차 | — | 등록만 |
+| `closed-schools-2025-09-30` | 학교알리미 폐교 정보 (주소만) | 2025-09-30 | — | 등록만. 참고용 |
+| `vworld-ri-boundary-2026-10-09` | 브이월드 법정리 경계 중 군위 92개 (SHP, EPSG:5186, 전국 zip 은 저장소 밖) | 2026-10-09 | — | 등록만. 리 단위 분석의 공간단위 |
+| `bjd-code-2026-09-29` | 국토부 법정동코드 (전국 CSV) | 2026-09-29 | — | 등록만. 군위 법정리 92개 코드 |
+| `mois-lgd-age-2023-12`, `mois-lgd-age-2026-09` | 행안부 지역별(법정동) 1세 단위 주민등록 인구 (전국 CSV) | 2023-12-31, 2026-09-30 | `ri_population.json` | 사용. 읍면 합 = mois-age |
+| `vworld-gis-building-gunwi-2026-09-09` | GIS건물통합정보 중 군위 54,977건 (SHP 4개를 zip 으로, EPSG:5186, 대구 원본은 저장소 밖) | 2026-09-09 | — | 등록만. 주거 건물 위치·사용승인일 |
 
 분석 제외(raw 삭제) — 2026-10-30 주제 변경(빈집·노후주택 주거환경)으로 뺐다.
 `data/sources.json` 에 `status: "분석제외"` 와 사유가 남아 있고, 원본은 git 커밋
@@ -30,6 +42,10 @@ public/data/*.json        웹 화면용
 
 | 삭제한 raw 폴더 | 원자료 | 쓰던 derived |
 |---|---|---|
+| `sgis-admstat-2025-2q` (2026-11-06, 커밋 `aed5395`) | SGIS 행정구역 통계 2024 | `sgis_stats.json` (주민등록으로 대체) |
+| `gunwi-yearbook-64-2023` (2026-11-06, 커밋 `aed5395`) | 군위통계연보 제64회 | — |
+| `mohw-local-health-orgs-2025-12-31` (2026-11-06, 커밋 `aed5395`) | 보건복지부 지역보건의료기관 | — (HIRA 대조용) |
+| `mois-eupmyeon-offices-2025-12` (2026-11-06, 커밋 `aed5395`) | 행안부 읍면동 하부행정기관 | — |
 | `datagokr-park-2026-03-05` | 도시공원 표준데이터(군위 3건) | `parks.json` |
 | `minwon-pothole-2026-10-13` | 권익위 포트홀 민원 좌표(전국) | `potholes.json` |
 | `datagokr-gunwi-small-facility-risk-2026-07-15` | 소규모공공시설 위험지정(39건) | `drainage_risk.json` |
@@ -69,7 +85,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 
 ## 1. 주민등록 인구 → `population.json`
 
-**raw**: `mois-age-2025-12/age.json`, `mois-age-2026-08/age.json`
+**raw**: `mois-age-2023-12/age.json`, `mois-age-2026-09/age.json` (`prepare.py` `MOIS_PERIODS`)
 (행정안전부 jumin.mois.go.kr 조회 결과)
 
 - 시점마다 9행(군 합계 1 + 읍면 8), 행마다 `[코드, 이름, 숫자 69칸]`.
@@ -85,14 +101,14 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 **derived**: 2시점 × 9행 = 18개 레코드
 
 ```json
-{"period": "2025-12", "reference_date": "2025-12-31",
+{"period": "2026-09", "reference_date": "2026-09-30",
  "region_code": "2772025000", "region_name": "군위읍", "level": "eupmyeon",
- "population": 7852, "male": 4078, "female": 3774, "elderly": 2830}
+ "population": 7844, "male": 4087, "female": 3757, "elderly": 2925}
 ```
 
 - `level`: `gun`(군 합계) / `eupmyeon`.
 - 고령화율은 저장하지 않는다. 화면에서 `elderly / population` 으로 계산한다.
-- 2025-12 군 전체: 인구 22,452명, 65세 이상 10,992명(49.0%).
+- 2026-09 군 전체: 인구 22,432명, 65세 이상 11,334명(50.5%). 2023-12: 22,988명, 10,311명.
 
 ## 2. 읍면 경계 → `eupmyeon.geojson`
 
@@ -156,9 +172,13 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - **2000년 기준은 공식 기준이 아니라 프로젝트 임시값**이다(`SENIOR_OLD_BEFORE_YEAR`).
 - `source_row` 로 원본 CSV 몇 번째 행인지 추적할 수 있다.
 
-## 4. SGIS 행정구역 통계 → `sgis_stats.json`
+## 4. SGIS 행정구역 통계 — 2026-11-06 분석 제외 (`sgis_stats.json` 삭제)
 
-**raw**: `sgis-admstat-2025-2q/` CSV 19개 (**cp949**). 전국 파일(269MB zip, 저장소 밖 보관)에서
+> 아래는 쓰던 때의 기록이다. 지금은 prepare.py 가 읽지 않는다. 노령화지수·노년부양비·평균나이·인구밀도는
+> `ri_population.json`(주민등록 법정동별 1세 단위 + 리 경계 면적), 세대수는 `population.json` `households`
+> (주민등록 세대현황)로 바꿨다.
+
+**raw**(2026-11-06 삭제, 커밋 `aed5395` 에서 복구): `sgis-admstat-2025-2q/` CSV 19개 (**cp949**). 전국 파일(269MB zip, 저장소 밖 보관)에서
 군위군(SGIS 코드 `22520`) 행만 걸러낸 것. 형식은 모두 같다:
 
 ```
@@ -195,7 +215,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 2. 검증: 기준연도 2024, 지역코드가 군 1 + 읍면 8.
 3. 더할 수 있는 항목(O)은 읍면 8개 합 = 군 합계인지 검산.
 4. `N/A`(비공개 소수 셀)는 0 이 아니라 `null` 로 두고 `na_cells` 에 기록 (현재 0칸).
-5. 코드 매핑 검산: SGIS 인구가 2025-12 주민등록 인구와 15% 넘게 다르면 멈춘다.
+5. 코드 매핑 검산: SGIS 인구가 분석 기준 시점(2026-09) 주민등록 인구와 15% 넘게 다르면 멈춘다.
 
 **derived**
 
@@ -210,9 +230,9 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 ```
 
 - SGIS 인구(등록센서스, 2024)와 주민등록 인구(§1)는 **정의가 달라 값이 다르다**
-  (군 전체 21,493 vs 22,452). 한 표에서 섞어 쓰지 말 것.
+  (군 전체 21,493 vs 22,432). 한 표에서 섞어 쓰지 말 것.
 
-## 5. 빈집애 읍면별 빈집 수 (derived 없음)
+## 5. 빈집애 읍면별 빈집 수 → `vacant_houses.json` (2026-11-06 연결)
 
 **raw**: `binzibe-gunwi-vacant-houses-2025/`
 
@@ -229,7 +249,52 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - 등급·건별 위치는 없다. 조사시점은 사이트에 없어 미확인.
 - 같은 정의의 분모(주택 수)가 없어 빈집률을 만들지 않는다. SGIS 주택 수(§4)나
   통계청 미거주주택과 정의가 달라 한 산식에서 섞지 않는다.
-- `prepare.py` 에 연결하지 않았다. 연결하면 읍면명(`sojaeji` 끝 단어)으로 region_code 를 붙인다.
+- `prepare_vacant_houses()` 가 읍면명(`sojaeji` 끝 단어)으로 region_code 를 붙이고 합 602 를 검증한다.
+  웹·엑셀에는 읍면 '빈집 수'로만 나간다(빈집률 없음).
+
+## 6. 법정리 경계 → `ri_boundary.geojson`, 시설 리 배정 → `ri_facilities.json`
+
+**raw**: `vworld-ri-boundary-2026-10-09/`(SHP, EPSG:5186), `bjd-code-2026-09-29/`(법정동코드),
+생활시설 raw 들(§한눈에 보기). 코드는 `tools/prepare_ri.py`.
+
+**`ri_boundary.geojson`** — 법정리 92개, EPSG:4326 으로 재투영(좌표 소수 6자리).
+속성 `ri_code`(10자리) · `ri_name` · `region_code`(읍면) · `region_name` · `base_date`.
+
+검증: 법정동코드의 군위 현행 법정리 92개와 코드·이름 일치, 읍면별 리 수
+(군위읍17 소보14 효령15 부계8 우보9 의흥11 산성7 삼국유사11), 모든 도형 유효.
+
+**`ri_facilities.json`** — 시설 점마다 `ri_code`·`region_code`·`ri_method` 를 붙인 목록(`points`)과
+리별 개수(`by_ri`).
+
+| 유형 | 자료 | 개수 | 리 배정 | 리별로 세나 |
+|---|---|---|---|---|
+| 경로당 | 경로당 표준데이터 | 215 | 좌표 → 리 경계 | 예 |
+| 보건소·보건지소·보건진료소 | HIRA | 18 | 좌표 | 예 |
+| 의원·치과·한의원 | HIRA | 17 | 좌표 | 예 (약국 7곳은 점만 배정, 분석 제외) |
+| 초·중·고 | 초중등학교위치 | 8 | 좌표 | 예 (원자료 '운영' 8곳 그대로) |
+| 어린이집 / 유치원 | 포털 / 유치원알리미 | 4 / 1 | 좌표 | 예 |
+| 폐교 | 학교알리미 | 11 | 주소의 읍면·리 이름 (고로면 → 삼국유사면) | 예 |
+| 버스정류장 | 국토부 | 725행 | 좌표, 군위 리 안에 드는 것만 | **아니오** — 중복 등록 묶는 기준 미정. 집별 거리에는 미정차 8행을 빼고 717행을 쓴다(`no_stop`) |
+| 상가(전 업종) | 상가정보 | 1,155 | 원자료 법정동코드 | 아니오 — 식료품점(슈퍼마켓·편의점 60곳)은 집별 거리(`ri_access.json` `grocery`)로만 쓴다 |
+
+대조(`checks`): 경로당 주소 읍면 215/215, HIRA 읍면동 42/42, 학교 지번주소 리 8/8 일치.
+상가는 원자료 법정동코드와 좌표 판정이 9건 다르다 — 큰 건물 하나에 여러 업소가 같은 좌표로
+찍혀 리 경계 근처에서 어긋나는 경우라 지번 기준 코드를 따른다.
+
+**`ri_access.json`** — 주거용 건물 10,264동마다 가장 가까운 시설까지 직선거리를 재고 리(`by_ri`)·
+읍면(`by_region`)·군(`gun`)별로 묶음마다 `mean_m`·`median_m`·`max_m`·`far_share_pct`(2 km 초과 비율,
+임시 기준·모든 묶음 공통)를 낸다. 묶음은 1차 의료 `primary_care`(35) · 보건기관 `health`(18) · 의원 `clinic`(17) ·
+버스정류장 `bus_stop`(717, 미정차 제외) · 초등학교 `school_elementary`(4) ·
+중·고등학교 `school_secondary`(4) · 어린이집 `childcare`(4)이고, `groups` 에 묶음별 이름·점 유형·
+거르는 조건(`filter`)·시설 수(`facilities`)가 있다. 읍면사무소는 좌표가 없어 없다. 버스 거리는 운행 횟수를
+반영하지 않는다(산식·한계는 methodology "집별 생활시설 거리"). 건물 단위 값은 derived 에도 남기지 않는다(지번 단위 자료라).
+
+**`ri_housing_age.json`** — 주거용 건물의 노후(사용승인 30년 이상) 비율. 리·읍면·군별로 `old_confirmed_pct`
+(확인, 하한), `old_with_estimate_pct`(빈칸+재래식 구조 추정 포함, 주 지표), `blank_pct`(추정 의존도).
+산식은 methodology "노후주택".
+
+공개: `build.py` 가 리별 **집계값만** `regions.json` 의 `ri` 와 `ri_boundary.geojson` 으로 내보낸다.
+건물·지번 단위 값과 시설 점 목록(`ri_facilities.json` 의 `points`)은 공개하지 않는다.
 
 ---
 
@@ -238,9 +303,12 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 | derived | `build.py` → `public/data/` | `export_excel.py` → `outputs/` |
 |---|---|---|
 | `population.json` | `regions.json` 에 합쳐짐(군 합계 행 제거) | 결과표 |
-| `sgis_stats.json` | `regions.json` 에 합쳐짐 | 결과표 |
+| `vacant_houses.json` | `regions.json` 읍면 행 `vacant_house_count` | 결과표 빈집수 |
 | `senior_centers.json` | `regions.json`(읍면 집계·노후 비율) + `facilities.json`(지점) | 결과표 |
 | `eupmyeon.geojson` | 그대로 복사 | — |
+| `ri_housing_age.json` · `ri_access.json` | `regions.json` 읍면 행 + `ri`(법정리 92행) | 결과표 열 + `리별지표` 시트·CSV |
+| `ri_facilities.json` | `ri` 행의 경로당 수(리별 집계만) | 리별지표 경로당수 |
+| `ri_boundary.geojson` | 그대로 복사 | — |
 
 ## 저장소에 없는 자료
 

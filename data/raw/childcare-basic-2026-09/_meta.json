@@ -1,0 +1,19 @@
+{
+  "source_id": "CHILDCARE_BASIC",
+  "name": "어린이집 기본정보 (어린이집정보공개포털) 중 대구 군위군",
+  "provider": "보건복지부 / 한국사회보장정보원",
+  "url": "https://info.childcare.go.kr/info/oais/openapi/OpenApiSlL.jsp",
+  "reference_date": "2026-09 (월말 정기 스냅샷)",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "이용허락범위 제한 없음 (data.go.kr 15083298)",
+  "provenance": "verified",
+  "notes": "포털 조회 결과 HTML 응답 그대로(키 불필요, POST sido=27 sigun=720, 2026-09 정기 스냅샷). xls 내보내기는 서버 오류라 HTML 로 받았다. 4곳(군위읍2·의흥1·소보1) 모두 정상. 위도·경도 있음(좌표계 미기재, WGS84 추정). 스냅샷에는 폐지 시설이 없다.",
+  "files": {
+    "childcare_basic_27720_202609.html": {
+      "sha256": "2a0b03473c2fb913fc1f15eb9e746cd68bc92d804818d0a26b27c1684703a137",
+      "bytes": 13514
+    }
+  },
+  "encoding": "utf-8"
+}

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "verified_at": "2026-10-14",
+  "verified_at": "2026-11-05",
   "target_reference_year": 2025,
   "sources": [
     {
@@ -8,13 +8,39 @@
       "name": "행정동별 연령별 주민등록인구",
       "provider": "행정안전부 주민등록 인구통계",
       "url": "https://jumin.mois.go.kr/ageStatMonth.do",
-      "reference_date": "2025-12-31 / 2026-08-31",
+      "reference_date": "2023-07-31 ~ 2026-09-30 (매월)",
       "license": "공식 통계 출처표시",
       "status": "확보",
       "request_status": null,
-      "raw_dir": "data/raw/mois-age-2025-12",
-      "used_for": ["읍면 인구", "고령화율"],
-      "notes": "2개 시점(2023-12·2024-12 는 분석 미사용으로 raw 삭제, 커밋 38c9139 에서 복구 가능). 분석 기준은 2025-12. 군 합계와 읍면 합계를 중복 합산하지 말 것. 성별 '계'와 '남'·'여'도 중복 합산 금지."
+      "raw_dir": "data/raw/mois-age-2026-09",
+      "used_for": ["읍면 인구", "고령화율", "인구감소·고령화 월별 추이 (39개 시점, prepare.py 미연결)"],
+      "notes": "[2026-11-05] gunwi/gunwi-facility-priority 의 data/raw/mois-age/YYYY-MM 39개 시점(대구 편입 후 2023-07~2026-09 매월)을 mois-age-YYYY-MM 폴더로 옮겨 왔다. 바이트 무수정, 각 _meta.json sha256 일치 확인. 원래 있던 2025-12·2026-08 은 옮겨 온 것과 바이트가 같아 그대로 뒀다. prepare.py MOIS_PERIODS(population.json·웹·엑셀)는 2023-12(인구감소 비교 기준)·2026-09(분석 기준, 2026-11-05 결정) 두 시점만 쓴다. 2023-12 군 인구 22,988·65세 이상 10,311 은 군청 월별 인구통계 HWP 값과 같다. 군 합계와 읍면 합계를 중복 합산하지 말 것. 성별 '계'와 '남'·'여'도 중복 합산 금지."
+    },
+    {
+      "id": "MOIS_HOUSEHOLD",
+      "name": "행정동별 주민등록 인구 및 세대현황",
+      "provider": "행정안전부 주민등록 인구통계",
+      "url": "https://jumin.mois.go.kr/statMonth.do",
+      "reference_date": "2023-07-31 ~ 2026-09-30 (MOIS_AGE 와 같은 39개 시점)",
+      "license": "공식 통계 출처표시",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/mois-household-2025-12",
+      "used_for": ["읍면별 세대수·세대당 인구 2023-12·2026-09 (derived/population.json households)"],
+      "notes": "[2026-11-05] gunwi/gunwi-facility-priority 의 data/raw/mois-household/YYYY-MM 39개를 mois-household-YYYY-MM 폴더로 옮겨 왔다(바이트 무수정, sha256 일치 확인). household.json 행 = [이름, 총인구수, 세대수, 세대당인구, 남자, 여자, 남녀비율] 화면 문자열 그대로. 화면에 행정기관코드가 없어 이름만 있다 — 같은 기준월 mois-age 와 이름·순서·총인구 일치를 수집 시 검증했으니 코드는 그쪽에서 붙일 것. 군 합계 행과 읍면을 중복 합산 금지."
+    },
+    {
+      "id": "GUNWI_YEARBOOK",
+      "name": "군위통계연보 (제64회)",
+      "provider": "군위군청",
+      "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=195&bod_uid=137652&cmd=2",
+      "reference_date": "2023-12-31",
+      "license": "공공누리(군위군청 게시판 표시)",
+      "status": "분석제외",
+      "request_status": null,
+      "raw_dir": null,
+      "used_for": ["읍면별 주택 수·주택보급률 (10장 주택건설, prepare.py 미연결)", "건축연도별 주택 (10장, 군 단위·주택종류별)", "리별 세대·인구 (3장, 행정리→읍면 대응)", "독거노인·노인 주거/재가 복지시설 (12장)"],
+      "notes": "[2026-11-06 raw 삭제] 사유: 리별 인구를 행안부 법정동별 자료로 대체했고 2023 기준이라 분석 시점과 맞지 않음. 원본은 git 커밋 aed5395 의 data/raw/gunwi-yearbook-64-2023 에서 복구할 수 있다. — [2026-11-05] gunwi/gunwi-facility-priority 의 data/raw/gunwi-yearbook/64-2023 을 gunwi-yearbook-64-2023 폴더로 옮겨 왔다(바이트 무수정, sha256 일치 확인). 장별 xlsx 가 든 zip 원본(10주택건설.xlsx 포함). 같은 날 제55~63회(2014~2022)도 옮겼다가 '2023년 이전은 보지 않는다'는 분석 범위 결정으로 뺐다 — 원본은 gunwi 저장소 data/raw/gunwi-yearbook/ 에 그대로 있다. 각 표는 그해 읍면별 값과 최근 5년 군 합계만 싣는다(5년 군 합계 중 2023 이전 값은 쓰지 않는다). 3장 리별세대및인구: 행정리 180, 11열 블록 6개 가로 배치, 리 이름 공백 제각각, 우보면 19개 리가 전부 0(누락), 소보면 소계 세대 1,620 은 오기(리 합 1,433). 2장 행정구역: 행정리 180·법정리 92. 연보 주택 수(2023 군 합 11,396호)는 SGIS 주택 수·빈집애 빈집 수와 정의·출처가 달라 한 산식에 섞지 말 것."
     },
     {
       "id": "DATAGOKR_PARK",
@@ -101,11 +127,11 @@
       "url": "https://www.data.go.kr/data/15114136/standard.do",
       "reference_date": "2025-12-19",
       "license": "공식 출처의 이용조건 확인 필요",
-      "status": "확보/이관자료",
+      "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/datagokr-gunwi-senior-2025-12-19",
       "used_for": ["경로당 읍면별 수·건립연도 분포 (derived/senior_centers.json)", "노후 경로당 수 (기준 연도 미확정)"],
-      "notes": "215행, 좌표·건립일자·면적, 전 행 영업. 팀원(윤현준) 추출본을 받은 그대로 동결 — 정부 원본 바이트가 아니므로 provenance=verified_import. 건립일자 전 행 YYYY-01-01 → 연도 정밀도. 읍면 컬럼이 없어 주소에서 추출한다. 경로당을 무더위쉼터로 간주하지 않는다. 공식 원본 재다운로드 시 새 raw 폴더로 교체할 것."
+      "notes": "[2026-11-06] 포털 원본(군위군 제공 파일, 2025-12-24 등록, 연간 갱신, 차기 2026-12-19)과 바이트 일치 확인 → provenance verified. 군위군 최신판이 이 판이다. 215행, 좌표·건립일자·면적, 전 행 영업. 팀원(윤현준) 추출본을 받은 그대로 동결 — 정부 원본 바이트가 아니므로 provenance=verified_import. 건립일자 전 행 YYYY-01-01 → 연도 정밀도. 읍면 컬럼이 없어 주소에서 추출한다. 경로당을 무더위쉼터로 간주하지 않는다. 공식 원본 재다운로드 시 새 raw 폴더로 교체할 것."
     },
     {
       "id": "DATAGOKR_GUNWI_PARKING",
@@ -153,11 +179,11 @@
       "url": "https://www.data.go.kr/data/15129688/fileData.do",
       "reference_date": "2024-12-31(통계) / 2025-06-30(경계 2025 2Q)",
       "license": "공공데이터포털 이용조건 확인 필요(출처표시)",
-      "status": "확보",
+      "status": "분석제외",
       "request_status": null,
-      "raw_dir": "data/raw/sgis-admstat-2025-2q",
-      "used_for": ["읍면별 인구총괄·가구·주택·사업체 총괄 (derived/sgis_stats.json)", "읍면별 건축년도별 주택 수 (2025년기준_2024년_건축년도별주택.csv, prepare.py 미연결)"],
-      "notes": "읍면 8개 단위. SGIS 제공용 코드 22520은 프로젝트 표준(2772025000 계열)과 다른 체계이므로 빌드 시점에 한 번만 매핑할 것. 원본 전국 zip(50MB 초과)은 커밋하지 않고 ~/Downloads/gunwi-dl/ 에 보관(sha256은 _meta.json). 경계 shp는 EPSG:5179로 재투영 필요."
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-11-06 raw 삭제] 사유: SGIS 지표를 주민등록 인구로 대체해 쓰지 않음. 원본은 git 커밋 aed5395 의 data/raw/sgis-admstat-2025-2q 에서 복구할 수 있다. — [2026-11-06 분석 제외] 사유: 2024 센서스 기반이라 분석 시점(2026-09)과 맞지 않고, 쓰던 값(노령화지수·노년부양비·평균나이·인구밀도·가구)을 모두 주민등록 인구(MOIS_LGD_AGE·MOIS_HOUSEHOLD)와 법정리 경계 면적으로 대신 계산할 수 있다. 주택·건축연도는 GIS건물통합정보가 대신한다. raw 는 남겨 둔다. — 이전 기록: 읍면 8개 단위. SGIS 제공용 코드 22520은 프로젝트 표준(2772025000 계열)과 다른 체계이므로 빌드 시점에 한 번만 매핑할 것. 원본 전국 zip(50MB 초과)은 커밋하지 않고 ~/Downloads/gunwi-dl/ 에 보관(sha256은 _meta.json). 경계 shp는 EPSG:5179로 재투영 필요."
     },
     {
       "id": "MINWON_POTHOLE_LATLON",
@@ -179,11 +205,11 @@
       "url": "https://www.data.go.kr/data/15134735/openapi.do",
       "reference_date": null,
       "license": "확인 필요",
-      "status": "미확보",
-      "request_status": "공공데이터포털 API 활용신청 승인(키는 환경변수 DATA_GO_KR_KEY). 미수집",
+      "status": "분석제외",
+      "request_status": null,
       "raw_dir": null,
       "used_for": ["리·지번 단위 건축물 사용승인일·주용도·구조 (미수집)"],
-      "notes": "국토교통부_건축HUB_건축물대장정보 서비스(15134735, 2026-10-30 제목 확인). 지번 단위 조회라 리 단위 노후도 집계의 원천 후보. 수집기는 아직 없다. 건축인허가(15136267)·주택인허가(15136560)는 docs/data-survey.md 이전 조사 기록에만 있고 이번에 다시 확인하지 않았다."
+      "notes": "[2026-11-06 분석 제외] 사유: GIS건물통합정보(GIS_BUILDING_INTEGRATED)가 건축물대장 속성과 건물 위치를 함께 제공해 대체했다. — [2026-11-05 명세 조사] Endpoint https://apis.data.go.kr/1613000/BldRgstHubService, 표제부 getBrTitleInfo. 필수 sigunguCd(27720)·bjdongCd(법정리 5자리, BJD_CODE 92개), bun·ji 옵션 → 법정리 단위 일괄 조회 가능(실제 전수 반환은 미확인). numOfRows 최대 100, 개발계정 트래픽 10,000. 필드 useAprDay(사용승인일)·mainPurpsCdNm·strctCdNm·platPlc·totArea·hhldCnt 등. 농촌 노후주택은 대장 미등재·사용승인일 결측이 많을 수 있어 SGIS 주택 수와 대조할 것. 국토교통부_건축HUB_건축물대장정보 서비스(15134735, 2026-10-30 제목 확인). 지번 단위 조회라 리 단위 노후도 집계의 원천 후보. 수집기는 아직 없다. 건축인허가(15136267)·주택인허가(15136560)는 docs/data-survey.md 이전 조사 기록에만 있고 이번에 다시 확인하지 않았다."
     },
     {
       "id": "BINZIBE_GUNWI_VACANT_HOUSES",
@@ -195,8 +221,8 @@
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/binzibe-gunwi-vacant-houses-2025",
-      "used_for": ["읍면별 빈집 수 (prepare.py 미연결)"],
-      "notes": "지도 화면이 쓰는 내부 API(/apihome/map/vacant-houses/rank, sigungu=27720) 응답을 tools/fetch_binzibe.py 로 받은 그대로 보존. 공개 Open API 가 아니다. 읍면 8행, 합 602. 지자체 빈집행정조사 결과로 국가승인통계가 아니다(지도 안내문). binzipRateReg 는 빈집률이 아니라 군 전체 대비 읍면 비중(%). 27720 은 통계청 코드라 region_code 와 다르다 — 읍면명으로 대응. 조사시점은 사이트에 없어 미확인(API year=2026, 화면 표시 2025년). 통계청 미거주주택·군청 실태조사와 정의가 달라 섞지 말 것. 등급·건별 위치 없음."
+      "used_for": ["읍면별 빈집 수 (derived/vacant_houses.json → 웹·엑셀 '빈집 수')"],
+      "notes": "[2026-11-06 연결] 사이트가 조사연도 하나만 제공해 이 판이 최신(2026-11-06 다시 조회해도 같은 값). 지도 화면이 쓰는 내부 API(/apihome/map/vacant-houses/rank, sigungu=27720) 응답을 tools/fetch_binzibe.py 로 받은 그대로 보존. 공개 Open API 가 아니다. 읍면 8행, 합 602. 지자체 빈집행정조사 결과로 국가승인통계가 아니다(지도 안내문). binzipRateReg 는 빈집률이 아니라 군 전체 대비 읍면 비중(%). 27720 은 통계청 코드라 region_code 와 다르다 — 읍면명으로 대응. 조사시점은 사이트에 없어 미확인(API year=2026, 화면 표시 2025년). 통계청 미거주주택·군청 실태조사와 정의가 달라 섞지 말 것. 등급·건별 위치 없음."
     },
     {
       "id": "KOSIS_VACANT_HOUSE_SIGUNGU",
@@ -205,11 +231,11 @@
       "url": "https://kosis.kr/statisticsList/mass/mass_list.jsp?org_id=101&tbl_id=DT_1JU1512",
       "reference_date": "2025 (조사 기준연도)",
       "license": "KOSIS 이용조건 확인 필요(출처표시)",
-      "status": "미확보",
-      "request_status": "대용량 통계자료 파일 다운로드(즉시). 저장소 raw 미등록",
+      "status": "분석제외",
+      "request_status": null,
       "raw_dir": null,
-      "used_for": ["군 단위 미거주주택 수 (비교 기준, 읍면 구분 없음)"],
-      "notes": "시군구 단위라 읍면 비교에는 못 쓴다. 2026-10-30 조사용으로 받은 2025년 파일에서 군위군(코드 22520) 주택 계 1,355호, 그중 1979년 이전 건축 1,060호. 작은 칸은 X 로 비공개. 빈집애(지자체 빈집행정조사)·군청 실태조사와 정의가 달라 섞지 말 것."
+      "used_for": [],
+      "notes": "[2026-11-05 분석 제외] 사유: 군 단위 비교 기준이 필요 없다는 결정(사용자). — 이전 기록: 시군구 단위라 읍면 비교에는 못 쓴다. 2026-10-30 조사용으로 받은 2025년 파일에서 군위군(코드 22520) 주택 계 1,355호, 그중 1979년 이전 건축 1,060호. 작은 칸은 X 로 비공개. 빈집애(지자체 빈집행정조사)·군청 실태조사와 정의가 달라 섞지 말 것."
     },
     {
       "id": "GUNWI_VACANT_SURVEY_INTERNAL",
@@ -219,10 +245,10 @@
       "reference_date": null,
       "license": "정보공개 결과 이용조건 확인 필요",
       "status": "미확보",
-      "request_status": "정보공개청구 필요. 청구서 초안 docs/requests/README.md (미발송)",
+      "request_status": "요청하지 않기로 함(2026-11-06 사용자 결정). 문안 docs/requests/README.md §1·§4 는 보관만",
       "raw_dir": null,
       "used_for": ["빈집 등급별·읍면/리별 수 (미확보)"],
-      "notes": "빈집애는 읍면별 수만 공개하고 등급·건별 위치는 없다. 등급·위치는 군청에 청구해야 한다. 개인정보(소유자·지번)가 포함되면 공개 저장소에 올리지 않고 비식별 집계만 raw 에 둔다."
+      "notes": "[2026-11-05] 언론 보도(kbmaeil 20250812500454 등)로 2023년 실태조사와 빈집정비계획 수립이 있었음을 확인했다. 보도에 나온 수치는 원자료가 아니라서 적지 않는다(data-survey §0). 청구 시 '2023년 실태조사'를 명시할 것. 읍면·리 목록 공개본은 찾지 못함. 빈집애는 읍면별 수만 공개하고 등급·건별 위치는 없다. 등급·위치는 군청에 청구해야 한다. 개인정보(소유자·지번)가 포함되면 공개 저장소에 올리지 않고 비식별 집계만 raw 에 둔다."
     },
     {
       "id": "DATAGOKR_GUNWI_HOUSING_SUPPLY",
@@ -242,39 +268,195 @@
       "name": "건강보험심사평가원_전국 병의원 및 약국 현황",
       "provider": "건강보험심사평가원",
       "url": "https://www.data.go.kr/data/15051059/fileData.do",
-      "reference_date": "2026-09-30 (파일데이터명 접미사)",
-      "license": "공공데이터포털 이용조건 확인 필요(출처표시)",
-      "status": "미확보",
-      "request_status": "파일 다운로드(즉시). 저장소 raw 미등록",
-      "raw_dir": null,
-      "used_for": ["의료기관 위치 (생활기반 접근성 후보, 미수집)"],
-      "notes": "2026-10-30 조사용 파일 확인: 주소에 군위군이 들어간 행은 병원정보 35, 약국정보 7. 주소·좌표가 있어 읍면 배정 가능."
+      "reference_date": "2026-09 (파일명 2026.9., 분기 갱신)",
+      "license": "공공누리 제1유형(출처표시)",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/hira-2026-09",
+      "used_for": ["의원·치과·한의원 위치", "보건소·보건지소·보건진료소 위치 (생활시설 접근성)", "약국 행은 있으나 분석 제외(2026-11-06)"],
+      "notes": "[2026-11-05 raw 등록, prepare_ri.py 연결] 좌표 오류 1건: 대율보건진료소가 부계면보건지소(창평리)와 같은 좌표로 들어 있어 GIS건물통합정보로 보정(HIRA_COORD_FIXES). 2026-11-05 조사: zip 안 CSV 12개(CP949) 중 1.병원정보서비스·2.약국정보서비스 사용. 군위 = 시군구코드명 '대구군위군'(HIRA 자체 코드 230200). 병원 35 + 약국 7 = 42행: 보건소 1·보건지소 7·보건진료소 10·의원 8·치과 3·한의원 6·약국 7, 병원급 0. 좌표 X=경도 Y=위도(WGS84 추정) 결측 0, 읍면 경계 PIP 와 읍면동 필드 100% 일치. 보건기관 18곳은 보건복지부 지역보건의료기관 현황(MOHW_LOCAL_HEALTH_ORGS)과 같은 구성 — 좌표는 이쪽을 쓴다. 부계면보건지소·대율보건진료소 같은 주소."
     },
     {
       "id": "BUS_STOPS_NATIONAL",
       "name": "국토교통부_전국 버스정류장 위치정보",
       "provider": "국토교통부",
       "url": "https://www.data.go.kr/data/15067528/fileData.do",
-      "reference_date": "2025-10-31 (파일데이터명 접미사)",
-      "license": "공공데이터포털 이용조건 확인 필요(출처표시)",
-      "status": "미확보",
-      "request_status": "파일 다운로드(즉시). 저장소 raw 미등록",
-      "raw_dir": null,
-      "used_for": ["버스정류장 위치 (생활기반 접근성 후보, 미수집)"],
-      "notes": "위도·경도 포함, EUC-KR. 도시명 열이 운영 주체 기준이라 군위 경계 안 정류장은 좌표로 판정해야 한다."
+      "reference_date": "2026-10-20 (정보수집일, 연간 갱신)",
+      "license": "이용허락범위 제한 없음",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/bus-stops-2026-10-20",
+      "used_for": ["버스정류장 위치 (생활시설 접근성)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: 전국 213,985행, CP949, WGS84. 도시명 '대구광역시 군위군'(37310) 56행 중 27행이 군위 경계 밖이라 코드·도시명으로 고르면 틀린다 → 읍면 경계 PIP 로만 판정(725행: 군위읍100 소보109 효령192 부계79 우보71 의흥51 산성63 삼국유사60). 같은 정류장이 여러 BIS 에 중복 등록됨(20m 군집 시 약 390지점, 20m 는 조사용 임시 기준). 경기BIS '(미정차)' IC/JC 8행 제외 필요. 운행 횟수·노선 없음 → 정류장 거리는 대중교통 서비스 수준을 대신하지 못한다."
     },
     {
       "id": "SBIZ_STORES",
       "name": "소상공인시장진흥공단_상가(상권)정보",
       "provider": "소상공인시장진흥공단",
       "url": "https://www.data.go.kr/data/15083033/fileData.do",
-      "reference_date": "2026-09-30 (파일데이터명 접미사)",
-      "license": "공공데이터포털 이용조건 확인 필요(출처표시)",
-      "status": "미확보",
-      "request_status": "파일 다운로드(즉시). 저장소 raw 미등록",
+      "reference_date": "2026-09 (zip 안 파일명 _202609, 분기 갱신)",
+      "license": "이용허락범위 제한 없음",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/sbiz-stores-gunwi-2026-09",
+      "used_for": ["식료품 소매점(슈퍼마켓·편의점 등) 위치 (생활시설 접근성)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: 이전 조사의 '201812' 는 이번 zip 에 없고 기준월 2026-09 확인. 시도별 CSV 17개, UTF-8. 군위 = 대구 파일 시군구 27720, 1,155행(PIP 와 행정동명 100% 일치). 식료품 핵심 G20404 슈퍼마켓 58 + G20405 편의점 17 = 75, 확장 G20501·G20503·G20505·G20506·G20509 = 45. 분류 혼재(휴게소·캠핑장이 슈퍼마켓, 농협하나로마트가 편의점) → 상호명 검토 기준을 methodology 에 먼저 적을 것."
+    },
+    {
+      "id": "MOHW_LOCAL_HEALTH_ORGS",
+      "name": "보건복지부_전국 지역보건의료기관 현황",
+      "provider": "보건복지부",
+      "url": "https://www.data.go.kr/data/3072692/fileData.do",
+      "reference_date": "2025-12-31 (파일데이터명 접미사)",
+      "license": "이용허락범위 제한 없음",
+      "status": "분석제외",
+      "request_status": null,
       "raw_dir": null,
-      "used_for": ["상가 위치·업종 (생활기반 접근성 후보, 미수집)"],
-      "notes": "조사용으로 받은 zip 안 파일명은 201812 로 표기돼 있어 기준일을 등록 전에 다시 확인해야 한다."
+      "used_for": ["보건소·보건지소·보건진료소 목록 대조 (좌표는 HIRA_HOSPITAL_PHARMACY)"],
+      "notes": "[2026-11-06 raw 삭제] 사유: 보건기관 좌표는 HIRA 를 쓰고 이 목록은 대율보건진료소 주소 대조에만 썼음(근거는 prepare_ri.py HIRA_COORD_FIXES 주석·methodology 에 기록). 원본은 git 커밋 aed5395 의 data/raw/mohw-local-health-orgs-2025-12-31 에서 복구할 수 있다. — [2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: CP949, 좌표 없음(주소만). 군위 18 = 보건소 1 + 보건지소 7(군위읍 제외 각 면) + 보건진료소 10. 주소 끝에 건물명이 덧붙어 있다. 1회성 제공신청 데이터라 정기 갱신 보장 없음. 경상북도 보건지소·보건진료소 현황(15056412/3)은 편입 후 군위 0행이라 쓰지 않는다."
+    },
+    {
+      "id": "MOIS_EUPMYEON_OFFICES",
+      "name": "행정안전부_읍면동 하부행정기관 현황",
+      "provider": "행정안전부",
+      "url": "https://www.data.go.kr/data/15059715/fileData.do",
+      "reference_date": "2025-12 (조사 서식 '25.12월, 연간 갱신)",
+      "license": "이용허락범위 제한 없음",
+      "status": "분석제외",
+      "request_status": null,
+      "raw_dir": null,
+      "used_for": ["읍면사무소(행정복지센터) 위치 (생활시설 접근성)"],
+      "notes": "[2026-11-06 raw 삭제] 사유: 좌표가 없어 생활시설 거리에서 제외하기로 함(2026-11-06). 원본은 git 커밋 aed5395 의 data/raw/mois-eupmyeon-offices-2025-12 에서 복구할 수 있다. — [2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: UTF-8(BOM), 좌표 없음(주소·우편번호). 군위 8행(읍면마다 1). 8곳뿐이라 좌표는 주소로 직접 확인해 넣을 수 있다 — 넣는 방법을 _meta.json 에 남길 것. 군청은 이 데이터에 없다."
+    },
+    {
+      "id": "SCHOOL_LOCATIONS",
+      "name": "한국교육시설안전원_초중등학교위치",
+      "provider": "한국교육시설안전원",
+      "url": "https://www.data.go.kr/data/15159184/fileData.do",
+      "reference_date": "2026-09-20 (반기 갱신)",
+      "license": "이용허락범위 제한 없음",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/school-locations-2026-09-20",
+      "used_for": ["초·중·고 위치 (생활시설 접근성)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: UTF-8(BOM), 위도·경도 WGS84, 운영상태·본교분교구분 있음. 군위 8행 모두 '운영'(군위읍3: 대구군위초·군위중·군위고, 효령2: 부계초 고매캠퍼스·부계중 효령캠퍼스, 부계2: 부계초·부계중, 의흥1: 부계초 의흥캠퍼스). 2026 학교 통합(14→5개교, 뉴시스 2026-06-10) 때문에 원천마다 목록이 다르다: 2025-09판(15099519) 12, 대구교육청 학교현황(15015254, 2026-04-01) 15. 캠퍼스 실제 운영 여부는 군위교육지원청 확인 필요. 분석에서 '운영 학교' 정의를 먼저 정할 것."
+    },
+    {
+      "id": "CHILDCARE_BASIC",
+      "name": "어린이집 기본정보 (어린이집정보공개포털)",
+      "provider": "보건복지부 / 한국사회보장정보원",
+      "url": "https://info.childcare.go.kr/info/oais/openapi/OpenApiSlL.jsp",
+      "reference_date": "월말 스냅샷 선택 가능 (조사 시 2026-09)",
+      "license": "이용허락범위 제한 없음 (data.go.kr 15083298)",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/childcare-basic-2026-09",
+      "used_for": ["어린이집 위치 (생활시설 접근성)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: 웹 표(HTML)로 받아야 함(xls 내보내기 서버 오류). 위도·경도 있음(WGS84 추정). 군위 4곳 모두 정상: 군위읍2·의흥1·소보1. 스냅샷에는 폐지 시설이 나오지 않는다."
+    },
+    {
+      "id": "KINDERGARTEN_GENERAL",
+      "name": "유치원알리미 공시자료 일반현황",
+      "provider": "교육부 / 한국교육학술정보원",
+      "url": "https://e-childschoolinfo.moe.go.kr/openData.do",
+      "reference_date": "2026년 2차 공시",
+      "license": "확인 필요 (data.go.kr 대응 15036719 는 제1유형·제3자 권리 포함)",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/kindergarten-general-2026-2",
+      "used_for": ["유치원 위치 (생활시설 접근성, 선택)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: UTF-8(BOM), 위도·경도 있음. 군위 1곳(대구군위초 병설유치원, 군위읍). 다른 병설유치원 7곳은 휴원으로 목록에 없음(매일신문 2025-02)."
+    },
+    {
+      "id": "CLOSED_SCHOOLS",
+      "name": "학교알리미 폐교 정보",
+      "provider": "교육부 / 한국교육학술정보원",
+      "url": "https://www.data.go.kr/data/15154585/fileData.do",
+      "reference_date": "2025-09-30",
+      "license": "확인 필요",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/closed-schools-2025-09-30",
+      "used_for": ["폐교 위치 (귀농·귀촌 거점·마을재생 후보 참고, 선택)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: 주소만. 군위 11곳(1992~2017 폐교). 군위교육지원청 폐교재산 대부현황(15053525) 7곳·매각현황(15053526) 4곳. 2026 통합 학교는 아직 없음. 대율초 폐교연도가 자료마다 다르다(1994/2012)."
+    },
+    {
+      "id": "BJD_CODE",
+      "name": "국토교통부_법정동코드",
+      "provider": "국토교통부 (원천: 행정표준코드관리시스템)",
+      "url": "https://www.data.go.kr/data/15123287/fileData.do",
+      "reference_date": "2026-09-29 (수정일, 연간 갱신)",
+      "license": "이용허락범위 제한 없음",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/bjd-code-2026-09-29",
+      "used_for": ["법정리 코드 목록 (리 단위 키, 건축물대장 조회 bjdongCd)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 2026-11-05 조사: CP949, 열 = 법정동코드·법정동명·폐지여부. 27720 존재 101행 = 군1 + 읍면8 + 법정리 92. 47720 은 전부 폐지. 편입 때 뒤 5자리 76/100 이 바뀌었다(군위읍 리와 읍면 코드만 유지) → 47720 자료를 앞자리만 바꿔 붙이면 틀린다. 이름이 같은 리가 있다(수서리: 군위읍·의흥면, 달산리: 소보면·우보면) → 키는 읍면+리."
+    },
+    {
+      "id": "VWORLD_RI_BOUNDARY",
+      "name": "브이월드 법정구역정보 중 리(LIG) 경계",
+      "provider": "국토교통부 (브이월드)",
+      "url": "https://www.vworld.kr/dtmk/dtmk_ntads_s002.do?dsId=21&dataSetSeq=21&svcCde=NA",
+      "reference_date": "2026-10-09 (전체데이터, 리 레코드 A3 2026-10-06)",
+      "license": "CC BY",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/vworld-ri-boundary-2026-10-09",
+      "used_for": ["법정리 경계 폴리곤 (리 단위 분석 공간단위)"],
+      "notes": "[2026-11-05 raw 등록, prepare.py 미연결] 사용자가 로그인해 받은 2026-10-09 전체판에서 군위 법정리 92개만 도형·속성 그대로 잘라 넣었다(전국 zip 은 저장소 밖 ~/Downloads/gunwi-dl/). EPSG:5186. 법정동코드 92개와 코드·이름 완전 일치, 읍면별 합집합 vs SGIS 읍면 경계 IoU 0.9965~0.9995. 2026-11-05 조사: SHP 전국 단일 파일 118~124MB, 시군구·읍면동·리 3단위. 좌표계·27720 여부·군위 폴리곤 수는 받아서 확인할 것(법정동코드 기준 기대값 92). 대안: LX 공간데이터마켓 법정구역경계_리(data_sn=165, 2024-11-11, 회원 로그인), 브이월드 API LT_C_ADRI_INFO(키), 행안부 리 법정경계 15153335(키). 행정리 경계는 공개 출처를 찾지 못함 → 리 단위 분석은 법정리 92개로 한다."
+    },
+    {
+      "id": "GIS_BUILDING_INTEGRATED",
+      "name": "브이월드 GIS건물통합정보 중 군위군",
+      "provider": "국토교통부 (브이월드)",
+      "url": "https://www.vworld.kr/dtmk/dtmk_ntads_s002.do?dsId=18&dataSetSeq=18&svcCde=NA",
+      "reference_date": "2026-09-09 (전체데이터, 레코드 데이터기준일자 2026-09-06)",
+      "license": "CC BY",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/vworld-gis-building-gunwi-2026-09-09",
+      "used_for": ["주거용 건물 위치 → 집별 생활시설 거리 (derived/ri_access.json)", "대율보건진료소 좌표 보정", "주택 사용승인일·구조 → 노후주택 비율 (derived/ri_housing_age.json)"],
+      "notes": "[2026-11-05 raw 등록] 수치지형도 건물 도형 + 건축물대장(세움터) 속성을 건물 단위로 합친 자료. 대구 원본(시도 단위 SHP, zip 67MB)에서 군위 54,977건을 레코드 바이트 그대로 잘라 zip 으로 묶었다(원본 zip 은 저장소 밖 ~/Downloads/gunwi-dl/). EPSG:5186 면. 법정동코드(A3)가 법정리 코드라 리 배정이 바로 된다(92종). 용도 빈칸 38,743건 = 대장과 연계 안 된 건물(창고·축사·무허가 주택 등 구분 불가) → 주거 판정은 용도 '단독주택'·'공동주택'(10,264건)만. 그중 사용승인일 빈칸 3,522건. 비교: SGIS 주택 수 2024 9,735호, 연보 2023 주택 수 11,396호 — 정의가 달라 섞지 말 것. 건축물대장 API(BUILDING_HUB_API)를 대신할 수 있다. 건물 단위 지번·건물명이 있어 웹에는 리별 집계만 공개한다."
+    },
+    {
+      "id": "GUNWI_MONTHLY_JUMIN_STATS",
+      "name": "군위군 월별 주민등록 인구통계 (읍면별)",
+      "provider": "대구광역시 군위군 (총무과)",
+      "url": "https://www.gunwi.go.kr/ko/page.do?mnu_uid=197",
+      "reference_date": "매월 말 (2016-01 ~ 2026-09)",
+      "license": "확인 필요",
+      "status": "미확보",
+      "request_status": "게시판 HWP 다운로드(즉시). 저장소 raw 미등록",
+      "raw_dir": null,
+      "used_for": ["읍면별 65세 이상 인구 남/여 (mois-age 대조용)"],
+      "notes": "2026-11-05 조사: 리별 표 없음. 2023-12 게시 bod_uid=126646, 2025-12 게시 bod_uid=137976. 65세 이상 군 계 2023-12 10,311 / 2025-12 10,992(2025-12 는 derived/population.json 고령인구와 같음). 외국인 포함 여부 미기재. HWP 라 파싱 도구가 필요하다 — mois-age 로 이미 계산 가능하므로 대조용으로만 고려."
+    },
+    {
+      "id": "GUNWI_RI_POPULATION_REQUEST",
+      "name": "군위군 행정리별 주민등록인구·65세 이상 인구 (군청 요청)",
+      "provider": "대구광역시 군위군 (총무과 추정)",
+      "url": null,
+      "reference_date": "요청하려던 기준일 2023-12-31, 2026-09-30",
+      "license": "해당 없음",
+      "status": "분석제외",
+      "request_status": null,
+      "raw_dir": null,
+      "used_for": [],
+      "notes": "[2026-11-06 분석 제외] 사유: 행안부가 공개하는 법정동별 1세 단위 주민등록 인구(MOIS_LGD_AGE)로 대체 - 법정리 단위라 분석 단위와 맞고, 읍면 합이 행정동 주민등록 인구와 정확히 같다. 요청은 보내지 않았다."
+    },
+    {
+      "id": "MOIS_LGD_AGE",
+      "name": "행정안전부_지역별(법정동) 성별 연령별 주민등록 인구수",
+      "provider": "행정안전부 (주민과)",
+      "url": "https://www.data.go.kr/data/15099158/fileData.do",
+      "reference_date": "2023-12-31, 2026-09-30 (월간 갱신, 주기성 과거 데이터로 지난 달 판 다운로드)",
+      "license": "이용허락범위 제한 없음",
+      "status": "확보",
+      "request_status": null,
+      "raw_dir": "data/raw/mois-lgd-age-2026-09",
+      "used_for": ["법정리별 인구·65세 이상·고령화율과 2023-12 대비 변화 (derived/ri_population.json)"],
+      "notes": "[2026-11-06 raw 등록] 전국 법정동·법정리 단위, 1세 단위(0~110세 이상) 성별. 포털 원본 CSV 그대로(cp949, 각 10MB). 폴더 mois-lgd-age-2023-12, mois-lgd-age-2026-09. 군위 읍면 합 = mois-age 행정동 주민등록 인구(8개 읍면 모두 일치), 65세 이상 합도 일치. 2023-12 판에 리 미지정 삼국유사면 행 1명이 있어 리별 값에서 빠진다. 같은 자료를 자동변환한 오픈API(15099158/v1)에 2022-01부터 매월 판이 있다(키 필요)."
     }
   ]
 }

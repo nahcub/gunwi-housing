@@ -1,0 +1,23 @@
+{
+  "source_id": "SBIZ_STORES",
+  "name": "소상공인시장진흥공단_상가(상권)정보_20260930 중 군위군",
+  "provider": "소상공인시장진흥공단",
+  "url": "https://www.data.go.kr/data/15083033/fileData.do",
+  "reference_date": "2026-09 (안쪽 파일명 _202609)",
+  "retrieved_at": "2026-11-05",
+  "retrieved_by": "Claude Code (2026-11-05 생활시설 조사, 서브에이전트 다운로드)",
+  "license": "이용허락범위 제한 없음",
+  "provenance": "verified",
+  "notes": "전국 원본 zip(소상공인시장진흥공단_상가(상권)정보_20260930.zip, 349,070,686 bytes, sha256 c83b30e7a1d1144864a91d0e1818abf360f565972878d6e3c88d75ceafe2286a)은 50MB 초과로 커밋하지 않고 ~/Downloads/gunwi-dl/ 에 보관. 안의 대구 CSV(62,402,597 bytes, sha256 a92edd633eef42cbbb21bf908e84ca89bbcbb9ad141c9735b816da89430b1216)에서 시군구코드=27720 행만 원본 바이트 그대로 잘라냈다(헤더 포함, 1,155행, 줄=레코드 검증). 값 가공 없음.",
+  "files": {
+    "소상공인시장진흥공단_상가(상권)정보_대구_202609_군위군(27720).csv": {
+      "sha256": "9f61b4dcaf9a8c94cdbecd988e6e92595bdb85a7990c3e6ad5d1808078759514",
+      "bytes": 645979
+    },
+    "capture.html": {
+      "sha256": "4d475b687b8671bdfa1de6513b8a613f0d3ae35d477408e4d7083d606d9011fc",
+      "bytes": 168794
+    }
+  },
+  "encoding": "utf-8"
+}

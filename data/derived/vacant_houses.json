@@ -1,0 +1,40 @@
+{
+  "reference_date": "2025 (화면 조사연도 표시값, 조사시점 미확인)",
+  "provenance": "verified",
+  "_note": "한국부동산원 빈집애 지도의 읍면별 빈집 수(지자체 빈집행정조사, 국가승인통계 아님). share_of_gun_pct 는 빈집률이 아니라 군 전체 빈집 대비 그 읍면 비중. 같은 조사의 주택 수가 없어 빈집률은 만들지 않는다. 사이트가 조사연도 하나만 제공한다(화면 '2025년').",
+  "total": 602,
+  "by_region": {
+    "2772035000": {
+      "vacant_houses": 112,
+      "share_of_gun_pct": 18.6
+    },
+    "2772034000": {
+      "vacant_houses": 108,
+      "share_of_gun_pct": 17.94
+    },
+    "2772025000": {
+      "vacant_houses": 103,
+      "share_of_gun_pct": 17.11
+    },
+    "2772036000": {
+      "vacant_houses": 65,
+      "share_of_gun_pct": 10.8
+    },
+    "2772031000": {
+      "vacant_houses": 65,
+      "share_of_gun_pct": 10.8
+    },
+    "2772032000": {
+      "vacant_houses": 65,
+      "share_of_gun_pct": 10.8
+    },
+    "2772037000": {
+      "vacant_houses": 42,
+      "share_of_gun_pct": 6.98
+    },
+    "2772033000": {
+      "vacant_houses": 42,
+      "share_of_gun_pct": 6.98
+    }
+  }
+}

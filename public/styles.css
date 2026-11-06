@@ -98,6 +98,7 @@ main {
   color: #fff;
 }
 .tabs.small button { font-size: 12px; padding: 4px 8px; }
+.note { margin: 0; font-size: 13px; line-height: 1.5; color: #4b5563; }
 
 #indicator-list, #sources, #ranking { margin: 0; padding: 0; list-style: none; }
 #ranking { counter-reset: rank; }
@@ -226,3 +227,6 @@ main {
   #sources-card { order: 3; }
   #sources-card #sources { grid-template-columns: minmax(0, 1fr); }
 }
+/* 리 92개일 때 순위 목록이 사이드바를 다 차지하지 않게 */
+#ranking { max-height: 440px; overflow-y: auto; }
+#unit-note:not(:empty) { margin-top: 8px; }

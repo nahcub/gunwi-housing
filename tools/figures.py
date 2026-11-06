@@ -35,7 +35,7 @@ DERIVED = ROOT / "data" / "derived"
 OUT = ROOT / "outputs" / "figures"
 
 # 그림1 에 그릴 지표 - 읍면 비교가 의미 있는 비율·지수
-MAP_INDICATORS = ["elderly_ratio", "aging_index", "senior_center_old_ratio",
+MAP_INDICATORS = ["elderly_ratio", "pop_change_rate", "senior_center_old_ratio",
                   "senior_center_per_1k_elderly"]
 CRITICAL_RHO_N8 = 0.738   # n=8, 양측 5% Spearman 임계값. 이보다 작으면 우연과 구분되지 않는다
 
@@ -137,7 +137,9 @@ def fig_maps(rows: list[dict]) -> None:
 # ---------------------------------------------------------------- 그림2
 
 def fig_correlation(rows: list[dict]) -> None:
-    ids = [i["id"] for i in build.INDICATORS if i["status"] == "available"]
+    # 연평균 변화율은 인구 변화율과 순위가 같아(단조 변환) 상관표에서 뺀다
+    ids = [i["id"] for i in build.INDICATORS
+           if i["status"] == "available" and i["id"] != "pop_change_rate_annual"]
     labels = [_ind(i)["label"] for i in ids]
     cols = {i: [r[i] for r in rows] for i in ids}
     n = len(ids)

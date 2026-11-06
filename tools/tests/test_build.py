@@ -16,6 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 
 import build  # noqa: E402
+import prepare  # noqa: E402
 
 REGISTRY = json.loads((ROOT / "data" / "sources.json").read_text(encoding="utf-8"))
 
@@ -67,6 +68,24 @@ def test_elderly_ratio_is_consistent():
             assert 0 < r["elderly_ratio"] < 100
 
 
+def test_single_analysis_period_with_change_from_baseline():
+    """한 시점 진단: 화면 행은 분석 시점 하나, 인구 변화는 기준 시점 대비로 붙는다."""
+    out = build.build_regions()
+    assert list(out["regions"]) == [prepare.ANALYSIS_PERIOD]
+    assert out["meta"]["baseline_period"] == prepare.BASELINE_PERIOD
+    months = out["meta"]["change_months"]
+    for r in out["regions"][prepare.ANALYSIS_PERIOD]:
+        p0, p1 = r["population_baseline"], r["population"]
+        assert r["pop_change_rate"] == round((p1 - p0) / p0 * 100, 1)
+        annual = ((p1 / p0) ** (12 / months) - 1) * 100
+        assert abs(r["pop_change_rate_annual"] - annual) < 0.006
+        # 변화 방향은 두 지표가 같아야 한다
+        assert (r["pop_change_rate"] >= 0) == (r["pop_change_rate_annual"] >= 0) or p1 == p0
+    # 2023-12 군위읍 8,069 → 2026-09 7,844 (raw 값 고정)
+    gunwi = next(r for r in out["regions"][prepare.ANALYSIS_PERIOD] if r["region_code"] == "2772025000")
+    assert (gunwi["population_baseline"], gunwi["population"]) == (8069, 7844)
+
+
 def test_missing_indicators_have_no_values():
     """원자료가 없는 지표에 값이 채워져 있으면 안 된다."""
     out = build.build_regions()
@@ -89,16 +108,42 @@ def test_every_indicator_declares_why_it_is_unavailable():
 def test_every_available_indicator_has_values():
     """화면에서 고를 수 있는 지표는 8개 읍면 모두 숫자가 있어야 한다."""
     out = build.build_regions()
-    available = [i["id"] for i in out["indicators"] if i["status"] == "available"]
-    for rows in out["regions"].values():
+    for unit, rows in [("eupmyeon", out["regions"][prepare.ANALYSIS_PERIOD]), ("ri", out["ri"])]:
+        available = [i["id"] for i in out["indicators"]
+                     if i["status"] == "available" and unit in i["units"]]
+        assert available, unit
         for r in rows:
             for key in available:
-                assert isinstance(r.get(key), (int, float)), f"{r['name']}.{key} 값 없음"
+                assert isinstance(r.get(key), (int, float)), f"{unit} {r['name']}.{key} 값 없음"
+
+
+def test_ri_rows_are_aggregates_only():
+    """리 행은 92개 법정리 집계뿐 - 건물·지번 단위 값이 공개 데이터에 섞이면 안 된다."""
+    out = build.build_regions()
+    ri = out["ri"]
+    assert len(ri) == 92 and len({r["ri_code"] for r in ri}) == 92
+    assert sum(r["houses"] for r in ri) == 10264
+    allowed = {"ri_code", "name", "region_code", "region_name", "houses", "old_house_ratio",
+               "population", "elderly", "elderly_ratio", "population_baseline", "elderly_baseline",
+               "pop_change_rate", "pop_change_rate_annual", "elderly_ratio_change",
+               "aging_index", "old_dependency", "avg_age", "density_per_km2",
+               "old_house_confirmed_ratio", "approval_blank_ratio", "primary_care_mean_m",
+               "primary_care_median_m", "primary_care_far_pct", "health_mean_m", "clinic_mean_m",
+               "bus_stop_mean_m", "bus_stop_far_pct", "school_elementary_mean_m",
+               "school_secondary_mean_m", "childcare_mean_m", "grocery_mean_m", "grocery_far_pct",
+               "senior_center_count", "facility_counts"}
+    for r in ri:
+        assert set(r) == allowed, set(r) ^ allowed
+
+
+def test_every_indicator_declares_units():
+    for ind in build.INDICATORS:
+        assert set(ind["units"]) <= {"eupmyeon", "ri"} and ind["units"], ind["id"]
 
 
 def test_facility_points_join_to_regions():
     fac = build.build_facilities()
-    codes = {r["region_code"] for r in build.build_regions()["regions"]["2025-12"]}
+    codes = {r["region_code"] for r in build.build_regions()["regions"][prepare.ANALYSIS_PERIOD]}
     assert len(fac["senior_centers"]["points"]) == 215
     for group in fac.values():
         for p in group["points"]:
