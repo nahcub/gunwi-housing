@@ -9,9 +9,10 @@
                         어긋난다 - 2026-11-05 첫 실행에서 1,155건 중 9건. 지번 기준 코드를 따른다)
   주소만 있는 폐교  -> 주소의 '읍면 + 리' 이름을 법정동코드 목록에 맞춘다
 
-배정만 한다. 기준이 아직 정해지지 않은 것(버스정류장 중복, 식료품점 상호 검토,
+배정만 한다. 기준이 아직 정해지지 않은 것(버스정류장 중복의 리별 개수, 식료품점 상호 검토,
 학교 '운영' 정의)은 여기서 걸러내거나 세지 않는다 - 점마다 원자료 구분값을 남겨
-둔다. 기준은 docs/methodology.md 에 먼저 적고 나서 센다.
+둔다. 기준은 docs/methodology.md 에 먼저 적고 나서 센다. 집별 거리(prepare_access)는
+ACCESS_GROUPS 의 조건(미정차 제외 등)으로 점을 고른다.
 """
 from __future__ import annotations
 
@@ -30,16 +31,54 @@ from shapely.geometry import Point, shape
 
 BUILDING_FOLDER = "vworld-gis-building-gunwi-2026-09-09"
 RESIDENTIAL_USES = ("단독주택", "공동주택")   # 건축물용도명. 용도 빈칸(대장 미연계) 건물은 집인지 알 수 없어 뺀다
-# 집에서 가장 가까운 시설까지 직선거리를 잴 묶음. 기준이 정해지지 않은 버스·식료품점은 아직 없다
+# 집에서 가장 가까운 시설까지 직선거리를 잴 묶음: 묶음 -> (점 유형, 걸러내는 조건 설명, 조건).
+# 조건은 점마다 원자료 구분값을 보고 판단한다. 식료품점(상가)은 기준이 정해지지 않아 아직 없다.
+# 읍면사무소는 좌표 자료가 없어 넣지 않는다(2026-11-06 사용자 결정)
 ACCESS_GROUPS = {
-    "primary_care": ("health", "clinic"),     # 1차 의료: 보건소·보건지소·보건진료소 + 의원·치과·한의원
-    "health": ("health",),
-    "clinic": ("clinic",),
-    "pharmacy": ("pharmacy",),
+    "primary_care": (("health", "clinic"), None, None),   # 1차 의료: 보건소·보건지소·보건진료소 + 의원·치과·한의원
+    "health": (("health",), None, None),
+    "clinic": (("clinic",), None, None),
+    "pharmacy": (("pharmacy",), None, None),
+    # 정류장명에 '미정차' 가 든 행(고속도로 IC·JC, 버스가 서지 않음)은 뺀다. 여러 BIS 에 중복 등록된
+    # 정류장은 가장 가까운 거리에 영향이 없어 그대로 둔다(2026-11-06 사용자 결정)
+    "bus_stop": (("bus_stop",), "정류장명에 '미정차' 가 든 행 제외", lambda p: not p["no_stop"]),
+    # 학교 위치 자료(2026-09-20)의 학교급구분. category = '학교급 / 본교분교 / 운영상태'
+    "school_elementary": (("school",), "학교급 초등학교",
+                          lambda p: p["category"].split(" / ")[0] == "초등학교"),
+    "school_secondary": (("school",), "학교급 중학교·고등학교",
+                         lambda p: p["category"].split(" / ")[0] in ("중학교", "고등학교")),
+    "childcare": (("childcare",), None, None),
+    # 식료품점(2026-11-06 사용자 결정): 상권업종 소분류 슈퍼마켓·편의점만, 휴게소·캠핑장 등 GROCERY_EXCLUDE 제외.
+    # 정육점·채소과일 등 확장 업종은 치킨집·농장 직판이 섞여 있어 쓰지 않는다
+    "grocery": (("store",), "슈퍼마켓(G20404)·편의점(G20405) 중 GROCERY_EXCLUDE 15곳 제외",
+                lambda p: p["category"].split()[0] in GROCERY_CODES and p["store_id"] not in GROCERY_EXCLUDE),
+}
+GROCERY_CODES = ("G20404", "G20405")
+# 사람이 상호를 보고 뺀 곳 (상가업소번호: (상호, 사유)). 2026-11-06 '휴게소' 키워드 1차 + 사용자 확인 12곳
+GROCERY_EXCLUDE = {
+    "MA010120220806434737": ("씨유군위휴게소점", "휴게소"),
+    "MA010120220808164975": ("송이휴게소", "휴게소"),
+    "MA010120220812397719": ("의흥휴게소", "휴게소"),
+    "MA010120220809253410": ("거매정자나무휴게실", "휴게 시설"),
+    "MA010120220809703149": ("팔공쉼터매점", "휴게 시설"),
+    "MA010120220805731350": ("청화산캠프관광농원", "캠핑장·관광지"),
+    "MA0101202406A0456697": ("이지파크캠핑", "캠핑장·관광지"),
+    "MA0101202303A0061741": ("동산더숲", "캠핑장·관광지"),
+    "MA0101202306A0098552": ("씨유삼국유사테마파크공원점", "캠핑장·관광지"),
+    "MA010120220808729566": ("일연파크편의점", "캠핑장·관광지"),
+    "MA010120220809256570": ("동산매점", "매점·주유소"),
+    "MA0101202406A0205746": ("해룡매점", "매점·주유소"),
+    "MA010120220809252345": ("일송정매점", "매점·주유소"),
+    "MA010120220809296038": ("화수정유소매점", "매점·주유소"),
+    "MA010120220814171518": ("아날로그데이", "분류 오류(원자료 업종 숙박업)"),
 }
 ACCESS_LABELS = {"primary_care": "1차 의료(보건기관+의원)", "health": "보건소·보건지소·보건진료소",
-                 "clinic": "의원·치과·한의원", "pharmacy": "약국"}
-# '먼 집' 기준 거리. 공식 기준이 아니라 프로젝트 임시값이다 - 확정되면 여기만 바꾼다
+                 "clinic": "의원·치과·한의원", "pharmacy": "약국",
+                 "bus_stop": "버스정류장(미정차 제외)", "school_elementary": "초등학교",
+                 "school_secondary": "중·고등학교", "childcare": "어린이집",
+                 "grocery": "식료품점(슈퍼마켓·편의점)"}
+# '먼 집' 기준 거리. 공식 기준이 아니라 프로젝트 임시값이다 - 확정되면 여기만 바꾼다.
+# 지금은 모든 묶음에 같은 값을 쓴다. 시설별 기준(예: 버스는 걸어서 1 km)은 아직 정하지 않았다
 ACCESS_FAR_M = 2000
 
 # HIRA 좌표 보정. 원자료가 틀린 것으로 확인된 시설만, 근거와 함께 적는다.
@@ -222,6 +261,7 @@ def _stores(raw: Path, read_meta) -> list[dict]:
         "name": r["상호명"] + (f" {r['지점명']}" if r["지점명"] else ""),
         "lon": float(r["경도"]), "lat": float(r["위도"]),
         "source_id": "SBIZ_STORES",
+        "store_id": r["상가업소번호"],
         "ri_code_source": r["법정동코드"],
     } for r in rows]
 
@@ -415,7 +455,8 @@ def assign_facilities(raw: Path, read_meta, ri_gj: dict, seniors: dict) -> dict:
     return {
         "_note": ("법정리 92개 기준 시설 배정. 좌표가 있으면 리 경계 포함 판정, 상가는 원자료 법정동코드, "
                   "폐교는 주소의 읍면·리 이름. 버스정류장(중복 등록·미정차 행 포함)과 상가(식료품 기준 미정)는 배정만 하고 "
-                  "리별로 세지 않는다 - 기준은 docs/methodology.md 에서 정한다."),
+                  "리별로 세지 않는다 - 기준은 docs/methodology.md 에서 정한다. 버스정류장은 미정차 행을 빼고 "
+                  "집별 거리(ri_access.json)에만 쓴다."),
         "ri_boundary_reference_date": ri_gj["_reference_date"],
         "type_labels": TYPE_LABELS,
         "counted_types": COUNTED_TYPES,
@@ -520,11 +561,18 @@ def prepare_access(raw: Path, read_meta, ri_gj: dict, ri_fac: dict) -> dict:
             mismatch += 1
     assert mismatch <= len(houses) * 0.02, f"건물 법정동코드 vs 좌표 불일치 {mismatch}/{len(houses)}"
 
+    # 식료품점 제외 목록이 원자료와 맞는지(번호가 있고 상호가 같은지) - 손으로 옮긴 목록이라 매번 검사한다
+    stores = {p["store_id"]: p for p in ri_fac["points"] if p["type"] == "store"}
+    for sid, (name, _) in GROCERY_EXCLUDE.items():
+        assert sid in stores, f"식료품점 제외 목록의 상가업소번호 {sid}({name})가 원자료에 없다"
+        assert stores[sid]["name"].strip() == name, f"{sid}: 상호 {stores[sid]['name']!r} != {name!r}"
+        assert stores[sid]["category"].split()[0] in GROCERY_CODES, f"{sid}: 슈퍼마켓·편의점이 아님"
+
     to_tm = Transformer.from_crs(4326, 5186, always_xy=True).transform
     trees = {}
-    for g, types in ACCESS_GROUPS.items():
+    for g, (types, _, keep) in ACCESS_GROUPS.items():
         pts = [Point(*to_tm(p["lon"], p["lat"])) for p in ri_fac["points"]
-               if p["type"] in types and p["lon"] is not None]
+               if p["type"] in types and p["lon"] is not None and (keep is None or keep(p))]
         assert pts, f"{g}: 시설이 없다"
         trees[g] = (STRtree(pts), len(pts))
     house_pts = [Point(h["x"], h["y"]) for h in houses]
@@ -553,11 +601,15 @@ def prepare_access(raw: Path, read_meta, ri_gj: dict, ri_fac: dict) -> dict:
         "_note": ("주거용 건물(GIS건물통합정보 용도 단독·공동주택) 중심점에서 가장 가까운 시설까지 직선거리(m). "
                   "도로망 미사용이라 실제 이동거리보다 짧다. 용도 빈칸 건물(대장 미연계)은 집인지 알 수 없어 "
                   "빠졌다. 사람 수가 아니라 집(건물) 수 기준이고 빈집도 포함된다. far_share_pct 의 기준 "
-                  f"{ACCESS_FAR_M} m 는 프로젝트 임시값."),
-        "reference_dates": {"buildings": "2026-09-09", "hira": "2026-09"},
+                  f"{ACCESS_FAR_M} m 는 프로젝트 임시값(모든 묶음 공통). 버스정류장은 운행 횟수가 없어 "
+                  "거리가 가까워도 서비스 수준을 뜻하지 않는다. 읍면사무소는 좌표 자료가 없어 뺐다."),
+        "reference_dates": {"buildings": "2026-09-09", "hira": "2026-09", "bus_stops": "2026-10-20",
+                            "schools": "2026-09-20", "childcare": "2026-09"},
         "far_m": ACCESS_FAR_M,
-        "groups": {g: {"label": ACCESS_LABELS[g], "types": list(t), "facilities": trees[g][1]}
-                   for g, t in ACCESS_GROUPS.items()},
+        "far_m_note": "모든 묶음에 같은 기준. 시설별 기준(예: 버스 도보 1 km)은 미정",
+        "groups": {g: {"label": ACCESS_LABELS[g], "types": list(t), "filter": rule,
+                       "facilities": trees[g][1]}
+                   for g, (t, rule, _) in ACCESS_GROUPS.items()},
         "residential_uses": list(RESIDENTIAL_USES),
         "totals": {"houses": len(houses),
                    "houses_without_approval_date": sum(1 for h in houses if not h["approved"])},

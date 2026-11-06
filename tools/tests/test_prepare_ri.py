@@ -123,6 +123,34 @@ def test_access_summary_is_consistent(access):
             assert 0 <= s["far_share_pct"] <= 100
             # 1차 의료는 보건기관과 의원을 합친 묶음이라 둘 중 가까운 쪽보다 멀 수 없다
         assert v["primary_care"]["max_m"] <= max(v["health"]["max_m"], v["clinic"]["max_m"])
+        # 중·고 묶음과 초등 묶음은 같은 학교 점(8곳)을 나눈 것 - 둘 다 비어 있으면 안 된다
+        assert v["school_elementary"]["mean_m"] is not None and v["school_secondary"]["mean_m"] is not None
+
+
+def test_access_group_facility_counts(access, ri):
+    """묶음별 시설 수. 버스는 군위 안 725행 중 '미정차' 8행(IC·JC)을 빼고 중복 등록은 그대로 둔다."""
+    _, _, fac = ri
+    n = {g: v["facilities"] for g, v in access["groups"].items()}
+    assert n == {"primary_care": 35, "health": 18, "clinic": 17, "pharmacy": 7,
+                 "bus_stop": 717, "school_elementary": 4, "school_secondary": 4, "childcare": 4,
+                 "grocery": 60}
+    bus = [p for p in fac["points"] if p["type"] == "bus_stop"]
+    assert sum(p["no_stop"] for p in bus) == 8
+    assert all("미정차" in p["name"] for p in bus if p["no_stop"])
+    # 학교 묶음 둘이 학교 점 전체를 빠짐없이, 겹치지 않게 나눈다
+    assert n["school_elementary"] + n["school_secondary"] == fac["totals"]["school"]
+    assert access["far_m"] == prepare_ri.ACCESS_FAR_M == 2000
+
+
+def test_access_new_groups_gun_summary(access):
+    """군 전체 평균이 읍면 평균의 집 수 가중평균과 맞는지(반올림 오차 1 m 이내)."""
+    for g in ("bus_stop", "school_elementary", "school_secondary", "childcare", "grocery"):
+        total = sum(v["houses"] for v in access["by_region"].values())
+        weighted = sum(v[g]["mean_m"] * v["houses"] for v in access["by_region"].values()) / total
+        assert abs(weighted - access["gun"][g]["mean_m"]) <= 1, g
+        assert access["gun"][g]["max_m"] == max(v[g]["max_m"] for v in access["by_ri"].values())
+    # 정류장이 학교·어린이집보다 훨씬 촘촘하다
+    assert access["gun"]["bus_stop"]["mean_m"] < access["gun"]["school_elementary"]["mean_m"]
 
 
 def test_daeyul_clinic_coordinate_fixed(ri):
@@ -159,3 +187,16 @@ def test_housing_age_parts_add_up(housing):
         assert v["old_confirmed"] + v["old_estimated"] <= v["houses"]
         assert v["old_confirmed_pct"] <= v["old_with_estimate_pct"]
     assert sum(v["old_estimated"] for v in housing["by_ri"].values()) == housing["gun"]["old_estimated"]
+
+
+def test_grocery_excludes_listed_stores(ri):
+    """식료품점 = 슈퍼마켓·편의점 75곳 - 사람이 확인한 제외 15곳. 제외 목록은 상가업소번호로 고정."""
+    _, _, fac = ri
+    stores = [p for p in fac["points"] if p["type"] == "store"]
+    core = [p for p in stores if p["category"].split()[0] in prepare_ri.GROCERY_CODES]
+    assert len(core) == 75 and len(prepare_ri.GROCERY_EXCLUDE) == 15
+    by_id = {p["store_id"]: p for p in core}
+    for sid, (name, _) in prepare_ri.GROCERY_EXCLUDE.items():
+        assert by_id[sid]["name"].strip() == name
+    keep = prepare_ri.ACCESS_GROUPS["grocery"][2]
+    assert sum(1 for p in stores if keep(p)) == 60

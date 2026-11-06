@@ -375,6 +375,8 @@ def main() -> None:
     g = ri_access["gun"]
     print(f"  주거 건물 {g['houses']}채 → 1차 의료 평균 {g['primary_care']['mean_m']} m, "
           f"{ri_access['far_m']} m 초과 {g['primary_care']['far_share_pct']}% (임시 기준)")
+    print("    평균 거리 " + ", ".join(
+        f"{v['label']} {g[k]['mean_m']} m({v['facilities']}곳)" for k, v in ri_access["groups"].items()))
     h = ri_housing["gun"]
     print(f"  노후주택({ri_housing['old_house_years']}년+) 확인 {h['old_confirmed_pct']}%, "
           f"구조 추정 포함 {h['old_with_estimate_pct']}%, 사용승인일 빈칸 {h['blank_pct']}%")
