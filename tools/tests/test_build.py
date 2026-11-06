@@ -108,11 +108,32 @@ def test_every_indicator_declares_why_it_is_unavailable():
 def test_every_available_indicator_has_values():
     """화면에서 고를 수 있는 지표는 8개 읍면 모두 숫자가 있어야 한다."""
     out = build.build_regions()
-    available = [i["id"] for i in out["indicators"] if i["status"] == "available"]
-    for rows in out["regions"].values():
+    for unit, rows in [("eupmyeon", out["regions"][prepare.ANALYSIS_PERIOD]), ("ri", out["ri"])]:
+        available = [i["id"] for i in out["indicators"]
+                     if i["status"] == "available" and unit in i["units"]]
+        assert available, unit
         for r in rows:
             for key in available:
-                assert isinstance(r.get(key), (int, float)), f"{r['name']}.{key} 값 없음"
+                assert isinstance(r.get(key), (int, float)), f"{unit} {r['name']}.{key} 값 없음"
+
+
+def test_ri_rows_are_aggregates_only():
+    """리 행은 92개 법정리 집계뿐 - 건물·지번 단위 값이 공개 데이터에 섞이면 안 된다."""
+    out = build.build_regions()
+    ri = out["ri"]
+    assert len(ri) == 92 and len({r["ri_code"] for r in ri}) == 92
+    assert sum(r["houses"] for r in ri) == 10264
+    allowed = {"ri_code", "name", "region_code", "region_name", "houses", "old_house_ratio",
+               "old_house_confirmed_ratio", "approval_blank_ratio", "primary_care_mean_m",
+               "primary_care_median_m", "primary_care_far_pct", "health_mean_m", "clinic_mean_m",
+               "pharmacy_mean_m", "senior_center_count", "facility_counts"}
+    for r in ri:
+        assert set(r) == allowed, set(r) ^ allowed
+
+
+def test_every_indicator_declares_units():
+    for ind in build.INDICATORS:
+        assert set(ind["units"]) <= {"eupmyeon", "ri"} and ind["units"], ind["id"]
 
 
 def test_facility_points_join_to_regions():

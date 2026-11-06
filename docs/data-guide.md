@@ -283,7 +283,8 @@ methodology "집별 생활시설 거리"). 건물 단위 값은 derived 에도 �
 (확인, 하한), `old_with_estimate_pct`(빈칸+재래식 구조 추정 포함, 주 지표), `blank_pct`(추정 의존도).
 산식은 methodology "노후주택".
 
-공개하지 않는다: 리 단위 결과는 `build.py` 에 아직 연결하지 않았다(`public/data/` 에 없음).
+공개: `build.py` 가 리별 **집계값만** `regions.json` 의 `ri` 와 `ri_boundary.geojson` 으로 내보낸다.
+건물·지번 단위 값과 시설 점 목록(`ri_facilities.json` 의 `points`)은 공개하지 않는다.
 
 ---
 
@@ -295,6 +296,9 @@ methodology "집별 생활시설 거리"). 건물 단위 값은 derived 에도 �
 | `sgis_stats.json` | `regions.json` 에 합쳐짐 | 결과표 |
 | `senior_centers.json` | `regions.json`(읍면 집계·노후 비율) + `facilities.json`(지점) | 결과표 |
 | `eupmyeon.geojson` | 그대로 복사 | — |
+| `ri_housing_age.json` · `ri_access.json` | `regions.json` 읍면 행 + `ri`(법정리 92행) | 결과표 열 + `리별지표` 시트·CSV |
+| `ri_facilities.json` | `ri` 행의 경로당 수(리별 집계만) | 리별지표 경로당수 |
+| `ri_boundary.geojson` | 그대로 복사 | — |
 
 ## 저장소에 없는 자료
 

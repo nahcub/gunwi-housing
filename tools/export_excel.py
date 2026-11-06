@@ -19,6 +19,7 @@ DERIVED = ROOT / "data" / "derived"
 REGISTRY = ROOT / "data" / "sources.json"
 OUT = ROOT / "outputs"
 BASENAME = "군위군_주거환경취약지역_기초지표_2026-09"
+RI_BASENAME = "군위군_주거환경취약지역_리별지표_2026-09"
 
 from prepare import ANALYSIS_PERIOD, BASELINE_PERIOD  # noqa: E402  기준 시점은 prepare.py 한 곳에서 정한다
 import build  # noqa: E402  인구 변화율 산식은 build.build_regions() 하나만 쓴다(웹과 같은 숫자)
@@ -48,6 +49,29 @@ COLUMNS = [
     ("고령인구1천명당_경로당수", "실수", "개소", "경로당수 / 고령인구 × 1,000"),
     ("중심위도", "실수", "도", "읍면 경계의 면적가중 중심점. EPSG:4326"),
     ("중심경도", "실수", "도", "읍면 경계의 면적가중 중심점. EPSG:4326"),
+]
+
+# 주거용 건물 기반 열 - 읍면 결과표와 리별 시트가 같은 정의를 쓴다 (컬럼명, 자료형, 단위, 설명, build 필드)
+HOUSING_COLUMNS = [
+    ("주거용건물수", "정수", "동", "GIS건물통합정보(2026-09-09) 용도 단독·공동주택 건물 수. 빈집 포함", "houses"),
+    ("노후주택비율", "실수", "%", "사용승인 30년 이상(1996-09-30 이전) + 사용승인일 빈칸 중 재래식 구조(목·조적·블록·벽돌·석) 추정. 분모는 주거용 건물 전체. 30년은 프로젝트 기준", "old_house_ratio"),
+    ("노후주택비율_확인분", "실수", "%", "사용승인일로 30년 이상이 확인된 집만 (하한)", "old_house_confirmed_ratio"),
+    ("사용승인일빈칸비율", "실수", "%", "사용승인일이 없는 주거용 건물 비율. 노후 추정에 기댄 정도", "approval_blank_ratio"),
+    ("1차의료_평균거리", "정수", "m", "집에서 가장 가까운 보건기관(보건소·지소·진료소) 또는 의원까지 직선거리 평균. 도로망 미사용", "primary_care_mean_m"),
+    ("1차의료_2km밖_비율", "실수", "%", "가장 가까운 1차 의료가 2,000 m 넘게 떨어진 집 비율. 2 km 는 프로젝트 임시 기준", "primary_care_far_pct"),
+    ("보건기관_평균거리", "정수", "m", "가장 가까운 보건소·보건지소·보건진료소까지 직선거리 평균", "health_mean_m"),
+    ("의원_평균거리", "정수", "m", "가장 가까운 의원·치과·한의원까지 직선거리 평균", "clinic_mean_m"),
+    ("약국_평균거리", "정수", "m", "가장 가까운 약국까지 직선거리 평균. 의약분업 예외지역 여부는 확인하지 않음", "pharmacy_mean_m"),
+]
+_pos = next(i for i, c in enumerate(COLUMNS) if c[0] == "중심위도")
+COLUMNS[_pos:_pos] = [c[:4] for c in HOUSING_COLUMNS]
+
+RI_COLUMNS = [
+    ("법정리코드", "문자열", "", "법정동코드 10자리(시군구 27720 + 읍면 3 + 리 2). 조인키"),
+    ("읍면명", "문자열", "", "읍·면 이름"),
+    ("리명", "문자열", "", "법정리 이름. 이름이 같은 리가 있으니(수서리·달산리) 코드로 구분"),
+    *[c[:4] for c in HOUSING_COLUMNS],
+    ("경로당수", "정수", "개소", "리 경계 안 경로당 (2025-12-19 기준)"),
 ]
 
 
@@ -118,6 +142,7 @@ def build_rows() -> list[dict]:
             "노후경로당수": seniors[code]["old_count"],
             "노후경로당비율": round(seniors[code]["old_count"] / seniors[code]["count"] * 100, 2),
             "고령인구1천명당_경로당수": round(seniors[code]["count"] / p["elderly"] * 1000, 2),
+            **{c[0]: change[code][c[4]] for c in HOUSING_COLUMNS},
             "중심위도": round(lat, 6),
             "중심경도": round(lon, 6),
         })
@@ -125,15 +150,30 @@ def build_rows() -> list[dict]:
     return rows
 
 
+def build_ri_rows() -> list[dict]:
+    """법정리 92개 행 - build.build_ri_rows() 의 값을 그대로 쓴다(웹과 같은 숫자)."""
+    rows = []
+    for r in build.build_ri_rows():
+        rows.append({
+            "법정리코드": r["ri_code"], "읍면명": r["region_name"], "리명": r["name"],
+            **{c[0]: r[c[4]] for c in HOUSING_COLUMNS},
+            "경로당수": r["senior_center_count"],
+        })
+    assert [c[0] for c in RI_COLUMNS] == list(rows[0]), "RI_COLUMNS 와 리별 시트 열이 어긋남"
+    return rows
+
+
 def method_rows() -> list[tuple[str, str]]:
     reg = {s["id"]: s for s in json.loads(REGISTRY.read_text(encoding="utf-8"))["sources"]}
-    used = ["MOIS_AGE", "SGIS_ADM_STAT_2025", "DATAGOKR_GUNWI_SENIOR", "BOUNDARY_EUPMYEON"]
+    used = ["MOIS_AGE", "SGIS_ADM_STAT_2025", "DATAGOKR_GUNWI_SENIOR", "BOUNDARY_EUPMYEON",
+            "GIS_BUILDING_INTEGRATED", "HIRA_HOSPITAL_PHARMACY", "VWORLD_RI_BOUNDARY"]
     excluded = [s for s in reg.values() if s["status"] == "분석제외"]
 
     rows = [
         ("■ 개요", ""),
         ("데이터셋", "대구광역시 군위군 읍면별 주거환경 취약지역 기초지표"),
-        ("공간 단위", "읍·면 8곳 (군위읍, 소보·효령·부계·우보·의흥·산성·삼국유사면)"),
+        ("공간 단위", "읍·면 8곳 (군위읍, 소보·효령·부계·우보·의흥·산성·삼국유사면) + "
+                     "'리별지표' 시트는 법정리 92곳 (인구·고령화는 리별 자료가 없어 읍면에만 있다)"),
         ("기준 시점", f"분석 기준 {ANALYSIS_PERIOD} 말(주민등록 인구). 인구 변화는 {BASELINE_PERIOD} 말 대비. "
                      "조사 주기가 정해진 자료는 최근 조사분: SGIS 2024년 / 경로당 2025-12-19"),
         ("좌표계", "EPSG:4326 (WGS84)"),
@@ -146,6 +186,10 @@ def method_rows() -> list[tuple[str, str]]:
         ("인구변화율", f"(분석 시점 인구 - 기준 시점 인구) ÷ 기준 시점 인구 × 100 ({BASELINE_PERIOD} → {ANALYSIS_PERIOD})"),
         ("연평균인구변화율", "((분석 시점 인구 ÷ 기준 시점 인구)^(12 ÷ 개월수) - 1) × 100"),
         ("노후경로당수", "건립연도 < 2000. 공식 기준이 아니라 프로젝트 임시 기준"),
+        ("노후주택비율", "(사용승인 30년 이상 + 사용승인일 빈칸·재래식 구조) ÷ 주거용 건물. 빈칸 집의 98% 가 "
+                       "목·조적·블록·벽돌·석조라 옛집으로 추정. 확인분만의 비율과 빈칸 비율을 함께 본다"),
+        ("1차의료_평균거리", "주거용 건물 중심점마다 가장 가까운 보건기관·의원까지 직선거리를 재고 평균. "
+                          "도로망을 쓰지 않아 실제 이동거리보다 짧다. HIRA 대율보건진료소 좌표 오류 1건 보정"),
         ("", ""),
         ("■ 자료 출처", ""),
     ]
@@ -171,6 +215,7 @@ def method_rows() -> list[tuple[str, str]]:
         ("", ""),
         ("■ 함께 제공하는 파일", ""),
         (f"{BASENAME}.csv", "결과표를 개방 포맷으로 (기계 판독용). 내용은 이 파일 1번 시트와 같다"),
+        (f"{RI_BASENAME}.csv", "리별지표 시트를 개방 포맷으로"),
         ("data/sources.json", "출처·기준일·확보 상태를 구조화한 출처 레지스트리"),
         ("tools/prepare.py · tools/export_excel.py", "원자료 → 정제 → 이 파일까지의 재현 코드"),
     ]
@@ -213,8 +258,17 @@ def main() -> None:
     for cell in ws["B"][1:]:
         cell.number_format = "@"          # 코드는 문자열로 둔다
 
-    _sheet(wb.create_sheet("컬럼설명"), ["컬럼명", "자료형", "단위", "설명"],
-           [list(c) for c in COLUMNS], [24, 9, 8, 84])
+    ri_rows = build_ri_rows()
+    ri_header = [c[0] for c in RI_COLUMNS]
+    ws_ri = wb.create_sheet("리별지표")
+    _sheet(ws_ri, ri_header, [[r[h] for h in ri_header] for r in ri_rows],
+           [13, 10, 10] + [13] * (len(ri_header) - 3))
+    for cell in ws_ri["A"][1:]:
+        cell.number_format = "@"
+
+    _sheet(wb.create_sheet("컬럼설명"), ["시트", "컬럼명", "자료형", "단위", "설명"],
+           [["기초지표", *c] for c in COLUMNS] + [["리별지표", *c] for c in RI_COLUMNS[:3]] +
+           [["리별지표", *RI_COLUMNS[-1]]], [10, 24, 9, 8, 84])
 
     ws3 = wb.create_sheet("산출방법")
     _sheet(ws3, ["구분", "내용"], [list(r) for r in method_rows()], [26, 112])
@@ -232,6 +286,11 @@ def main() -> None:
 
     print(f"  {xlsx.relative_to(ROOT)}  (읍면 {len(rows)}행 x {len(header)}열)")
     print(f"  {(OUT / f'{BASENAME}.csv').relative_to(ROOT)}")
+    with open(OUT / f"{RI_BASENAME}.csv", "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=ri_header)
+        w.writeheader()
+        w.writerows(ri_rows)
+    print(f"  리별지표 시트 (법정리 {len(ri_rows)}행) + {(OUT / f'{RI_BASENAME}.csv').relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

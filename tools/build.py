@@ -32,34 +32,53 @@ SOURCE_FIELDS = [
 # 원자료가 없는 지표에 값을 채우지 않는다 - 비활성이 정직한 상태다.
 INDICATORS = [
     {"id": "population", "label": "총인구", "unit": "명",
-     "status": "available", "higher_is_worse": False},
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False},
     {"id": "elderly_ratio", "label": "고령화율", "unit": "%",
-     "status": "available", "higher_is_worse": True},
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True},
     # 인구 변화: 시계열은 raw 에 두고, 분석 기준 시점(2026-09) 값으로는 기준 시점 대비 변화만 낸다
     {"id": "pop_change_rate", "label": "인구 변화율", "unit": "%",
-     "status": "available", "higher_is_worse": False,
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
     {"id": "pop_change_rate_annual", "label": "연평균 인구 변화율", "unit": "%/년",
-     "status": "available", "higher_is_worse": False,
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}, 연율 환산"},
     {"id": "elderly_ratio_change", "label": "고령화율 변화", "unit": "%p",
-     "status": "available", "higher_is_worse": True,
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
     # 아래 시설·SGIS 지표는 조사 주기가 정해진 자료라 기준일이 다르다. reference 에 적는다
     {"id": "aging_index", "label": "노령화지수", "unit": "",
-     "status": "available", "higher_is_worse": True, "reference": "SGIS 2024"},
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True, "reference": "SGIS 2024"},
     {"id": "density_per_km2", "label": "인구밀도", "unit": "명/㎢",
-     "status": "available", "higher_is_worse": False, "reference": "SGIS 2024"},
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False, "reference": "SGIS 2024"},
     {"id": "senior_center_count", "label": "경로당 수", "unit": "개소",
-     "status": "available", "higher_is_worse": False, "reference": "2025-12-19"},
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False, "reference": "2025-12-19"},
     {"id": "senior_center_per_1k_elderly", "label": "고령인구 1천명당 경로당", "unit": "개소",
-     "status": "available", "higher_is_worse": False,
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False,
      "reference": f"경로당 2025-12-19 / 고령인구 {ANALYSIS_PERIOD}"},
     {"id": "senior_center_old_ratio", "label": "노후 경로당 비율", "unit": "%",
-     "status": "available", "higher_is_worse": True,
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True,
      "reference": "2025-12-19 · 2000년 이전 건립(프로젝트 임시 기준)"},
+    # 주거용 건물(GIS건물통합정보 2026-09-09) 기반 - 읍면·리 모두. 산식은 methodology "노후주택"·"집별 생활시설 거리"
+    {"id": "old_house_ratio", "label": "노후주택 비율", "unit": "%",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
+     "reference": "사용승인 30년+ · 사용승인일 빈칸은 재래식 구조로 추정 포함"},
+    {"id": "old_house_confirmed_ratio", "label": "노후주택 비율(확인분만)", "unit": "%",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
+     "reference": "사용승인 30년+ 로 확인된 집만 (하한)"},
+    {"id": "approval_blank_ratio", "label": "사용승인일 빈칸 비율", "unit": "%",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False,
+     "reference": "노후 추정에 기댄 정도 (자료 품질)"},
+    {"id": "primary_care_mean_m", "label": "1차 의료까지 평균 거리", "unit": "m",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
+     "reference": "집별 직선거리, 보건기관+의원 (HIRA 2026-09)"},
+    {"id": "primary_care_far_pct", "label": "1차 의료 2km 밖 집 비율", "unit": "%",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
+     "reference": "집별 직선거리 2,000 m 초과 (프로젝트 임시 기준)"},
+    {"id": "pharmacy_mean_m", "label": "약국까지 평균 거리", "unit": "m",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
+     "reference": "집별 직선거리 (HIRA 2026-09)"},
     {"id": "priority_score", "label": "종합 점수", "unit": "점",
-     "status": "blocked",
+     "status": "blocked", "units": ["eupmyeon", "ri"],
      "reason": "검증된 가중치 모형이 없다. docs/methodology.md 참고"},
 ]
 
@@ -83,6 +102,8 @@ def build_regions() -> dict:
     pop = load("population.json")
     sgis = load("sgis_stats.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
+    housing = load("ri_housing_age.json")["by_region"]
+    access = load("ri_access.json")["by_region"]
     eup = [r for r in pop["records"] if r["level"] == "eupmyeon"]
     base = {r["region_code"]: r for r in eup if r["period"] == BASELINE_PERIOD}
     cur = [r for r in eup if r["period"] == ANALYSIS_PERIOD]
@@ -108,6 +129,7 @@ def build_regions() -> dict:
             "pop_change_rate_annual": round(
                 ((rec["population"] / b["population"]) ** (12 / months) - 1) * 100, 2),
             "elderly_ratio_change": round(ratio_now - ratio_base, 1),
+            **_housing_access_fields(housing[code], access[code]),
             "aging_index": sgis[code]["aging_index"],
             "density_per_km2": sgis[code]["density_per_km2"],
             "senior_center_count": seniors[code]["count"],
@@ -133,7 +155,44 @@ def build_regions() -> dict:
         "indicators": INDICATORS,
         # 키를 시점으로 두는 것은 figures·테스트와의 호환 때문이다. 시점은 하나뿐이다
         "regions": {ANALYSIS_PERIOD: rows},
+        "ri": build_ri_rows(),
     }
+
+
+def _housing_access_fields(h: dict, a: dict) -> dict:
+    """노후주택·집별 거리 요약에서 화면에 내보낼 값만 고른다(읍면·리 공통)."""
+    return {
+        "houses": h["houses"],
+        "old_house_ratio": h["old_with_estimate_pct"],
+        "old_house_confirmed_ratio": h["old_confirmed_pct"],
+        "approval_blank_ratio": h["blank_pct"],
+        "primary_care_mean_m": a["primary_care"]["mean_m"],
+        "primary_care_median_m": a["primary_care"]["median_m"],
+        "primary_care_far_pct": a["primary_care"]["far_share_pct"],
+        "health_mean_m": a["health"]["mean_m"],
+        "clinic_mean_m": a["clinic"]["mean_m"],
+        "pharmacy_mean_m": a["pharmacy"]["mean_m"],
+    }
+
+
+def build_ri_rows() -> list[dict]:
+    """법정리 92개 행. 리별 집계만 내보낸다 - 건물·지번 단위 값은 공개하지 않는다."""
+    housing = load("ri_housing_age.json")["by_ri"]
+    access = load("ri_access.json")["by_ri"]
+    fac = load("ri_facilities.json")["by_ri"]
+    rows = []
+    for code in sorted(housing):
+        h, a, f = housing[code], access[code], fac[code]
+        assert h["houses"] == a["houses"], f"{code}: 노후·거리 집 수가 다름"
+        rows.append({
+            "ri_code": code, "name": h["ri_name"], "region_code": h["region_code"],
+            "region_name": h["region_name"],
+            **_housing_access_fields(h, a),
+            "senior_center_count": f["counts"]["senior_center"],
+            "facility_counts": {k: v for k, v in f["counts"].items() if v},
+        })
+    assert len(rows) == 92, f"리 {len(rows)}개"
+    return rows
 
 
 def build_facilities() -> dict:
@@ -182,6 +241,7 @@ def main() -> None:
     print("public/data 생성:")
     write("regions.json", build_regions())
     write("eupmyeon.geojson", boundary)
+    write("ri_boundary.geojson", load("ri_boundary.geojson"))
     write("facilities.json", build_facilities())
     write("sources.json", build_sources())
 
