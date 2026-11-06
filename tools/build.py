@@ -74,9 +74,6 @@ INDICATORS = [
     {"id": "primary_care_far_pct", "label": "1차 의료 2km 밖 집 비율", "unit": "%",
      "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
      "reference": "집별 직선거리 2,000 m 초과 (프로젝트 기준)"},
-    {"id": "pharmacy_mean_m", "label": "약국까지 평균 거리", "unit": "m",
-     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
-     "reference": "집별 직선거리 (HIRA 2026-09)"},
     # 버스·학교·어린이집. 운행 횟수·정원은 반영하지 않는다(거리 ≠ 서비스 수준). methodology "집별 생활시설 거리"
     {"id": "bus_stop_mean_m", "label": "버스정류장까지 평균 거리", "unit": "m",
      "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
@@ -193,7 +190,6 @@ def _housing_access_fields(h: dict, a: dict) -> dict:
         "primary_care_far_pct": a["primary_care"]["far_share_pct"],
         "health_mean_m": a["health"]["mean_m"],
         "clinic_mean_m": a["clinic"]["mean_m"],
-        "pharmacy_mean_m": a["pharmacy"]["mean_m"],
         "bus_stop_mean_m": a["bus_stop"]["mean_m"],
         "bus_stop_far_pct": a["bus_stop"]["far_share_pct"],
         "school_elementary_mean_m": a["school_elementary"]["mean_m"],

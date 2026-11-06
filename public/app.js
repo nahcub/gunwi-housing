@@ -189,7 +189,6 @@ function renderDetail() {
     `<dt>노후주택</dt><dd>${r.old_house_ratio} % (확인분 ${r.old_house_confirmed_ratio} %, 사용승인일 빈칸 ${r.approval_blank_ratio} %)</dd>` +
     `<dt>1차 의료 거리</dt><dd>평균 ${km(r.primary_care_mean_m)}, 2km 밖 ${r.primary_care_far_pct} %</dd>` +
     `<dt>보건기관 / 의원</dt><dd>평균 ${km(r.health_mean_m)} / ${km(r.clinic_mean_m)}</dd>` +
-    `<dt>약국 거리</dt><dd>평균 ${km(r.pharmacy_mean_m)}</dd>` +
     `<dt>버스정류장 거리</dt><dd>평균 ${km(r.bus_stop_mean_m)}, 2km 밖 ${r.bus_stop_far_pct} % (운행 횟수 미반영)</dd>` +
     `<dt>초등학교 / 중·고교</dt><dd>평균 ${km(r.school_elementary_mean_m)} / ${km(r.school_secondary_mean_m)}</dd>` +
     `<dt>어린이집 거리</dt><dd>평균 ${km(r.childcare_mean_m)}</dd>` +

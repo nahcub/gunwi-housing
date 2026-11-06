@@ -38,7 +38,6 @@ ACCESS_GROUPS = {
     "primary_care": (("health", "clinic"), None, None),   # 1차 의료: 보건소·보건지소·보건진료소 + 의원·치과·한의원
     "health": (("health",), None, None),
     "clinic": (("clinic",), None, None),
-    "pharmacy": (("pharmacy",), None, None),
     # 정류장명에 '미정차' 가 든 행(고속도로 IC·JC, 버스가 서지 않음)은 뺀다. 여러 BIS 에 중복 등록된
     # 정류장은 가장 가까운 거리에 영향이 없어 그대로 둔다(2026-11-06 사용자 결정)
     "bus_stop": (("bus_stop",), "정류장명에 '미정차' 가 든 행 제외", lambda p: not p["no_stop"]),
@@ -73,7 +72,7 @@ GROCERY_EXCLUDE = {
     "MA010120220814171518": ("아날로그데이", "분류 오류(원자료 업종 숙박업)"),
 }
 ACCESS_LABELS = {"primary_care": "1차 의료(보건기관+의원)", "health": "보건소·보건지소·보건진료소",
-                 "clinic": "의원·치과·한의원", "pharmacy": "약국",
+                 "clinic": "의원·치과·한의원",
                  "bus_stop": "버스정류장(미정차 제외)", "school_elementary": "초등학교",
                  "school_secondary": "중·고등학교", "childcare": "어린이집",
                  "grocery": "식료품점(슈퍼마켓·편의점)"}
@@ -372,11 +371,12 @@ def _closed_schools(raw: Path, read_meta, bjd: dict[str, str]) -> list[dict]:
 # ------------------------------------------------------------- 배정
 
 # 리별로 세는 유형. 버스정류장(중복 등록)·상가(식료품 기준 미정)는 기준을 정할 때까지 세지 않는다
-COUNTED_TYPES = ["senior_center", "health", "clinic", "pharmacy", "school",
+# 약국은 분석에서 뺀다(2026-11-06 선임 결정) - HIRA 원자료에 있어 점으로는 배정되지만 세지도, 거리도 안 잰다
+COUNTED_TYPES = ["senior_center", "health", "clinic", "school",
                  "childcare", "kindergarten", "closed_school"]
 TYPE_LABELS = {
     "senior_center": "경로당", "health": "보건소·보건지소·보건진료소", "clinic": "의원·치과·한의원",
-    "pharmacy": "약국", "school": "초·중·고", "childcare": "어린이집", "kindergarten": "유치원",
+    "pharmacy": "약국(분석 제외)", "school": "초·중·고", "childcare": "어린이집", "kindergarten": "유치원",
     "closed_school": "폐교", "bus_stop": "버스정류장(원자료 행, 중복 포함)",
     "store": "상가(전 업종)",
 }

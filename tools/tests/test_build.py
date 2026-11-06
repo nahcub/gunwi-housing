@@ -128,7 +128,7 @@ def test_ri_rows_are_aggregates_only():
                "pop_change_rate", "pop_change_rate_annual", "elderly_ratio_change",
                "old_house_confirmed_ratio", "approval_blank_ratio", "primary_care_mean_m",
                "primary_care_median_m", "primary_care_far_pct", "health_mean_m", "clinic_mean_m",
-               "pharmacy_mean_m", "bus_stop_mean_m", "bus_stop_far_pct", "school_elementary_mean_m",
+               "bus_stop_mean_m", "bus_stop_far_pct", "school_elementary_mean_m",
                "school_secondary_mean_m", "childcare_mean_m", "grocery_mean_m", "grocery_far_pct",
                "senior_center_count", "facility_counts"}
     for r in ri:

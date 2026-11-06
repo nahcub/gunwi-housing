@@ -131,7 +131,7 @@ def test_access_group_facility_counts(access, ri):
     """묶음별 시설 수. 버스는 군위 안 725행 중 '미정차' 8행(IC·JC)을 빼고 중복 등록은 그대로 둔다."""
     _, _, fac = ri
     n = {g: v["facilities"] for g, v in access["groups"].items()}
-    assert n == {"primary_care": 35, "health": 18, "clinic": 17, "pharmacy": 7,
+    assert n == {"primary_care": 35, "health": 18, "clinic": 17,
                  "bus_stop": 717, "school_elementary": 4, "school_secondary": 4, "childcare": 4,
                  "grocery": 60}
     bus = [p for p in fac["points"] if p["type"] == "bus_stop"]

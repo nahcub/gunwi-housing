@@ -35,14 +35,6 @@
       "filter": null,
       "facilities": 17
     },
-    "pharmacy": {
-      "label": "약국",
-      "types": [
-        "pharmacy"
-      ],
-      "filter": null,
-      "facilities": 7
-    },
     "bus_stop": {
       "label": "버스정류장(미정차 제외)",
       "types": [
@@ -118,12 +110,6 @@
       "max_m": 15925,
       "far_share_pct": 76.1
     },
-    "pharmacy": {
-      "mean_m": 6506,
-      "median_m": 5377,
-      "max_m": 20572,
-      "far_share_pct": 82.8
-    },
     "bus_stop": {
       "mean_m": 349,
       "median_m": 211,
@@ -176,12 +162,6 @@
         "max_m": 6088,
         "far_share_pct": 54.2
       },
-      "pharmacy": {
-        "mean_m": 2443,
-        "median_m": 2455,
-        "max_m": 6378,
-        "far_share_pct": 54.9
-      },
       "bus_stop": {
         "mean_m": 336,
         "median_m": 228,
@@ -231,12 +211,6 @@
         "mean_m": 9134,
         "median_m": 8745,
         "max_m": 14060,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 9220,
-        "median_m": 8832,
-        "max_m": 14134,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -290,12 +264,6 @@
         "max_m": 8921,
         "far_share_pct": 84.8
       },
-      "pharmacy": {
-        "mean_m": 3955,
-        "median_m": 3838,
-        "max_m": 9108,
-        "far_share_pct": 84.9
-      },
       "bus_stop": {
         "mean_m": 305,
         "median_m": 218,
@@ -345,12 +313,6 @@
         "mean_m": 11258,
         "median_m": 12067,
         "max_m": 15925,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 11529,
-        "median_m": 12194,
-        "max_m": 16039,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -404,12 +366,6 @@
         "max_m": 6311,
         "far_share_pct": 62.2
       },
-      "pharmacy": {
-        "mean_m": 2916,
-        "median_m": 2635,
-        "max_m": 7302,
-        "far_share_pct": 62.5
-      },
       "bus_stop": {
         "mean_m": 393,
         "median_m": 200,
@@ -460,12 +416,6 @@
         "median_m": 2010,
         "max_m": 5585,
         "far_share_pct": 50.6
-      },
-      "pharmacy": {
-        "mean_m": 6747,
-        "median_m": 6836,
-        "max_m": 10569,
-        "far_share_pct": 100.0
       },
       "bus_stop": {
         "mean_m": 316,
@@ -518,12 +468,6 @@
         "max_m": 13532,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 10647,
-        "median_m": 10392,
-        "max_m": 15204,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 302,
         "median_m": 163,
@@ -574,12 +518,6 @@
         "median_m": 4704,
         "max_m": 10962,
         "far_share_pct": 94.7
-      },
-      "pharmacy": {
-        "mean_m": 15190,
-        "median_m": 15048,
-        "max_m": 20572,
-        "far_share_pct": 100.0
       },
       "bus_stop": {
         "mean_m": 560,
@@ -637,12 +575,6 @@
         "max_m": 1596,
         "far_share_pct": 0.0
       },
-      "pharmacy": {
-        "mean_m": 392,
-        "median_m": 359,
-        "max_m": 1596,
-        "far_share_pct": 0.0
-      },
       "bus_stop": {
         "mean_m": 164,
         "median_m": 157,
@@ -697,12 +629,6 @@
         "max_m": 1088,
         "far_share_pct": 0.0
       },
-      "pharmacy": {
-        "mean_m": 187,
-        "median_m": 144,
-        "max_m": 1088,
-        "far_share_pct": 0.0
-      },
       "bus_stop": {
         "mean_m": 147,
         "median_m": 152,
@@ -752,12 +678,6 @@
         "far_share_pct": 46.6
       },
       "clinic": {
-        "mean_m": 2709,
-        "median_m": 2233,
-        "max_m": 3861,
-        "far_share_pct": 68.5
-      },
-      "pharmacy": {
         "mean_m": 2709,
         "median_m": 2233,
         "max_m": 3861,
@@ -817,12 +737,6 @@
         "max_m": 4741,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 4090,
-        "median_m": 4271,
-        "max_m": 4625,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 553,
         "median_m": 620,
@@ -872,12 +786,6 @@
         "far_share_pct": 87.6
       },
       "clinic": {
-        "mean_m": 3066,
-        "median_m": 2566,
-        "max_m": 4678,
-        "far_share_pct": 96.9
-      },
-      "pharmacy": {
         "mean_m": 3066,
         "median_m": 2566,
         "max_m": 4678,
@@ -937,12 +845,6 @@
         "max_m": 2266,
         "far_share_pct": 11.9
       },
-      "pharmacy": {
-        "mean_m": 1596,
-        "median_m": 1676,
-        "max_m": 2266,
-        "far_share_pct": 11.9
-      },
       "bus_stop": {
         "mean_m": 412,
         "median_m": 407,
@@ -997,12 +899,6 @@
         "max_m": 3352,
         "far_share_pct": 54.4
       },
-      "pharmacy": {
-        "mean_m": 2365,
-        "median_m": 2465,
-        "max_m": 3392,
-        "far_share_pct": 56.7
-      },
       "bus_stop": {
         "mean_m": 503,
         "median_m": 458,
@@ -1055,12 +951,6 @@
         "mean_m": 3268,
         "median_m": 3183,
         "max_m": 3996,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 3457,
-        "median_m": 3304,
-        "max_m": 4281,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1117,12 +1007,6 @@
         "max_m": 4161,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 4197,
-        "median_m": 4261,
-        "max_m": 4369,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 273,
         "median_m": 264,
@@ -1177,12 +1061,6 @@
         "max_m": 3851,
         "far_share_pct": 95.6
       },
-      "pharmacy": {
-        "mean_m": 3357,
-        "median_m": 3559,
-        "max_m": 4200,
-        "far_share_pct": 98.2
-      },
       "bus_stop": {
         "mean_m": 278,
         "median_m": 206,
@@ -1235,12 +1113,6 @@
         "mean_m": 3882,
         "median_m": 4022,
         "max_m": 4278,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 4247,
-        "median_m": 4383,
-        "max_m": 4647,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1297,12 +1169,6 @@
         "max_m": 1719,
         "far_share_pct": 0.0
       },
-      "pharmacy": {
-        "mean_m": 1477,
-        "median_m": 1425,
-        "max_m": 2088,
-        "far_share_pct": 3.8
-      },
       "bus_stop": {
         "mean_m": 375,
         "median_m": 376,
@@ -1357,12 +1223,6 @@
         "max_m": 2705,
         "far_share_pct": 40.8
       },
-      "pharmacy": {
-        "mean_m": 1971,
-        "median_m": 1724,
-        "max_m": 2757,
-        "far_share_pct": 42.7
-      },
       "bus_stop": {
         "mean_m": 198,
         "median_m": 125,
@@ -1415,12 +1275,6 @@
         "mean_m": 3426,
         "median_m": 3122,
         "max_m": 4934,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 3464,
-        "median_m": 3167,
-        "max_m": 4978,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1477,12 +1331,6 @@
         "max_m": 4591,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 3789,
-        "median_m": 3568,
-        "max_m": 4855,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 480,
         "median_m": 183,
@@ -1535,12 +1383,6 @@
         "mean_m": 4764,
         "median_m": 4831,
         "max_m": 5926,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 4871,
-        "median_m": 4973,
-        "max_m": 6038,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1597,12 +1439,6 @@
         "max_m": 6088,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 5618,
-        "median_m": 5709,
-        "max_m": 6378,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 286,
         "median_m": 236,
@@ -1655,12 +1491,6 @@
         "mean_m": 12555,
         "median_m": 12188,
         "max_m": 13553,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 12756,
-        "median_m": 12384,
-        "max_m": 13755,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1717,12 +1547,6 @@
         "max_m": 14060,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 13088,
-        "median_m": 12472,
-        "max_m": 14134,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 166,
         "median_m": 113,
@@ -1775,12 +1599,6 @@
         "mean_m": 10697,
         "median_m": 10894,
         "max_m": 11585,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 10882,
-        "median_m": 11081,
-        "max_m": 11771,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1837,12 +1655,6 @@
         "max_m": 12801,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 10690,
-        "median_m": 10487,
-        "max_m": 12849,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 235,
         "median_m": 141,
@@ -1895,12 +1707,6 @@
         "mean_m": 10707,
         "median_m": 10362,
         "max_m": 13231,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 10748,
-        "median_m": 10403,
-        "max_m": 13272,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -1957,12 +1763,6 @@
         "max_m": 8799,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 8162,
-        "median_m": 8136,
-        "max_m": 8840,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 181,
         "median_m": 120,
@@ -2015,12 +1815,6 @@
         "mean_m": 7608,
         "median_m": 7637,
         "max_m": 8025,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 7648,
-        "median_m": 7677,
-        "max_m": 8065,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -2077,12 +1871,6 @@
         "max_m": 11559,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 9605,
-        "median_m": 9390,
-        "max_m": 11599,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 215,
         "median_m": 138,
@@ -2135,12 +1923,6 @@
         "mean_m": 6504,
         "median_m": 6564,
         "max_m": 6861,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 6543,
-        "median_m": 6604,
-        "max_m": 6901,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -2197,12 +1979,6 @@
         "max_m": 7772,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 6805,
-        "median_m": 6730,
-        "max_m": 7809,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 215,
         "median_m": 208,
@@ -2255,12 +2031,6 @@
         "mean_m": 5051,
         "median_m": 5056,
         "max_m": 5198,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 5072,
-        "median_m": 5081,
-        "max_m": 5225,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -2317,12 +2087,6 @@
         "max_m": 8839,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 8300,
-        "median_m": 8336,
-        "max_m": 8989,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 869,
         "median_m": 351,
@@ -2375,12 +2139,6 @@
         "mean_m": 6942,
         "median_m": 6722,
         "max_m": 7955,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 7037,
-        "median_m": 6808,
-        "max_m": 8018,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -2437,12 +2195,6 @@
         "max_m": 5609,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 5400,
-        "median_m": 5555,
-        "max_m": 5765,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 622,
         "median_m": 640,
@@ -2494,12 +2246,6 @@
       "clinic": {
         "mean_m": 4056,
         "median_m": 4129,
-        "max_m": 5039,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 4037,
-        "median_m": 4107,
         "max_m": 5039,
         "far_share_pct": 100.0
       },
@@ -2557,12 +2303,6 @@
         "max_m": 4748,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 4115,
-        "median_m": 4036,
-        "max_m": 4542,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 255,
         "median_m": 151,
@@ -2615,12 +2355,6 @@
         "mean_m": 3360,
         "median_m": 3101,
         "max_m": 4103,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 3169,
-        "median_m": 2911,
-        "max_m": 3906,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -2677,12 +2411,6 @@
         "max_m": 3798,
         "far_share_pct": 96.5
       },
-      "pharmacy": {
-        "mean_m": 2286,
-        "median_m": 2176,
-        "max_m": 3596,
-        "far_share_pct": 89.4
-      },
       "bus_stop": {
         "mean_m": 254,
         "median_m": 214,
@@ -2737,12 +2465,6 @@
         "max_m": 2758,
         "far_share_pct": 90.9
       },
-      "pharmacy": {
-        "mean_m": 2400,
-        "median_m": 2487,
-        "max_m": 2726,
-        "far_share_pct": 89.1
-      },
       "bus_stop": {
         "mean_m": 260,
         "median_m": 228,
@@ -2795,12 +2517,6 @@
         "mean_m": 2241,
         "median_m": 2273,
         "max_m": 2729,
-        "far_share_pct": 91.0
-      },
-      "pharmacy": {
-        "mean_m": 2301,
-        "median_m": 2336,
-        "max_m": 2789,
         "far_share_pct": 91.0
       },
       "bus_stop": {
@@ -2857,12 +2573,6 @@
         "max_m": 1060,
         "far_share_pct": 0.0
       },
-      "pharmacy": {
-        "mean_m": 429,
-        "median_m": 354,
-        "max_m": 1191,
-        "far_share_pct": 0.0
-      },
       "bus_stop": {
         "mean_m": 181,
         "median_m": 139,
@@ -2915,12 +2625,6 @@
         "mean_m": 1332,
         "median_m": 1210,
         "max_m": 1964,
-        "far_share_pct": 0.0
-      },
-      "pharmacy": {
-        "mean_m": 1353,
-        "median_m": 1232,
-        "max_m": 1925,
         "far_share_pct": 0.0
       },
       "bus_stop": {
@@ -2977,12 +2681,6 @@
         "max_m": 4309,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 3500,
-        "median_m": 3532,
-        "max_m": 4511,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 410,
         "median_m": 274,
@@ -3037,12 +2735,6 @@
         "max_m": 4562,
         "far_share_pct": 64.2
       },
-      "pharmacy": {
-        "mean_m": 2942,
-        "median_m": 2839,
-        "max_m": 4725,
-        "far_share_pct": 72.4
-      },
       "bus_stop": {
         "mean_m": 439,
         "median_m": 492,
@@ -3095,12 +2787,6 @@
         "mean_m": 3429,
         "median_m": 3158,
         "max_m": 4855,
-        "far_share_pct": 99.1
-      },
-      "pharmacy": {
-        "mean_m": 3490,
-        "median_m": 3219,
-        "max_m": 4955,
         "far_share_pct": 99.1
       },
       "bus_stop": {
@@ -3157,12 +2843,6 @@
         "max_m": 7141,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 6459,
-        "median_m": 6456,
-        "max_m": 7196,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 154,
         "median_m": 125,
@@ -3215,12 +2895,6 @@
         "mean_m": 5284,
         "median_m": 4815,
         "max_m": 6902,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 5419,
-        "median_m": 4962,
-        "max_m": 7034,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -3277,12 +2951,6 @@
         "max_m": 8921,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 7998,
-        "median_m": 7954,
-        "max_m": 9108,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 272,
         "median_m": 208,
@@ -3335,12 +3003,6 @@
         "mean_m": 5115,
         "median_m": 4978,
         "max_m": 6959,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 5312,
-        "median_m": 5176,
-        "max_m": 7151,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -3397,12 +3059,6 @@
         "max_m": 10552,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 10322,
-        "median_m": 9815,
-        "max_m": 12444,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 224,
         "median_m": 191,
@@ -3455,12 +3111,6 @@
         "mean_m": 11301,
         "median_m": 11075,
         "max_m": 12350,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 11579,
-        "median_m": 11447,
-        "max_m": 12955,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -3517,12 +3167,6 @@
         "max_m": 10859,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 10223,
-        "median_m": 10151,
-        "max_m": 10966,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 392,
         "median_m": 241,
@@ -3575,12 +3219,6 @@
         "mean_m": 12279,
         "median_m": 12223,
         "max_m": 13319,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 12399,
-        "median_m": 12346,
-        "max_m": 13430,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -3637,12 +3275,6 @@
         "max_m": 15925,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 13621,
-        "median_m": 13502,
-        "max_m": 16039,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 536,
         "median_m": 353,
@@ -3695,12 +3327,6 @@
         "mean_m": 13576,
         "median_m": 13772,
         "max_m": 15425,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 13725,
-        "median_m": 13919,
-        "max_m": 15575,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -3757,12 +3383,6 @@
         "max_m": 7671,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 7519,
-        "median_m": 7557,
-        "max_m": 7771,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 148,
         "median_m": 137,
@@ -3815,12 +3435,6 @@
         "mean_m": 7797,
         "median_m": 7741,
         "max_m": 8763,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 8085,
-        "median_m": 7899,
-        "max_m": 8962,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -3877,12 +3491,6 @@
         "max_m": 4236,
         "far_share_pct": 55.7
       },
-      "pharmacy": {
-        "mean_m": 2440,
-        "median_m": 2635,
-        "max_m": 4217,
-        "far_share_pct": 55.7
-      },
       "bus_stop": {
         "mean_m": 406,
         "median_m": 366,
@@ -3937,12 +3545,6 @@
         "max_m": 2451,
         "far_share_pct": 4.6
       },
-      "pharmacy": {
-        "mean_m": 602,
-        "median_m": 379,
-        "max_m": 2468,
-        "far_share_pct": 5.0
-      },
       "bus_stop": {
         "mean_m": 141,
         "median_m": 114,
@@ -3995,12 +3597,6 @@
         "mean_m": 1923,
         "median_m": 2024,
         "max_m": 2570,
-        "far_share_pct": 55.1
-      },
-      "pharmacy": {
-        "mean_m": 1907,
-        "median_m": 2012,
-        "max_m": 2553,
         "far_share_pct": 55.1
       },
       "bus_stop": {
@@ -4057,12 +3653,6 @@
         "max_m": 2219,
         "far_share_pct": 25.4
       },
-      "pharmacy": {
-        "mean_m": 1485,
-        "median_m": 1305,
-        "max_m": 2236,
-        "far_share_pct": 27.1
-      },
       "bus_stop": {
         "mean_m": 904,
         "median_m": 730,
@@ -4115,12 +3705,6 @@
         "mean_m": 2603,
         "median_m": 2535,
         "max_m": 3714,
-        "far_share_pct": 92.6
-      },
-      "pharmacy": {
-        "mean_m": 2609,
-        "median_m": 2543,
-        "max_m": 3720,
         "far_share_pct": 92.6
       },
       "bus_stop": {
@@ -4177,12 +3761,6 @@
         "max_m": 4277,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 5499,
-        "median_m": 5438,
-        "max_m": 7014,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 196,
         "median_m": 189,
@@ -4235,12 +3813,6 @@
         "mean_m": 4425,
         "median_m": 4061,
         "max_m": 5736,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 6320,
-        "median_m": 6131,
-        "max_m": 7302,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -4297,12 +3869,6 @@
         "max_m": 6311,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 4447,
-        "median_m": 4184,
-        "max_m": 6599,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 228,
         "median_m": 112,
@@ -4355,12 +3921,6 @@
         "mean_m": 3838,
         "median_m": 3866,
         "max_m": 4221,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 3801,
-        "median_m": 3829,
-        "max_m": 4147,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -4417,12 +3977,6 @@
         "max_m": 1406,
         "far_share_pct": 0.0
       },
-      "pharmacy": {
-        "mean_m": 5252,
-        "median_m": 5248,
-        "max_m": 6201,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 179,
         "median_m": 132,
@@ -4476,12 +4030,6 @@
         "median_m": 1432,
         "max_m": 2998,
         "far_share_pct": 14.9
-      },
-      "pharmacy": {
-        "mean_m": 4169,
-        "median_m": 3825,
-        "max_m": 6523,
-        "far_share_pct": 100.0
       },
       "bus_stop": {
         "mean_m": 818,
@@ -4537,12 +4085,6 @@
         "max_m": 2335,
         "far_share_pct": 28.9
       },
-      "pharmacy": {
-        "mean_m": 3495,
-        "median_m": 3738,
-        "max_m": 4285,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 327,
         "median_m": 321,
@@ -4596,12 +4138,6 @@
         "median_m": 1766,
         "max_m": 2566,
         "far_share_pct": 12.0
-      },
-      "pharmacy": {
-        "mean_m": 4359,
-        "median_m": 4029,
-        "max_m": 5548,
-        "far_share_pct": 100.0
       },
       "bus_stop": {
         "mean_m": 359,
@@ -4657,12 +4193,6 @@
         "max_m": 2649,
         "far_share_pct": 54.5
       },
-      "pharmacy": {
-        "mean_m": 7110,
-        "median_m": 7147,
-        "max_m": 7629,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 322,
         "median_m": 295,
@@ -4715,12 +4245,6 @@
         "mean_m": 3460,
         "median_m": 3293,
         "max_m": 5176,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 8238,
-        "median_m": 8083,
-        "max_m": 9652,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -4777,12 +4301,6 @@
         "max_m": 5585,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 10136,
-        "median_m": 10355,
-        "max_m": 10569,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 255,
         "median_m": 211,
@@ -4835,12 +4353,6 @@
         "mean_m": 3516,
         "median_m": 3593,
         "max_m": 3989,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 8693,
-        "median_m": 8765,
-        "max_m": 9173,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -4897,12 +4409,6 @@
         "max_m": 4698,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 9517,
-        "median_m": 9570,
-        "max_m": 9760,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 169,
         "median_m": 165,
@@ -4957,12 +4463,6 @@
         "max_m": 2678,
         "far_share_pct": 46.0
       },
-      "pharmacy": {
-        "mean_m": 7077,
-        "median_m": 6902,
-        "max_m": 7681,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 176,
         "median_m": 172,
@@ -5015,12 +4515,6 @@
         "mean_m": 4713,
         "median_m": 4851,
         "max_m": 5267,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 9508,
-        "median_m": 9644,
-        "max_m": 10056,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5077,12 +4571,6 @@
         "max_m": 13532,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 14139,
-        "median_m": 14488,
-        "max_m": 15204,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 205,
         "median_m": 189,
@@ -5135,12 +4623,6 @@
         "mean_m": 9242,
         "median_m": 9132,
         "max_m": 10527,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 12088,
-        "median_m": 11980,
-        "max_m": 13190,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5197,12 +4679,6 @@
         "max_m": 9730,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 12467,
-        "median_m": 12447,
-        "max_m": 13045,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 400,
         "median_m": 381,
@@ -5255,12 +4731,6 @@
         "mean_m": 7504,
         "median_m": 7498,
         "max_m": 8881,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 10652,
-        "median_m": 10490,
-        "max_m": 11786,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5317,12 +4787,6 @@
         "max_m": 7920,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 9829,
-        "median_m": 9741,
-        "max_m": 10366,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 165,
         "median_m": 135,
@@ -5375,12 +4839,6 @@
         "mean_m": 5846,
         "median_m": 5829,
         "max_m": 6382,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 8622,
-        "median_m": 8581,
-        "max_m": 9771,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5437,12 +4895,6 @@
         "max_m": 4808,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 7541,
-        "median_m": 7814,
-        "max_m": 8090,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 694,
         "median_m": 1004,
@@ -5495,12 +4947,6 @@
         "mean_m": 7083,
         "median_m": 6672,
         "max_m": 8149,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 11752,
-        "median_m": 11468,
-        "max_m": 12592,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5557,12 +5003,6 @@
         "max_m": 10156,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 13564,
-        "median_m": 13725,
-        "max_m": 15126,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 977,
         "median_m": 935,
@@ -5615,12 +5055,6 @@
         "mean_m": 9821,
         "median_m": 9713,
         "max_m": 10962,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 16578,
-        "median_m": 16552,
-        "max_m": 16868,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5677,12 +5111,6 @@
         "max_m": 9169,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 12986,
-        "median_m": 12458,
-        "max_m": 14272,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 1125,
         "median_m": 1586,
@@ -5735,12 +5163,6 @@
         "mean_m": 7937,
         "median_m": 8171,
         "max_m": 8342,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 16756,
-        "median_m": 16879,
-        "max_m": 16969,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5797,12 +5219,6 @@
         "max_m": 6645,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 16167,
-        "median_m": 16469,
-        "max_m": 17158,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 1735,
         "median_m": 1717,
@@ -5855,12 +5271,6 @@
         "mean_m": 4607,
         "median_m": 4620,
         "max_m": 5196,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 14958,
-        "median_m": 14875,
-        "max_m": 15365,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -5917,12 +5327,6 @@
         "max_m": 5818,
         "far_share_pct": 100.0
       },
-      "pharmacy": {
-        "mean_m": 13996,
-        "median_m": 14155,
-        "max_m": 14920,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 919,
         "median_m": 1037,
@@ -5975,12 +5379,6 @@
         "mean_m": 2581,
         "median_m": 2545,
         "max_m": 3408,
-        "far_share_pct": 100.0
-      },
-      "pharmacy": {
-        "mean_m": 16006,
-        "median_m": 16013,
-        "max_m": 16357,
         "far_share_pct": 100.0
       },
       "bus_stop": {
@@ -6037,12 +5435,6 @@
         "max_m": 3395,
         "far_share_pct": 62.4
       },
-      "pharmacy": {
-        "mean_m": 17186,
-        "median_m": 17327,
-        "max_m": 18292,
-        "far_share_pct": 100.0
-      },
       "bus_stop": {
         "mean_m": 315,
         "median_m": 166,
@@ -6096,12 +5488,6 @@
         "median_m": 3227,
         "max_m": 4946,
         "far_share_pct": 94.8
-      },
-      "pharmacy": {
-        "mean_m": 19318,
-        "median_m": 19268,
-        "max_m": 20572,
-        "far_share_pct": 100.0
       },
       "bus_stop": {
         "mean_m": 497,
