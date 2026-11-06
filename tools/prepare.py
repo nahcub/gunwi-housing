@@ -337,6 +337,8 @@ def main() -> None:
     ri_facilities = prepare_ri.assign_facilities(RAW, read_meta, ri_boundary, seniors)
     ri_access = prepare_ri.prepare_access(RAW, read_meta, ri_boundary, ri_facilities)
     ri_housing = prepare_ri.prepare_housing_age(RAW, read_meta, ri_boundary, ANALYSIS_PERIOD)
+    ri_population = prepare_ri.prepare_ri_population(RAW, read_meta, ri_boundary, population,
+                                                     BASELINE_PERIOD, ANALYSIS_PERIOD)
 
     def write(name: str, obj) -> None:
         path = DERIVED / name
@@ -360,6 +362,7 @@ def main() -> None:
     write("ri_facilities.json", ri_facilities)
     write("ri_access.json", ri_access)
     write("ri_housing_age.json", ri_housing)
+    write("ri_population.json", ri_population)
 
     print(f"\n  인구 {len(population)}행")
     old = sum(v["old_count"] for v in seniors["by_region"].values())

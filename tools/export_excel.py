@@ -77,6 +77,13 @@ RI_COLUMNS = [
     ("법정리코드", "문자열", "", "법정동코드 10자리(시군구 27720 + 읍면 3 + 리 2). 조인키"),
     ("읍면명", "문자열", "", "읍·면 이름"),
     ("리명", "문자열", "", "법정리 이름. 이름이 같은 리가 있으니(수서리·달산리) 코드로 구분"),
+    ("총인구", "정수", "명", f"{ANALYSIS_PERIOD} 말 주민등록 인구 (행안부 지역별(법정동) 1세 단위)"),
+    ("고령인구", "정수", "명", "65세 이상 주민등록 인구"),
+    ("고령화율", "실수", "%", "고령인구 / 총인구 × 100"),
+    ("기준시점인구", "정수", "명", f"{BASELINE_PERIOD} 말 주민등록 인구"),
+    ("인구변화율", "실수", "%", f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}. 인구가 적은 리는 크게 흔들린다"),
+    ("연평균인구변화율", "실수", "%/년", "연율 환산"),
+    ("고령화율변화", "실수", "%p", f"{ANALYSIS_PERIOD} 고령화율 - {BASELINE_PERIOD} 고령화율"),
     *[c[:4] for c in HOUSING_COLUMNS],
     ("경로당수", "정수", "개소", "리 경계 안 경로당 (2025-12-19 기준)"),
 ]
@@ -163,6 +170,9 @@ def build_ri_rows() -> list[dict]:
     for r in build.build_ri_rows():
         rows.append({
             "법정리코드": r["ri_code"], "읍면명": r["region_name"], "리명": r["name"],
+            "총인구": r["population"], "고령인구": r["elderly"], "고령화율": r["elderly_ratio"],
+            "기준시점인구": r["population_baseline"], "인구변화율": r["pop_change_rate"],
+            "연평균인구변화율": r["pop_change_rate_annual"], "고령화율변화": r["elderly_ratio_change"],
             **{c[0]: r[c[4]] for c in HOUSING_COLUMNS},
             "경로당수": r["senior_center_count"],
         })
@@ -274,7 +284,7 @@ def main() -> None:
         cell.number_format = "@"
 
     _sheet(wb.create_sheet("컬럼설명"), ["시트", "컬럼명", "자료형", "단위", "설명"],
-           [["기초지표", *c] for c in COLUMNS] + [["리별지표", *c] for c in RI_COLUMNS[:3]] +
+           [["기초지표", *c] for c in COLUMNS] + [["리별지표", *c] for c in RI_COLUMNS[:10]] +
            [["리별지표", *RI_COLUMNS[-1]]], [10, 24, 9, 8, 84])
 
     ws3 = wb.create_sheet("산출방법")

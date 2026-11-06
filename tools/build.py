@@ -32,18 +32,18 @@ SOURCE_FIELDS = [
 # 원자료가 없는 지표에 값을 채우지 않는다 - 비활성이 정직한 상태다.
 INDICATORS = [
     {"id": "population", "label": "총인구", "unit": "명",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False},
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False},
     {"id": "elderly_ratio", "label": "고령화율", "unit": "%",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True},
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True},
     # 인구 변화: 시계열은 raw 에 두고, 분석 기준 시점(2026-09) 값으로는 기준 시점 대비 변화만 낸다
     {"id": "pop_change_rate", "label": "인구 변화율", "unit": "%",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False,
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
     {"id": "pop_change_rate_annual", "label": "연평균 인구 변화율", "unit": "%/년",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False,
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}, 연율 환산"},
     {"id": "elderly_ratio_change", "label": "고령화율 변화", "unit": "%p",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True,
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
     # 아래 시설·SGIS 지표는 조사 주기가 정해진 자료라 기준일이 다르다. reference 에 적는다
     {"id": "aging_index", "label": "노령화지수", "unit": "",
@@ -204,18 +204,26 @@ def _housing_access_fields(h: dict, a: dict) -> dict:
     }
 
 
+RI_POPULATION_FIELDS = ("population", "elderly", "elderly_ratio", "population_baseline",
+                        "elderly_baseline", "pop_change_rate", "pop_change_rate_annual",
+                        "elderly_ratio_change")
+
+
 def build_ri_rows() -> list[dict]:
     """법정리 92개 행. 리별 집계만 내보낸다 - 건물·지번 단위 값은 공개하지 않는다."""
     housing = load("ri_housing_age.json")["by_ri"]
     access = load("ri_access.json")["by_ri"]
     fac = load("ri_facilities.json")["by_ri"]
+    pop = load("ri_population.json")["by_ri"]
     rows = []
     for code in sorted(housing):
-        h, a, f = housing[code], access[code], fac[code]
+        h, a, f, p = housing[code], access[code], fac[code], pop[code]
         assert h["houses"] == a["houses"], f"{code}: 노후·거리 집 수가 다름"
         rows.append({
             "ri_code": code, "name": h["ri_name"], "region_code": h["region_code"],
             "region_name": h["region_name"],
+            # 행안부 법정동별 1세 단위 주민등록 인구 (읍면 합 = 행정동 주민등록 인구)
+            **{k: p[k] for k in RI_POPULATION_FIELDS},
             **_housing_access_fields(h, a),
             "senior_center_count": f["counts"]["senior_center"],
             "facility_counts": {k: v for k, v in f["counts"].items() if v},

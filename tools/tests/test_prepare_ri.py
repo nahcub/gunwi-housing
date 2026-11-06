@@ -200,3 +200,30 @@ def test_grocery_excludes_listed_stores(ri):
         assert by_id[sid]["name"].strip() == name
     keep = prepare_ri.ACCESS_GROUPS["grocery"][2]
     assert sum(1 for p in stores if keep(p)) == 60
+
+
+# ------------------------------------------------------------- 리별 인구·고령화
+
+@pytest.fixture(scope="module")
+def ri_pop(ri):
+    _, gj, _ = ri
+    population, _ = prepare.prepare_population()
+    return prepare_ri.prepare_ri_population(prepare.RAW, prepare.read_meta, gj, population,
+                                            prepare.BASELINE_PERIOD, prepare.ANALYSIS_PERIOD)
+
+
+def test_ri_population_sums_match_mois(ri_pop):
+    """법정리 합(+리 미지정 행)이 행정동 주민등록 인구와 같다 - prepare 에서 검증, 여기선 알려진 값 고정."""
+    v = ri_pop["by_ri"].values()
+    assert len(ri_pop["by_ri"]) == 92
+    assert sum(x["population"] for x in v) == 22432                 # 2026-09
+    assert sum(x["population_baseline"] for x in v) + 1 == 22988    # 2023-12 + 삼국유사면 리 미지정 1명
+    assert sum(x["elderly"] for x in v) == 11334
+    assert ri_pop["checks"]["2023-12"]["emd_only_rows"] == {"2772037000": 1}
+
+
+def test_ri_population_rates_consistent(ri_pop):
+    for x in ri_pop["by_ri"].values():
+        assert x["elderly_ratio"] == round(x["elderly"] / x["population"] * 100, 1)
+        assert x["pop_change_rate"] == round((x["population"] - x["population_baseline"])
+                                             / x["population_baseline"] * 100, 1)

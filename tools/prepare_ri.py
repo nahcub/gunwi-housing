@@ -675,3 +675,90 @@ def prepare_housing_age(raw: Path, read_meta, ri_gj: dict, analysis_period: str)
         "by_region": by_region,
         "by_ri": by_ri,
     }
+
+
+# ------------------------------------------------------------- 리별 인구·고령화
+
+LGD_FOLDER = "mois-lgd-age-{period}"     # 행안부 지역별(법정동) 성별 연령별 주민등록 인구수, 1세 단위
+ELDERLY_FROM_AGE = 65
+
+
+def _read_lgd(raw: Path, read_meta, period: str) -> dict[str, dict]:
+    """군위 법정리별 총인구·65세 이상. 키는 법정동코드(리). 리가 없는 읍면 행은 '_emd_only' 로 모은다."""
+    folder = LGD_FOLDER.format(period=period)
+    meta = read_meta(folder)
+    rows = _csv_rows(raw, folder, meta)
+    head = list(rows[0])
+    age_cols = [c for c in head if c[0].isdigit() and ("남자" in c or "여자" in c)]
+    assert len(age_cols) == 222, f"{folder}: 연령 열 {len(age_cols)}개 (0~110세이상 x 남녀 = 222)"
+    old_cols = [c for c in age_cols if int(re.match(r"\d+", c).group()) >= ELDERLY_FROM_AGE]
+    out, emd_only = {}, {}
+    for r in rows:
+        code = r["법정동코드"]
+        if not code.startswith(SIGUNGU):
+            continue
+        assert r["기준연월"].startswith(period), f"{folder}: 기준연월 {r['기준연월']}"
+        total = int(r["계"])
+        assert int(r["남자"]) + int(r["여자"]) == total, f"{code}: 남+여 != 계"
+        assert sum(int(r[c]) for c in age_cols) == total, f"{code}: 연령 합 != 계"
+        rec = {"population": total, "elderly": sum(int(r[c]) for c in old_cols)}
+        if code.endswith("00"):
+            emd_only[code] = rec           # 리 미지정(예: 2023-12 삼국유사면 1명)
+        else:
+            out[code] = rec
+    out["_emd_only"] = emd_only
+    return out
+
+
+def prepare_ri_population(raw: Path, read_meta, ri_gj: dict, population: list,
+                          baseline: str, analysis: str) -> dict:
+    """법정리별 인구·고령화율과 기준 시점 대비 변화. 읍면 합이 행정동 주민등록(mois-age)과 같은지 검증."""
+    ri_props = {f["properties"]["ri_code"]: f["properties"] for f in ri_gj["features"]}
+    data = {p: _read_lgd(raw, read_meta, p) for p in (baseline, analysis)}
+    mois = {(r["period"], r["region_code"]): r for r in population if r["level"] == "eupmyeon"}
+    checks = {}
+    for p, d in data.items():
+        ri_codes = {c for c in d if c != "_emd_only"}
+        assert ri_codes <= set(ri_props), f"{p}: 현행 법정리가 아닌 코드 {sorted(ri_codes - set(ri_props))}"
+        for rc in {v["region_code"] for v in ri_props.values()}:
+            pop = sum(v["population"] for c, v in d.items() if c != "_emd_only" and c[:8] + "00" == rc)
+            old = sum(v["elderly"] for c, v in d.items() if c != "_emd_only" and c[:8] + "00" == rc)
+            extra = d["_emd_only"].get(rc, {"population": 0, "elderly": 0})
+            m = mois[(p, rc)]
+            assert pop + extra["population"] == m["population"], (
+                f"{p} {rc}: 법정동 합 {pop}+{extra['population']} != 행정동 {m['population']}")
+            assert old + extra["elderly"] == m["elderly"], f"{p} {rc}: 65세 이상 합이 다름"
+        checks[p] = {"ri_rows": len(ri_codes),
+                     "emd_only_rows": {c: v["population"] for c, v in d["_emd_only"].items()}}
+
+    (ys, ms), (ye, me) = (map(int, p.split("-")) for p in (baseline, analysis))
+    months = (ye - ys) * 12 + (me - ms)
+    b, a = data[baseline], data[analysis]
+    by_ri = {}
+    for code, prop in sorted(ri_props.items()):
+        cur = a.get(code)
+        base = b.get(code)
+        assert cur, f"{analysis}: 법정리 {code} {prop['ri_name']} 인구 행이 없다"
+        assert base, f"{baseline}: 법정리 {code} {prop['ri_name']} 인구 행이 없다"
+        p0, p1 = base["population"], cur["population"]
+        r0 = base["elderly"] / p0 * 100 if p0 else None
+        r1 = cur["elderly"] / p1 * 100 if p1 else None
+        by_ri[code] = {
+            "ri_name": prop["ri_name"], "region_code": prop["region_code"], "region_name": prop["region_name"],
+            "population": p1, "elderly": cur["elderly"],
+            "elderly_ratio": round(r1, 1) if r1 is not None else None,
+            "population_baseline": p0, "elderly_baseline": base["elderly"],
+            "pop_change_rate": round((p1 - p0) / p0 * 100, 1) if p0 else None,
+            "pop_change_rate_annual": round(((p1 / p0) ** (12 / months) - 1) * 100, 2) if p0 and p1 else None,
+            "elderly_ratio_change": round(r1 - r0, 1) if r0 is not None and r1 is not None else None,
+        }
+    return {
+        "_note": (f"행안부 지역별(법정동) 1세 단위 주민등록 인구로 법정리별 인구·{ELDERLY_FROM_AGE}세 이상을 센다. "
+                  f"{baseline} → {analysis} 변화. 읍면 합이 행정동 주민등록 인구(mois-age)와 정확히 같음을 검증했다. "
+                  "리가 지정되지 않은 읍면 행(2023-12 삼국유사면 1명)은 리별 값에서 빠진다. 인구가 적은 리는 "
+                  "비율이 크게 흔들린다."),
+        "baseline_period": baseline, "analysis_period": analysis, "change_months": months,
+        "elderly_from_age": ELDERLY_FROM_AGE,
+        "checks": checks,
+        "by_ri": by_ri,
+    }

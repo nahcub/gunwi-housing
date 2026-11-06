@@ -35,7 +35,7 @@ raw 의 `mois-age-*` 월별 39개·`mois-household-*` 39개는 당장 쓰지 않
 | "X 하려면 어느 파일을 고치나" 작업별 절차 | `docs/how-to.md` |
 | 지표 산식과 근거, 계산하지 않는 이유 | `docs/methodology.md` |
 | 있는 자료와 없는 자료 조사 결과 | `docs/data-survey.md` |
-| 군청 자료 요청 문안(발주처 경유, 미발송) | `docs/requests/README.md` §3·§4 |
+| 군청 자료 요청 문안(보내지 않기로 함, 보관만) | `docs/requests/README.md` |
 
 ## 폴더 소유권
 

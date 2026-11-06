@@ -106,8 +106,8 @@ function renderUnits() {
     box.appendChild(b);
   });
   $('unit-note').textContent = state.unit === 'ri'
-    ? '리 단위는 주거용 건물(GIS건물통합정보 2026-09-09) 기반 지표와 경로당 수만 있다. ' +
-      '인구·고령화는 리별 자료가 없어 읍면에서만 볼 수 있다. 값은 리별 집계이며 집 단위 값은 공개하지 않는다.'
+    ? '리 단위 인구·고령화는 행안부 법정동별 주민등록 인구(1세 단위), 노후주택·거리는 주거용 건물 기반이다. ' +
+      '노령화지수·인구밀도·경로당 관련 비율은 읍면에만 있다. 인구가 적은 리는 비율이 크게 흔들린다. 값은 리별 집계만 공개한다.'
     : '';
 }
 
@@ -197,7 +197,12 @@ function renderDetail() {
   if (state.unit === 'ri') {
     $('detail').innerHTML =
       `<div class="name">${r.region_name} ${r.name}</div>` +
-      '<dl>' + housingRows +
+      '<dl>' +
+      `<dt>총인구</dt><dd>${r.population.toLocaleString('ko-KR')} 명 (65세 이상 ${r.elderly.toLocaleString('ko-KR')})</dd>` +
+      `<dt>고령화율</dt><dd>${r.elderly_ratio} % (${r.elderly_ratio_change >= 0 ? '+' : ''}${r.elderly_ratio_change}%p)</dd>` +
+      `<dt>인구 변화</dt><dd>${r.population_baseline.toLocaleString('ko-KR')} → ` +
+      `${r.population.toLocaleString('ko-KR')} 명 (${r.pop_change_rate}%, 연 ${r.pop_change_rate_annual}%)</dd>` +
+      housingRows +
       `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (리 안)</dd>` +
       `<dt>법정리코드</dt><dd>${r.ri_code}</dd>` +
       '</dl>';
