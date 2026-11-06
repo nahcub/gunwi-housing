@@ -21,16 +21,12 @@ public/data/*.json        웹 화면용
 | `mois-age-2026-09` | 〃 | 2026-09-30 | `population.json` | 사용 (분석 기준 시점) |
 | `boundary-eupmyeon-2025-06-30` | 읍면 경계 GeoJSON (SGIS 2025 2Q) | 2025-06-30 | `eupmyeon.geojson` | 사용 (2026-10-15 출처 확인) |
 | `datagokr-gunwi-senior-2025-12-19` | 경로당 표준데이터(군위 215곳) | 2025-12-19 | `senior_centers.json` | 사용 |
-| `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | — | **분석 제외**(2026-11-06, 주민등록으로 대체) |
 | `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | `vacant_houses.json` | 사용 |
 | `mois-age-2023-07` ~ `mois-age-2026-09` (위 2개 제외 37개) | 행안부 연령별 주민등록인구 월별 | 매월 말일 | — | 등록만(prepare.py 미연결). 2026-11-05 gunwi 저장소에서 이관 |
 | `mois-household-2023-07` ~ `mois-household-2026-09` (39개) | 행안부 주민등록 인구 및 세대현황 월별 | 매월 말일 | `population.json` `households` | 2023-12·2026-09 사용. 이름으로 붙이고 총인구 일치 검증 |
-| `gunwi-yearbook-64-2023` | 군위통계연보 제64회 (장별 xlsx zip) | 2023-12-31 | — | 등록만. 10장 주택건설·3장 리별 세대·인구·12장 독거노인 |
 | `hira-2026-09` | HIRA 병의원·약국 (보건소·지소·진료소 포함, 전국 zip) | 2026-09 | — | 등록만. 군위 = '대구군위군' 42행 |
 | `bus-stops-2026-10-20` | 국토부 전국 버스정류장 (CP949) | 2026-10-20 | — | 등록만. 군위는 좌표로 판정 |
 | `sbiz-stores-gunwi-2026-09` | 상가(상권)정보 대구 CSV 중 군위 1,155행 (전국 zip 은 저장소 밖) | 2026-09 | — | 등록만 |
-| `mohw-local-health-orgs-2025-12-31` | 보건복지부 지역보건의료기관 (좌표 없음) | 2025-12-31 | — | 등록만. HIRA 대조용 |
-| `mois-eupmyeon-offices-2025-12` | 행안부 읍면동 하부행정기관 (좌표 없음) | 2025-12 | — | 등록만 |
 | `school-locations-2026-09-20` | 초중등학교위치 | 2026-09-20 | — | 등록만 |
 | `childcare-basic-2026-09` | 어린이집 기본정보 (포털 HTML 응답) | 2026-09 | — | 등록만 |
 | `kindergarten-general-2026-2` | 유치원알리미 일반현황 (대구) | 2026년 2차 | — | 등록만 |
@@ -46,6 +42,10 @@ public/data/*.json        웹 화면용
 
 | 삭제한 raw 폴더 | 원자료 | 쓰던 derived |
 |---|---|---|
+| `sgis-admstat-2025-2q` (2026-11-06, 커밋 `aed5395`) | SGIS 행정구역 통계 2024 | `sgis_stats.json` (주민등록으로 대체) |
+| `gunwi-yearbook-64-2023` (2026-11-06, 커밋 `aed5395`) | 군위통계연보 제64회 | — |
+| `mohw-local-health-orgs-2025-12-31` (2026-11-06, 커밋 `aed5395`) | 보건복지부 지역보건의료기관 | — (HIRA 대조용) |
+| `mois-eupmyeon-offices-2025-12` (2026-11-06, 커밋 `aed5395`) | 행안부 읍면동 하부행정기관 | — |
 | `datagokr-park-2026-03-05` | 도시공원 표준데이터(군위 3건) | `parks.json` |
 | `minwon-pothole-2026-10-13` | 권익위 포트홀 민원 좌표(전국) | `potholes.json` |
 | `datagokr-gunwi-small-facility-risk-2026-07-15` | 소규모공공시설 위험지정(39건) | `drainage_risk.json` |
@@ -178,7 +178,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 > `ri_population.json`(주민등록 법정동별 1세 단위 + 리 경계 면적), 세대수는 `population.json` `households`
 > (주민등록 세대현황)로 바꿨다.
 
-**raw**: `sgis-admstat-2025-2q/` CSV 19개 (**cp949**). 전국 파일(269MB zip, 저장소 밖 보관)에서
+**raw**(2026-11-06 삭제, 커밋 `aed5395` 에서 복구): `sgis-admstat-2025-2q/` CSV 19개 (**cp949**). 전국 파일(269MB zip, 저장소 밖 보관)에서
 군위군(SGIS 코드 `22520`) 행만 걸러낸 것. 형식은 모두 같다:
 
 ```

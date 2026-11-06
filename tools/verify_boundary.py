@@ -9,7 +9,7 @@ data/raw/boundary-eupmyeon-2025-06-30/eupmyeon.geojson 은 다운로드 이력 �
   python tools/verify_boundary.py --shp 경로/bnd_dong_00_2025_2Q.shp
 
 전국 원본 zip(269MB)·shp(135MB)는 저장소에 넣지 않는다. 보관 위치와 해시는
-data/raw/sgis-admstat-2025-2q/_meta.json · boundary-eupmyeon-2025-06-30/_meta.json 참고.
+boundary-eupmyeon-2025-06-30/_meta.json 참고(sgis-admstat-2025-2q 는 2026-11-06 삭제, 커밋 aed5395).
 """
 from __future__ import annotations
 
