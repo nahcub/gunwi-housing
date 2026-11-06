@@ -77,8 +77,8 @@ ACCESS_LABELS = {"primary_care": "1차 의료(보건기관+의원)", "health": "
                  "bus_stop": "버스정류장(미정차 제외)", "school_elementary": "초등학교",
                  "school_secondary": "중·고등학교", "childcare": "어린이집",
                  "grocery": "식료품점(슈퍼마켓·편의점)"}
-# '먼 집' 기준 거리. 공식 기준이 아니라 프로젝트 임시값이다 - 확정되면 여기만 바꾼다.
-# 지금은 모든 묶음에 같은 값을 쓴다. 시설별 기준(예: 버스는 걸어서 1 km)은 아직 정하지 않았다
+# '먼 집' 기준 거리. 공식 기준이 아니라 프로젝트 기준이다 - 바꿀 때는 여기만 바꾼다.
+# 모든 묶음에 같은 값을 쓴다(2026-11-06 사용자 확인)
 ACCESS_FAR_M = 2000
 
 # HIRA 좌표 보정. 원자료가 틀린 것으로 확인된 시설만, 근거와 함께 적는다.
@@ -601,12 +601,12 @@ def prepare_access(raw: Path, read_meta, ri_gj: dict, ri_fac: dict) -> dict:
         "_note": ("주거용 건물(GIS건물통합정보 용도 단독·공동주택) 중심점에서 가장 가까운 시설까지 직선거리(m). "
                   "도로망 미사용이라 실제 이동거리보다 짧다. 용도 빈칸 건물(대장 미연계)은 집인지 알 수 없어 "
                   "빠졌다. 사람 수가 아니라 집(건물) 수 기준이고 빈집도 포함된다. far_share_pct 의 기준 "
-                  f"{ACCESS_FAR_M} m 는 프로젝트 임시값(모든 묶음 공통). 버스정류장은 운행 횟수가 없어 "
+                  f"{ACCESS_FAR_M} m 는 프로젝트 기준(모든 묶음 공통, 2026-11-06 확인). 버스정류장은 운행 횟수가 없어 "
                   "거리가 가까워도 서비스 수준을 뜻하지 않는다. 읍면사무소는 좌표 자료가 없어 뺐다."),
         "reference_dates": {"buildings": "2026-09-09", "hira": "2026-09", "bus_stops": "2026-10-20",
                             "schools": "2026-09-20", "childcare": "2026-09"},
         "far_m": ACCESS_FAR_M,
-        "far_m_note": "모든 묶음에 같은 기준. 시설별 기준(예: 버스 도보 1 km)은 미정",
+        "far_m_note": "모든 묶음에 같은 기준(2026-11-06 사용자 확인). 법정 기준 아님",
         "groups": {g: {"label": ACCESS_LABELS[g], "types": list(t), "filter": rule,
                        "facilities": trees[g][1]}
                    for g, (t, rule, _) in ACCESS_GROUPS.items()},

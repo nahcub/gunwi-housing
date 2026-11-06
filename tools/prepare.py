@@ -374,7 +374,7 @@ def main() -> None:
         print(f"    대조 {k}: {v['n']}건 중 불일치 {v['mismatch']}")
     g = ri_access["gun"]
     print(f"  주거 건물 {g['houses']}채 → 1차 의료 평균 {g['primary_care']['mean_m']} m, "
-          f"{ri_access['far_m']} m 초과 {g['primary_care']['far_share_pct']}% (임시 기준)")
+          f"{ri_access['far_m']} m 초과 {g['primary_care']['far_share_pct']}% (프로젝트 기준)")
     print("    평균 거리 " + ", ".join(
         f"{v['label']} {g[k]['mean_m']} m({v['facilities']}곳)" for k, v in ri_access["groups"].items()))
     h = ri_housing["gun"]
