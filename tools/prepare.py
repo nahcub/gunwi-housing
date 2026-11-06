@@ -41,6 +41,21 @@ def read_meta(folder: str) -> dict:
 
 # ---------------------------------------------------------------- 인구
 
+def _read_households(period: str) -> dict:
+    """행안부 주민등록 인구 및 세대현황(같은 달). 화면에 코드가 없어 이름으로 붙인다(이름·순서·총인구는
+    수집 때 연령별 인구와 일치 확인). 행 = [이름, 총인구수, 세대수, 세대당인구, 남, 여, 남녀비율]."""
+    folder = f"mois-household-{period}"
+    read_meta(folder)
+    rows = json.loads((RAW / folder / "household.json").read_text(encoding="utf-8"))
+    assert len(rows) == 9, f"{folder}: 9행이어야 하는데 {len(rows)}행"
+    out = {r[0]: {"population": _num(r[1]), "households": _num(r[2])} for r in rows}
+    assert len(out) == 9, f"{folder}: 이름 중복"
+    gun = [k for k in out if k.endswith("군")]
+    assert len(gun) == 1 and sum(v["households"] for k, v in out.items() if k not in gun) == out[gun[0]]["households"], (
+        f"{folder}: 읍면 세대 합 != 군 세대")
+    return out
+
+
 def prepare_population():
     """행정안전부 연령별 인구. 2개 시점 x (군 합계 1 + 읍면 8) = 18행."""
     records = []
@@ -52,6 +67,7 @@ def prepare_population():
         rows = json.loads((RAW / folder / "age.json").read_text(encoding="utf-8"))
 
         assert len(rows) == 9, f"{folder}: 9행이어야 하는데 {len(rows)}행"
+        households = _read_households(period)
 
         gunwi_total = None
         eupmyeon_total = 0
@@ -75,6 +91,9 @@ def prepare_population():
             elderly = sum(nums[2 + ELDERLY_FROM_BUCKET: 2 + 21])
             is_gunwi = code == GUNWI_CODE
 
+            hh = households[name]
+            assert hh["population"] == block["total"], (
+                f"{folder}/{name}: 세대현황 총인구 {hh['population']} != 연령별 {block['total']}")
             records.append({
                 "period": period,
                 "reference_date": meta["reference_date"],
@@ -85,6 +104,7 @@ def prepare_population():
                 "male": block["male"],
                 "female": block["female"],
                 "elderly": elderly,
+                "households": hh["households"],
             })
 
             if is_gunwi:
@@ -233,91 +253,34 @@ def prepare_senior_centers(name_by_code: dict) -> dict:
     }
 
 
-# ---------------------------------------------------------------- SGIS 통계
+# ---------------------------------------------------------------- 빈집애
 
-SGIS_FOLDER = "sgis-admstat-2025-2q"
-SGIS_GUN_CODE = "22520"           # SGIS 체계의 군 합계 코드
-# 파일명이 의미를 정해 주는 총괄 항목만 쓴다. 건축년도·주택유형·연건평 등
-# 주택 세부 항목은 사유 재산이라 공공시설 관리 분석 범위 밖이므로 쓰지 않는다.
-SGIS_ITEMS = {
-    # 항목코드: (파일명 접미, 출력 키, 단위, 읍면합 == 군합 검사 여부)
-    "to_in_001": ("인구총괄(총인구)", "population", "명", True),
-    "to_in_002": ("인구총괄(평균나이)", "avg_age", "세", False),
-    "to_in_003": ("인구총괄(인구밀도)", "density_per_km2", "명/㎢", False),
-    "to_in_004": ("인구총괄(노령화지수)", "aging_index", "유소년 100명당 고령인구", False),
-    "to_in_005": ("인구총괄(노년부양비)", "old_dependency", "생산연령 100명당 고령인구", False),
-    "to_in_006": ("인구총괄(유년부양비)", "young_dependency", "생산연령 100명당 유소년", False),
-    "to_ga_001": ("가구총괄", "households", "가구", True),
-    "to_ho_001": ("주택총괄_총주택(거처)수", "houses", "호", True),
-    "to_fa_010": ("산업분류별(11차_대분류)_총괄사업체수", "businesses", "개", True),
-    "to_em_020": ("산업분류별(11차_대분류)_총괄종사자수", "employees", "명", True),
-}
-# SGIS 인구(등록센서스)와 주민등록 인구는 정의가 달라 같지 않다. 매핑이
-# 뒤바뀌면 수배 차이가 나므로 이 정도 허용 폭이면 뒤바뀜만 잡는다.
-SGIS_POP_TOLERANCE = 0.15
+BINZIBE_FOLDER = "binzibe-gunwi-vacant-houses-2025"
 
 
-def prepare_sgis_stats(boundary: dict, population: list) -> dict:
-    """SGIS 행정구역 통계(2024년)를 읍면별로 정리한다.
-
-    SGIS 코드(22520111 계열)는 경계 원본 ADM_CD 와 같은 체계다. prepare_boundary()
-    가 심어 둔 source_adm_cd -> region_code 대응을 그대로 써서, 코드 변환을
-    한 곳에만 둔다.
-    """
-    meta = read_meta(SGIS_FOLDER)
-    region_by_sgis = {f["properties"]["source_adm_cd"]: f["properties"]["region_code"]
-                      for f in boundary["features"]}
-    assert len(region_by_sgis) == 8, "경계에서 SGIS 코드 8개를 얻지 못함"
-
-    by_region = {code: {} for code in region_by_sgis.values()}
-    gun = {}
-    na_cells = []
-    for item, (suffix, key, _unit, additive) in SGIS_ITEMS.items():
-        name = f"2025년기준_2024년_{suffix}.csv"
-        assert name in meta["files"], f"{SGIS_FOLDER}: _meta.json 에 없는 파일 {name}"
-        text = (RAW / SGIS_FOLDER / name).read_bytes().decode(meta["encoding"])
-        rows = [r for r in csv.DictReader(io.StringIO(text)) if r["통계항목"] == item]
-        assert {r["기준연도"] for r in rows} == {"2024"}, f"{name}: 기준연도가 2024가 아님"
-        codes = [r["행정구역코드"] for r in rows]
-        assert sorted(codes) == sorted([SGIS_GUN_CODE, *region_by_sgis]), (
-            f"{name}: 지역코드가 군 1 + 읍면 8 이 아님 {codes}")
-
-        for r in rows:
-            raw = r["통계값"].strip()
-            # N/A 는 비공개(소수 셀) 표시다. 0 으로 바꾸지 않는다
-            value = None if raw == "N/A" else (int(raw) if additive else float(raw))
-            if value is None:
-                na_cells.append(f"{r['행정구역코드']}/{item}")
-            if r["행정구역코드"] == SGIS_GUN_CODE:
-                gun[key] = value
-            else:
-                by_region[region_by_sgis[r["행정구역코드"]]][key] = value
-
-        if additive:
-            parts = [by_region[c][key] for c in by_region]
-            if None not in parts and gun[key] is not None:
-                assert sum(parts) == gun[key], (
-                    f"{name}: 읍면 합 {sum(parts)} != 군 합계 {gun[key]}")
-
-    # 매핑 검산: 분석 기준 시점 주민등록 인구와 크게 다르면 코드가 뒤바뀐 것
-    mois = {r["region_code"]: r["population"] for r in population
-            if r["period"] == ANALYSIS_PERIOD}
-    for code, v in by_region.items():
-        gap = abs(v["population"] - mois[code]) / mois[code]
-        assert gap <= SGIS_POP_TOLERANCE, (
-            f"SGIS {code}: 인구 {v['population']:.0f} vs 주민등록 {mois[code]} "
-            f"({gap:.0%} 차이) - 코드 매핑 확인")
-
+def prepare_vacant_houses(name_by_code: dict) -> dict:
+    """빈집애 읍면별 빈집 수(지자체 빈집행정조사). 빈집률은 만들지 않는다 - 같은 조사의 주택 수가 없다."""
+    meta = read_meta(BINZIBE_FOLDER)
+    d = json.loads((RAW / BINZIBE_FOLDER / "rank.json").read_text(encoding="utf-8"))
+    code_by_name = {v: k for k, v in name_by_code.items()}
+    by_region = {}
+    for r in d["dataList"]:
+        parts = r["sojaeji"].split("_")
+        assert parts[:2] == ["대구광역시", "군위군"], f"군위군이 아닌 행 {r['sojaeji']}"
+        name = parts[-1]
+        assert name in code_by_name, f"빈집애 읍면 {name!r} 가 인구 자료에 없다"
+        by_region[code_by_name[name]] = {"vacant_houses": int(r["binCnt"]),
+                                         "share_of_gun_pct": r["binzipRateReg"]}
+    assert set(by_region) == set(name_by_code), "빈집애 읍면이 8개가 아님"
+    total = sum(v["vacant_houses"] for v in by_region.values())
+    assert total == d["regionStatus"]["totalBinCnt"] == 602, f"빈집 합 {total}"
     return {
-        "reference_date": "2024-12-31",
+        "reference_date": meta["reference_date"],
         "provenance": meta["provenance"],
-        "_note": ("SGIS 등록센서스 기반 2024년 통계. 인구는 주민등록 인구와 정의가 달라 "
-                  "값이 다르다 - 섞어 쓰지 말 것. 주택 세부 항목(건축년도 등)은 "
-                  "사유 재산이라 분석 범위 밖으로 제외."),
-        "items": {key: {"sgis_code": item, "label": suffix, "unit": unit}
-                  for item, (suffix, key, unit, _) in SGIS_ITEMS.items()},
-        "na_cells": na_cells,
-        "gun_total": gun,
+        "_note": ("한국부동산원 빈집애 지도의 읍면별 빈집 수(지자체 빈집행정조사, 국가승인통계 아님). "
+                  "share_of_gun_pct 는 빈집률이 아니라 군 전체 빈집 대비 그 읍면 비중. 같은 조사의 주택 수가 "
+                  "없어 빈집률은 만들지 않는다. 사이트가 조사연도 하나만 제공한다(화면 '2025년')."),
+        "total": total,
         "by_region": by_region,
     }
 
@@ -330,7 +293,7 @@ def main() -> None:
     population, name_by_code = prepare_population()
     boundary = prepare_boundary(name_by_code)
     seniors = prepare_senior_centers(name_by_code)
-    sgis = prepare_sgis_stats(boundary, population)
+    vacant = prepare_vacant_houses(name_by_code)
     # 리 단위(법정리 92개). shapely·pyproj·pyshp 가 필요하다(requirements.txt)
     import prepare_ri
     ri_boundary = prepare_ri.prepare_ri_boundary(RAW, read_meta, name_by_code)
@@ -357,7 +320,7 @@ def main() -> None:
     })
     write("eupmyeon.geojson", boundary)
     write("senior_centers.json", seniors)
-    write("sgis_stats.json", sgis)
+    write("vacant_houses.json", vacant)
     write("ri_boundary.geojson", ri_boundary)
     write("ri_facilities.json", ri_facilities)
     write("ri_access.json", ri_access)
@@ -368,8 +331,7 @@ def main() -> None:
     old = sum(v["old_count"] for v in seniors["by_region"].values())
     print(f"  경로당 {len(seniors['centers'])}곳 "
           f"(노후 {old}곳, {SENIOR_OLD_BEFORE_YEAR}년 이전 - 임시 기준)")
-    print(f"  SGIS 2024 항목 {len(sgis['items'])}개 x 읍면 {len(sgis['by_region'])}개 "
-          f"(N/A {len(sgis['na_cells'])}칸)")
+    print(f"  빈집애 읍면별 빈집 수 합 {vacant['total']} (빈집률 아님)")
     print(f"  법정리 {len(ri_boundary['features'])}개 경계, 시설 배정 "
           + ", ".join(f"{ri_facilities['type_labels'][t]} {n}"
                       for t, n in ri_facilities["totals"].items()))

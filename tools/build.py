@@ -45,11 +45,20 @@ INDICATORS = [
     {"id": "elderly_ratio_change", "label": "고령화율 변화", "unit": "%p",
      "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
      "reference": f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}"},
-    # 아래 시설·SGIS 지표는 조사 주기가 정해진 자료라 기준일이 다르다. reference 에 적는다
+    # 노령화지수·인구밀도: SGIS 2024 대신 주민등록 인구(법정동별 1세 단위)로 계산 (2026-11-06)
     {"id": "aging_index", "label": "노령화지수", "unit": "",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True, "reference": "SGIS 2024"},
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True,
+     "reference": f"65세 이상 ÷ 0~14세 × 100, 주민등록 {ANALYSIS_PERIOD}. 리는 유소년 0명인 곳이 18곳이라 노년부양비로 본다"},
+    {"id": "old_dependency", "label": "노년부양비", "unit": "",
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": True,
+     "reference": f"65세 이상 ÷ 15~64세 × 100, 주민등록 {ANALYSIS_PERIOD}"},
     {"id": "density_per_km2", "label": "인구밀도", "unit": "명/㎢",
-     "status": "available", "units": ["eupmyeon"], "higher_is_worse": False, "reference": "SGIS 2024"},
+     "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False,
+     "reference": f"주민등록 {ANALYSIS_PERIOD} ÷ 법정리 경계 면적"},
+    {"id": "vacant_house_count", "label": "빈집 수", "unit": "호",
+     "status": "available", "units": ["eupmyeon"], "higher_is_worse": True,
+     "reference": "빈집애(지자체 빈집행정조사, 화면 2025년). 빈집률 아님"},
+    # 아래 시설 지표는 조사 주기가 정해진 자료라 기준일이 다르다. reference 에 적는다
     {"id": "senior_center_count", "label": "경로당 수", "unit": "개소",
      "status": "available", "units": ["eupmyeon", "ri"], "higher_is_worse": False, "reference": "2025-12-19"},
     {"id": "senior_center_per_1k_elderly", "label": "고령인구 1천명당 경로당", "unit": "개소",
@@ -102,6 +111,9 @@ INDICATORS = [
 ]
 
 
+STRUCTURE_FIELDS = ("aging_index", "old_dependency", "avg_age", "density_per_km2")
+
+
 def load(name: str):
     return json.loads((DERIVED / name).read_text(encoding="utf-8"))
 
@@ -119,7 +131,8 @@ def build_regions() -> dict:
     내보내지 않고 변화율 계산에만 쓴다. 산식은 docs/methodology.md §1.
     """
     pop = load("population.json")
-    sgis = load("sgis_stats.json")["by_region"]
+    struct = load("ri_population.json")["by_region"]
+    vacant = load("vacant_houses.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
     housing = load("ri_housing_age.json")["by_region"]
     access = load("ri_access.json")["by_region"]
@@ -149,8 +162,10 @@ def build_regions() -> dict:
                 ((rec["population"] / b["population"]) ** (12 / months) - 1) * 100, 2),
             "elderly_ratio_change": round(ratio_now - ratio_base, 1),
             **_housing_access_fields(housing[code], access[code]),
-            "aging_index": sgis[code]["aging_index"],
-            "density_per_km2": sgis[code]["density_per_km2"],
+            **{k: struct[code][k] for k in STRUCTURE_FIELDS},
+            "households": rec["households"],
+            "persons_per_household": round(rec["population"] / rec["households"], 2),
+            "vacant_house_count": vacant[code]["vacant_houses"],
             "senior_center_count": seniors[code]["count"],
             "senior_center_old_count": seniors[code]["old_count"],
             "senior_center_old_ratio": round(
@@ -202,7 +217,7 @@ def _housing_access_fields(h: dict, a: dict) -> dict:
 
 RI_POPULATION_FIELDS = ("population", "elderly", "elderly_ratio", "population_baseline",
                         "elderly_baseline", "pop_change_rate", "pop_change_rate_annual",
-                        "elderly_ratio_change")
+                        "elderly_ratio_change", *STRUCTURE_FIELDS)
 
 
 def build_ri_rows() -> list[dict]:

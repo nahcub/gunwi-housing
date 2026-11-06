@@ -13,7 +13,8 @@
       "population": 22988,
       "male": 11886,
       "female": 11102,
-      "elderly": 10311
+      "elderly": 10311,
+      "households": 13588
     },
     {
       "period": "2023-12",
@@ -24,7 +25,8 @@
       "population": 8069,
       "male": 4202,
       "female": 3867,
-      "elderly": 2633
+      "elderly": 2633,
+      "households": 4339
     },
     {
       "period": "2023-12",
@@ -35,7 +37,8 @@
       "population": 2317,
       "male": 1221,
       "female": 1096,
-      "elderly": 1211
+      "elderly": 1211,
+      "households": 1433
     },
     {
       "period": "2023-12",
@@ -46,7 +49,8 @@
       "population": 3750,
       "male": 1955,
       "female": 1795,
-      "elderly": 1788
+      "elderly": 1788,
+      "households": 2244
     },
     {
       "period": "2023-12",
@@ -57,7 +61,8 @@
       "population": 2094,
       "male": 1092,
       "female": 1002,
-      "elderly": 990
+      "elderly": 990,
+      "households": 1261
     },
     {
       "period": "2023-12",
@@ -68,7 +73,8 @@
       "population": 1939,
       "male": 981,
       "female": 958,
-      "elderly": 1051
+      "elderly": 1051,
+      "households": 1223
     },
     {
       "period": "2023-12",
@@ -79,7 +85,8 @@
       "population": 2317,
       "male": 1128,
       "female": 1189,
-      "elderly": 1256
+      "elderly": 1256,
+      "households": 1440
     },
     {
       "period": "2023-12",
@@ -90,7 +97,8 @@
       "population": 1188,
       "male": 608,
       "female": 580,
-      "elderly": 659
+      "elderly": 659,
+      "households": 774
     },
     {
       "period": "2023-12",
@@ -101,7 +109,8 @@
       "population": 1314,
       "male": 699,
       "female": 615,
-      "elderly": 723
+      "elderly": 723,
+      "households": 874
     },
     {
       "period": "2026-09",
@@ -112,7 +121,8 @@
       "population": 22432,
       "male": 11723,
       "female": 10709,
-      "elderly": 11334
+      "elderly": 11334,
+      "households": 13521
     },
     {
       "period": "2026-09",
@@ -123,7 +133,8 @@
       "population": 7844,
       "male": 4087,
       "female": 3757,
-      "elderly": 2925
+      "elderly": 2925,
+      "households": 4294
     },
     {
       "period": "2026-09",
@@ -134,7 +145,8 @@
       "population": 2195,
       "male": 1173,
       "female": 1022,
-      "elderly": 1264
+      "elderly": 1264,
+      "households": 1412
     },
     {
       "period": "2026-09",
@@ -145,7 +157,8 @@
       "population": 3641,
       "male": 1922,
       "female": 1719,
-      "elderly": 1991
+      "elderly": 1991,
+      "households": 2177
     },
     {
       "period": "2026-09",
@@ -156,7 +169,8 @@
       "population": 2107,
       "male": 1116,
       "female": 991,
-      "elderly": 1139
+      "elderly": 1139,
+      "households": 1306
     },
     {
       "period": "2026-09",
@@ -167,7 +181,8 @@
       "population": 1919,
       "male": 992,
       "female": 927,
-      "elderly": 1146
+      "elderly": 1146,
+      "households": 1264
     },
     {
       "period": "2026-09",
@@ -178,7 +193,8 @@
       "population": 2214,
       "male": 1103,
       "female": 1111,
-      "elderly": 1341
+      "elderly": 1341,
+      "households": 1405
     },
     {
       "period": "2026-09",
@@ -189,7 +205,8 @@
       "population": 1190,
       "male": 618,
       "female": 572,
-      "elderly": 731
+      "elderly": 731,
+      "households": 776
     },
     {
       "period": "2026-09",
@@ -200,7 +217,8 @@
       "population": 1322,
       "male": 712,
       "female": 610,
-      "elderly": 797
+      "elderly": 797,
+      "households": 887
     }
   ]
 }

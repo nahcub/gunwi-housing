@@ -38,11 +38,13 @@ COLUMNS = [
     ("인구변화율", "실수", "%", f"(총인구 - 기준시점인구) / 기준시점인구 × 100. {BASELINE_PERIOD} → {ANALYSIS_PERIOD}"),
     ("연평균인구변화율", "실수", "%/년", "((총인구 / 기준시점인구)^(12 / 개월수) - 1) × 100. 기간이 1년 단위가 아니라 연율로 환산"),
     ("고령화율변화", "실수", "%p", f"{ANALYSIS_PERIOD} 고령화율 - {BASELINE_PERIOD} 고령화율"),
-    ("노령화지수", "실수", "", "유소년(0~14세) 100명당 고령인구. SGIS 2024년 (등록센서스)"),
-    ("노년부양비", "실수", "", "생산연령(15~64세) 100명당 고령인구. SGIS 2024년"),
-    ("평균나이", "실수", "세", "SGIS 2024년"),
-    ("인구밀도", "실수", "명/㎢", "SGIS 2024년. SGIS 인구 기준이라 위 총인구와 분모가 다르다"),
-    ("가구수", "정수", "가구", "SGIS 2024년 일반가구"),
+    ("노령화지수", "실수", "", f"유소년(0~14세) 100명당 고령인구. 주민등록 {ANALYSIS_PERIOD} (법정동별 1세 단위)"),
+    ("노년부양비", "실수", "", f"생산연령(15~64세) 100명당 고령인구. 주민등록 {ANALYSIS_PERIOD}"),
+    ("평균나이", "실수", "세", f"주민등록 {ANALYSIS_PERIOD} 1세 단위 평균(110세 이상은 110세로 셈)"),
+    ("인구밀도", "실수", "명/㎢", f"주민등록 {ANALYSIS_PERIOD} 인구 ÷ 법정리 경계 면적 합"),
+    ("세대수", "정수", "세대", f"주민등록 세대 {ANALYSIS_PERIOD} (통계청 '가구'와 정의가 다르다)"),
+    ("세대당인구", "실수", "명", "총인구 ÷ 세대수"),
+    ("빈집수", "정수", "호", "빈집애 읍면별 빈집 수(지자체 빈집행정조사, 화면 2025년). 같은 조사의 주택 수가 없어 빈집률은 만들지 않는다"),
     ("경로당수", "정수", "개소", "주소 기준 해당 읍면 소재 경로당 (2025-12-19 기준)"),
     ("노후경로당수", "정수", "개소", "건립연도 2000년 이전. 공식 기준이 아닌 프로젝트 임시 기준"),
     ("노후경로당비율", "실수", "%", "노후경로당수 / 경로당수 × 100"),
@@ -83,6 +85,8 @@ RI_COLUMNS = [
     ("인구변화율", "실수", "%", f"{BASELINE_PERIOD} → {ANALYSIS_PERIOD}. 인구가 적은 리는 크게 흔들린다"),
     ("연평균인구변화율", "실수", "%/년", "연율 환산"),
     ("고령화율변화", "실수", "%p", f"{ANALYSIS_PERIOD} 고령화율 - {BASELINE_PERIOD} 고령화율"),
+    ("노령화지수", "실수", "", "65세 이상 ÷ 0~14세 × 100. 유소년이 0명인 리는 빈칸"),
+    ("인구밀도", "실수", "명/㎢", "총인구 ÷ 법정리 면적"),
     *[c[:4] for c in HOUSING_COLUMNS],
     ("경로당수", "정수", "개소", "리 경계 안 경로당 (2025-12-19 기준)"),
 ]
@@ -122,7 +126,6 @@ def build_rows() -> list[dict]:
     pop = [r for r in load("population.json")["records"]
            if r["period"] == ANALYSIS_PERIOD and r["level"] == "eupmyeon"]
     assert len(pop) == 8, f"{ANALYSIS_PERIOD} 읍면 인구가 8행이 아님: {len(pop)}"
-    sgis = load("sgis_stats.json")["by_region"]
     seniors = load("senior_centers.json")["by_region"]
     shapes = {f["properties"]["region_code"]: f["geometry"]
               for f in load("eupmyeon.geojson")["features"]}
@@ -146,11 +149,13 @@ def build_rows() -> list[dict]:
             "인구변화율": c["pop_change_rate"],
             "연평균인구변화율": c["pop_change_rate_annual"],
             "고령화율변화": c["elderly_ratio_change"],
-            "노령화지수": sgis[code]["aging_index"],
-            "노년부양비": sgis[code]["old_dependency"],
-            "평균나이": sgis[code]["avg_age"],
-            "인구밀도": sgis[code]["density_per_km2"],
-            "가구수": sgis[code]["households"],
+            "노령화지수": c["aging_index"],
+            "노년부양비": c["old_dependency"],
+            "평균나이": c["avg_age"],
+            "인구밀도": c["density_per_km2"],
+            "세대수": c["households"],
+            "세대당인구": c["persons_per_household"],
+            "빈집수": c["vacant_house_count"],
             "경로당수": seniors[code]["count"],
             "노후경로당수": seniors[code]["old_count"],
             "노후경로당비율": round(seniors[code]["old_count"] / seniors[code]["count"] * 100, 2),
@@ -172,6 +177,7 @@ def build_ri_rows() -> list[dict]:
             "총인구": r["population"], "고령인구": r["elderly"], "고령화율": r["elderly_ratio"],
             "기준시점인구": r["population_baseline"], "인구변화율": r["pop_change_rate"],
             "연평균인구변화율": r["pop_change_rate_annual"], "고령화율변화": r["elderly_ratio_change"],
+            "노령화지수": r["aging_index"], "인구밀도": r["density_per_km2"],
             **{c[0]: r[c[4]] for c in HOUSING_COLUMNS},
             "경로당수": r["senior_center_count"],
         })
@@ -181,7 +187,8 @@ def build_ri_rows() -> list[dict]:
 
 def method_rows() -> list[tuple[str, str]]:
     reg = {s["id"]: s for s in json.loads(REGISTRY.read_text(encoding="utf-8"))["sources"]}
-    used = ["MOIS_AGE", "SGIS_ADM_STAT_2025", "DATAGOKR_GUNWI_SENIOR", "BOUNDARY_EUPMYEON",
+    used = ["MOIS_AGE", "MOIS_HOUSEHOLD", "MOIS_LGD_AGE", "BINZIBE_GUNWI_VACANT_HOUSES",
+            "DATAGOKR_GUNWI_SENIOR", "BOUNDARY_EUPMYEON",
             "GIS_BUILDING_INTEGRATED", "HIRA_HOSPITAL_PHARMACY", "VWORLD_RI_BOUNDARY"]
     excluded = [s for s in reg.values() if s["status"] == "분석제외"]
 
@@ -191,7 +198,7 @@ def method_rows() -> list[tuple[str, str]]:
         ("공간 단위", "읍·면 8곳 (군위읍, 소보·효령·부계·우보·의흥·산성·삼국유사면) + "
                      "'리별지표' 시트는 법정리 92곳 (인구·고령화는 리별 자료가 없어 읍면에만 있다)"),
         ("기준 시점", f"분석 기준 {ANALYSIS_PERIOD} 말(주민등록 인구). 인구 변화는 {BASELINE_PERIOD} 말 대비. "
-                     "조사 주기가 정해진 자료는 최근 조사분: SGIS 2024년 / 경로당 2025-12-19"),
+                     "조사 주기가 정해진 자료는 최근 조사분: 빈집애 2025년 / 경로당 2025-12-19"),
         ("좌표계", "EPSG:4326 (WGS84)"),
         ("", ""),
         ("■ 산출식", ""),
@@ -217,8 +224,8 @@ def method_rows() -> list[tuple[str, str]]:
         ("", ""),
         ("■ 알아둘 점", ""),
         ("표본 수", "읍면이 8곳뿐이라 상관분석은 탐색적 수준이다. 유의성 해석에 주의"),
-        ("두 가지 인구", "총인구·고령인구는 주민등록(" + ANALYSIS_PERIOD + "), 노령화지수·인구밀도 등은 SGIS 등록센서스"
-                      "(2024)다. 정의가 달라 값이 다르므로 한 지표 안에서 섞지 말 것"),
+        ("인구 지표", "총인구·고령인구·노령화지수·노년부양비·평균나이·인구밀도 모두 주민등록(" + ANALYSIS_PERIOD +
+                    ") 기준이다. SGIS 2024 통계는 2026-11-06 부터 쓰지 않는다"),
         ("경계 출처", "읍면 경계는 통계청 SGIS 행정구역 경계 2025년 2분기(기준일 2025-06-30). "
                     "2026-10-15 SGIS 원본과 8개 읍면 도형 일치 확인"),
         ("", ""),
@@ -283,7 +290,7 @@ def main() -> None:
         cell.number_format = "@"
 
     _sheet(wb.create_sheet("컬럼설명"), ["시트", "컬럼명", "자료형", "단위", "설명"],
-           [["기초지표", *c] for c in COLUMNS] + [["리별지표", *c] for c in RI_COLUMNS[:10]] +
+           [["기초지표", *c] for c in COLUMNS] + [["리별지표", *c] for c in RI_COLUMNS[:12]] +
            [["리별지표", *RI_COLUMNS[-1]]], [10, 24, 9, 8, 84])
 
     ws3 = wb.create_sheet("산출방법")

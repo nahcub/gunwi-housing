@@ -26,7 +26,7 @@
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/mois-household-2025-12",
-      "used_for": ["읍면별 세대수·세대당 인구 월별 추이 (prepare.py 미연결)"],
+      "used_for": ["읍면별 세대수·세대당 인구 2023-12·2026-09 (derived/population.json households)"],
       "notes": "[2026-11-05] gunwi/gunwi-facility-priority 의 data/raw/mois-household/YYYY-MM 39개를 mois-household-YYYY-MM 폴더로 옮겨 왔다(바이트 무수정, sha256 일치 확인). household.json 행 = [이름, 총인구수, 세대수, 세대당인구, 남자, 여자, 남녀비율] 화면 문자열 그대로. 화면에 행정기관코드가 없어 이름만 있다 — 같은 기준월 mois-age 와 이름·순서·총인구 일치를 수집 시 검증했으니 코드는 그쪽에서 붙일 것. 군 합계 행과 읍면을 중복 합산 금지."
     },
     {
@@ -127,11 +127,11 @@
       "url": "https://www.data.go.kr/data/15114136/standard.do",
       "reference_date": "2025-12-19",
       "license": "공식 출처의 이용조건 확인 필요",
-      "status": "확보/이관자료",
+      "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/datagokr-gunwi-senior-2025-12-19",
       "used_for": ["경로당 읍면별 수·건립연도 분포 (derived/senior_centers.json)", "노후 경로당 수 (기준 연도 미확정)"],
-      "notes": "215행, 좌표·건립일자·면적, 전 행 영업. 팀원(윤현준) 추출본을 받은 그대로 동결 — 정부 원본 바이트가 아니므로 provenance=verified_import. 건립일자 전 행 YYYY-01-01 → 연도 정밀도. 읍면 컬럼이 없어 주소에서 추출한다. 경로당을 무더위쉼터로 간주하지 않는다. 공식 원본 재다운로드 시 새 raw 폴더로 교체할 것."
+      "notes": "[2026-11-06] 포털 원본(군위군 제공 파일, 2025-12-24 등록, 연간 갱신, 차기 2026-12-19)과 바이트 일치 확인 → provenance verified. 군위군 최신판이 이 판이다. 215행, 좌표·건립일자·면적, 전 행 영업. 팀원(윤현준) 추출본을 받은 그대로 동결 — 정부 원본 바이트가 아니므로 provenance=verified_import. 건립일자 전 행 YYYY-01-01 → 연도 정밀도. 읍면 컬럼이 없어 주소에서 추출한다. 경로당을 무더위쉼터로 간주하지 않는다. 공식 원본 재다운로드 시 새 raw 폴더로 교체할 것."
     },
     {
       "id": "DATAGOKR_GUNWI_PARKING",
@@ -179,11 +179,11 @@
       "url": "https://www.data.go.kr/data/15129688/fileData.do",
       "reference_date": "2024-12-31(통계) / 2025-06-30(경계 2025 2Q)",
       "license": "공공데이터포털 이용조건 확인 필요(출처표시)",
-      "status": "확보",
+      "status": "분석제외",
       "request_status": null,
       "raw_dir": "data/raw/sgis-admstat-2025-2q",
-      "used_for": ["읍면별 인구총괄·가구·주택·사업체 총괄 (derived/sgis_stats.json)", "읍면별 건축년도별 주택 수 (2025년기준_2024년_건축년도별주택.csv, prepare.py 미연결)"],
-      "notes": "읍면 8개 단위. SGIS 제공용 코드 22520은 프로젝트 표준(2772025000 계열)과 다른 체계이므로 빌드 시점에 한 번만 매핑할 것. 원본 전국 zip(50MB 초과)은 커밋하지 않고 ~/Downloads/gunwi-dl/ 에 보관(sha256은 _meta.json). 경계 shp는 EPSG:5179로 재투영 필요."
+      "used_for": [],
+      "notes": "[2026-11-06 분석 제외] 사유: 2024 센서스 기반이라 분석 시점(2026-09)과 맞지 않고, 쓰던 값(노령화지수·노년부양비·평균나이·인구밀도·가구)을 모두 주민등록 인구(MOIS_LGD_AGE·MOIS_HOUSEHOLD)와 법정리 경계 면적으로 대신 계산할 수 있다. 주택·건축연도는 GIS건물통합정보가 대신한다. raw 는 남겨 둔다. — 이전 기록: 읍면 8개 단위. SGIS 제공용 코드 22520은 프로젝트 표준(2772025000 계열)과 다른 체계이므로 빌드 시점에 한 번만 매핑할 것. 원본 전국 zip(50MB 초과)은 커밋하지 않고 ~/Downloads/gunwi-dl/ 에 보관(sha256은 _meta.json). 경계 shp는 EPSG:5179로 재투영 필요."
     },
     {
       "id": "MINWON_POTHOLE_LATLON",
@@ -221,8 +221,8 @@
       "status": "확보",
       "request_status": null,
       "raw_dir": "data/raw/binzibe-gunwi-vacant-houses-2025",
-      "used_for": ["읍면별 빈집 수 (prepare.py 미연결)"],
-      "notes": "지도 화면이 쓰는 내부 API(/apihome/map/vacant-houses/rank, sigungu=27720) 응답을 tools/fetch_binzibe.py 로 받은 그대로 보존. 공개 Open API 가 아니다. 읍면 8행, 합 602. 지자체 빈집행정조사 결과로 국가승인통계가 아니다(지도 안내문). binzipRateReg 는 빈집률이 아니라 군 전체 대비 읍면 비중(%). 27720 은 통계청 코드라 region_code 와 다르다 — 읍면명으로 대응. 조사시점은 사이트에 없어 미확인(API year=2026, 화면 표시 2025년). 통계청 미거주주택·군청 실태조사와 정의가 달라 섞지 말 것. 등급·건별 위치 없음."
+      "used_for": ["읍면별 빈집 수 (derived/vacant_houses.json → 웹·엑셀 '빈집 수')"],
+      "notes": "[2026-11-06 연결] 사이트가 조사연도 하나만 제공해 이 판이 최신(2026-11-06 다시 조회해도 같은 값). 지도 화면이 쓰는 내부 API(/apihome/map/vacant-houses/rank, sigungu=27720) 응답을 tools/fetch_binzibe.py 로 받은 그대로 보존. 공개 Open API 가 아니다. 읍면 8행, 합 602. 지자체 빈집행정조사 결과로 국가승인통계가 아니다(지도 안내문). binzipRateReg 는 빈집률이 아니라 군 전체 대비 읍면 비중(%). 27720 은 통계청 코드라 region_code 와 다르다 — 읍면명으로 대응. 조사시점은 사이트에 없어 미확인(API year=2026, 화면 표시 2025년). 통계청 미거주주택·군청 실태조사와 정의가 달라 섞지 말 것. 등급·건별 위치 없음."
     },
     {
       "id": "KOSIS_VACANT_HOUSE_SIGUNGU",

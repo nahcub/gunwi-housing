@@ -691,7 +691,9 @@ def _read_lgd(raw: Path, read_meta, period: str) -> dict[str, dict]:
     head = list(rows[0])
     age_cols = [c for c in head if c[0].isdigit() and ("남자" in c or "여자" in c)]
     assert len(age_cols) == 222, f"{folder}: 연령 열 {len(age_cols)}개 (0~110세이상 x 남녀 = 222)"
-    old_cols = [c for c in age_cols if int(re.match(r"\d+", c).group()) >= ELDERLY_FROM_AGE]
+    age_of = {c: int(re.match(r"\d+", c).group()) for c in age_cols}   # 110세이상 은 110 으로 센다
+    old_cols = [c for c in age_cols if age_of[c] >= ELDERLY_FROM_AGE]
+    young_cols = [c for c in age_cols if age_of[c] <= 14]
     out, emd_only = {}, {}
     for r in rows:
         code = r["법정동코드"]
@@ -701,7 +703,9 @@ def _read_lgd(raw: Path, read_meta, period: str) -> dict[str, dict]:
         total = int(r["계"])
         assert int(r["남자"]) + int(r["여자"]) == total, f"{code}: 남+여 != 계"
         assert sum(int(r[c]) for c in age_cols) == total, f"{code}: 연령 합 != 계"
-        rec = {"population": total, "elderly": sum(int(r[c]) for c in old_cols)}
+        rec = {"population": total, "elderly": sum(int(r[c]) for c in old_cols),
+               "young": sum(int(r[c]) for c in young_cols),
+               "age_sum": sum(int(r[c]) * age_of[c] for c in age_cols)}
         if code.endswith("00"):
             emd_only[code] = rec           # 리 미지정(예: 2023-12 삼국유사면 1명)
         else:
@@ -734,6 +738,24 @@ def prepare_ri_population(raw: Path, read_meta, ri_gj: dict, population: list,
     (ys, ms), (ye, me) = (map(int, p.split("-")) for p in (baseline, analysis))
     months = (ye - ys) * 12 + (me - ms)
     b, a = data[baseline], data[analysis]
+    # 면적(㎢): 법정리 경계를 EPSG:5186 평면으로 되돌려 잰다. 읍면 면적 = 그 읍면 리 면적의 합
+    to_tm = Transformer.from_crs(4326, 5186, always_xy=True).transform
+    area = {f["properties"]["ri_code"]: shapely.transform(shape(f["geometry"]), to_tm, interleaved=False).area / 1e6
+            for f in ri_gj["features"]}
+
+    def structure(rec: dict, area_km2: float) -> dict:
+        """노령화지수·노년부양비·평균나이·인구밀도 (SGIS 대신 주민등록 인구로 계산, 2026-11-06)."""
+        p, y, o = rec["population"], rec["young"], rec["elderly"]
+        working = p - y - o
+        return {
+            "young": y, "working": working,
+            "aging_index": round(o / y * 100, 1) if y else None,      # 유소년 0명이면 정의되지 않는다
+            "old_dependency": round(o / working * 100, 1) if working else None,
+            "avg_age": round(rec["age_sum"] / p, 1) if p else None,
+            "area_km2": round(area_km2, 3),
+            "density_per_km2": round(p / area_km2, 1),
+        }
+
     by_ri = {}
     for code, prop in sorted(ri_props.items()):
         cur = a.get(code)
@@ -751,7 +773,17 @@ def prepare_ri_population(raw: Path, read_meta, ri_gj: dict, population: list,
             "pop_change_rate": round((p1 - p0) / p0 * 100, 1) if p0 else None,
             "pop_change_rate_annual": round(((p1 / p0) ** (12 / months) - 1) * 100, 2) if p0 and p1 else None,
             "elderly_ratio_change": round(r1 - r0, 1) if r0 is not None and r1 is not None else None,
+            **structure(cur, area[code]),
         }
+    # 읍면 합(리 + 리 미지정 행). 리 미지정 행은 2026-09 에 없지만 있으면 더한다
+    by_region = {}
+    for rc in sorted({v["region_code"] for v in ri_props.values()}):
+        codes = [c for c in ri_props if c[:8] + "00" == rc]
+        agg = {k: sum(a[c][k] for c in codes) for k in ("population", "elderly", "young", "age_sum")}
+        for k in agg:
+            agg[k] += a["_emd_only"].get(rc, {}).get(k, 0)
+        by_region[rc] = {"population": agg["population"], "elderly": agg["elderly"],
+                         **structure(agg, sum(area[c] for c in codes))}
     return {
         "_note": (f"행안부 지역별(법정동) 1세 단위 주민등록 인구로 법정리별 인구·{ELDERLY_FROM_AGE}세 이상을 센다. "
                   f"{baseline} → {analysis} 변화. 읍면 합이 행정동 주민등록 인구(mois-age)와 정확히 같음을 검증했다. "
@@ -760,5 +792,6 @@ def prepare_ri_population(raw: Path, read_meta, ri_gj: dict, population: list,
         "baseline_period": baseline, "analysis_period": analysis, "change_months": months,
         "elderly_from_age": ELDERLY_FROM_AGE,
         "checks": checks,
+        "by_region": by_region,
         "by_ri": by_ri,
     }

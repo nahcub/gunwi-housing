@@ -77,7 +77,7 @@ function renderBanner() {
 function renderSubtitle() {
   const ref = store.regions.meta.reference_dates[state.period];
   const ind = indicatorById(state.indicator);
-  // 시설·SGIS 지표는 인구 시점과 기준일이 다르다
+  // 시설·빈집 지표는 인구 시점과 기준일이 다르다
   const indRef = ind.reference ? ` (지표 기준 ${ind.reference})` : '';
   $('subtitle').textContent =
     `기준시점 ${ref} · 표시 지표: ${ind.label}${indRef} · ${UNIT_LABEL[state.unit]} ${rows().length}개 · ` +
@@ -107,7 +107,7 @@ function renderUnits() {
   });
   $('unit-note').textContent = state.unit === 'ri'
     ? '리 단위 인구·고령화는 행안부 법정동별 주민등록 인구(1세 단위), 노후주택·거리는 주거용 건물 기반이다. ' +
-      '노령화지수·인구밀도·경로당 관련 비율은 읍면에만 있다. 인구가 적은 리는 비율이 크게 흔들린다. 값은 리별 집계만 공개한다.'
+      '빈집 수·세대·경로당 관련 비율은 읍면에만 있다. 인구가 적은 리는 비율이 크게 흔들린다. 값은 리별 집계만 공개한다.'
     : '';
 }
 
@@ -201,6 +201,8 @@ function renderDetail() {
       `<dt>고령화율</dt><dd>${r.elderly_ratio} % (${r.elderly_ratio_change >= 0 ? '+' : ''}${r.elderly_ratio_change}%p)</dd>` +
       `<dt>인구 변화</dt><dd>${r.population_baseline.toLocaleString('ko-KR')} → ` +
       `${r.population.toLocaleString('ko-KR')} 명 (${r.pop_change_rate}%, 연 ${r.pop_change_rate_annual}%)</dd>` +
+      `<dt>노령화지수 / 평균나이</dt><dd>${r.aging_index ?? '—'} / ${r.avg_age}세</dd>` +
+      `<dt>인구밀도</dt><dd>${r.density_per_km2} 명/㎢</dd>` +
       housingRows +
       `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (리 안)</dd>` +
       `<dt>법정리코드</dt><dd>${r.ri_code}</dd>` +
@@ -216,7 +218,9 @@ function renderDetail() {
     `<dt>인구 변화</dt><dd>${r.population_baseline.toLocaleString('ko-KR')} → ` +
     `${r.population.toLocaleString('ko-KR')} 명 (${r.pop_change_rate}%, 연 ${r.pop_change_rate_annual}%)</dd>` +
     housingRows +
-    `<dt>노령화지수</dt><dd>${r.aging_index}</dd>` +
+    `<dt>노령화지수 / 평균나이</dt><dd>${r.aging_index} / ${r.avg_age}세</dd>` +
+    `<dt>세대</dt><dd>${r.households.toLocaleString('ko-KR')} 세대 (세대당 ${r.persons_per_household}명)</dd>` +
+    `<dt>빈집 (빈집애)</dt><dd>${r.vacant_house_count} 호</dd>` +
     `<dt>경로당</dt><dd>${r.senior_center_count} 개소 (노후 ${r.senior_center_old_count}, ${r.senior_center_old_ratio}%)</dd>` +
     `<dt>고령 1천명당 경로당</dt><dd>${r.senior_center_per_1k_elderly} 개소</dd>` +
     `<dt>행정기관코드</dt><dd>${r.region_code}</dd>` +

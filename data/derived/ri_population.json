@@ -16,6 +16,96 @@
       "emd_only_rows": {}
     }
   },
+  "by_region": {
+    "2772025000": {
+      "population": 7844,
+      "elderly": 2925,
+      "young": 498,
+      "working": 4421,
+      "aging_index": 587.3,
+      "old_dependency": 66.2,
+      "avg_age": 54.4,
+      "area_km2": 83.716,
+      "density_per_km2": 93.7
+    },
+    "2772031000": {
+      "population": 2195,
+      "elderly": 1264,
+      "young": 34,
+      "working": 897,
+      "aging_index": 3717.6,
+      "old_dependency": 140.9,
+      "avg_age": 64.9,
+      "area_km2": 99.931,
+      "density_per_km2": 22.0
+    },
+    "2772032000": {
+      "population": 3641,
+      "elderly": 1991,
+      "young": 97,
+      "working": 1553,
+      "aging_index": 2052.6,
+      "old_dependency": 128.2,
+      "avg_age": 62.5,
+      "area_km2": 98.461,
+      "density_per_km2": 37.0
+    },
+    "2772033000": {
+      "population": 2107,
+      "elderly": 1139,
+      "young": 45,
+      "working": 923,
+      "aging_index": 2531.1,
+      "old_dependency": 123.4,
+      "avg_age": 63.0,
+      "area_km2": 64.635,
+      "density_per_km2": 32.6
+    },
+    "2772034000": {
+      "population": 1919,
+      "elderly": 1146,
+      "young": 25,
+      "working": 748,
+      "aging_index": 4584.0,
+      "old_dependency": 153.2,
+      "avg_age": 65.1,
+      "area_km2": 60.272,
+      "density_per_km2": 31.8
+    },
+    "2772035000": {
+      "population": 2214,
+      "elderly": 1341,
+      "young": 33,
+      "working": 840,
+      "aging_index": 4063.6,
+      "old_dependency": 159.6,
+      "avg_age": 65.3,
+      "area_km2": 54.596,
+      "density_per_km2": 40.6
+    },
+    "2772036000": {
+      "population": 1190,
+      "elderly": 731,
+      "young": 22,
+      "working": 437,
+      "aging_index": 3322.7,
+      "old_dependency": 167.3,
+      "avg_age": 66.1,
+      "area_km2": 37.219,
+      "density_per_km2": 32.0
+    },
+    "2772037000": {
+      "population": 1322,
+      "elderly": 797,
+      "young": 10,
+      "working": 515,
+      "aging_index": 7970.0,
+      "old_dependency": 154.8,
+      "avg_age": 65.9,
+      "area_km2": 114.842,
+      "density_per_km2": 11.5
+    }
+  },
   "by_ri": {
     "2772025021": {
       "ri_name": "동부리",
@@ -28,7 +118,14 @@
       "elderly_baseline": 298,
       "pop_change_rate": -1.3,
       "pop_change_rate_annual": -0.49,
-      "elderly_ratio_change": 3.2
+      "elderly_ratio_change": 3.2,
+      "young": 151,
+      "working": 988,
+      "aging_index": 226.5,
+      "old_dependency": 34.6,
+      "avg_age": 46.9,
+      "area_km2": 2.937,
+      "density_per_km2": 504.3
     },
     "2772025022": {
       "ri_name": "서부리",
@@ -41,7 +138,14 @@
       "elderly_baseline": 648,
       "pop_change_rate": -3.6,
       "pop_change_rate_annual": -1.31,
-      "elderly_ratio_change": 5.0
+      "elderly_ratio_change": 5.0,
+      "young": 235,
+      "working": 1636,
+      "aging_index": 322.1,
+      "old_dependency": 46.3,
+      "avg_age": 49.6,
+      "area_km2": 1.211,
+      "density_per_km2": 2169.8
     },
     "2772025023": {
       "ri_name": "금구리",
@@ -54,7 +158,14 @@
       "elderly_baseline": 128,
       "pop_change_rate": -3.2,
       "pop_change_rate_annual": -1.17,
-      "elderly_ratio_change": 5.9
+      "elderly_ratio_change": 5.9,
+      "young": 13,
+      "working": 149,
+      "aging_index": 1092.3,
+      "old_dependency": 95.3,
+      "avg_age": 59.4,
+      "area_km2": 4.748,
+      "density_per_km2": 64.0
     },
     "2772025024": {
       "ri_name": "무성리",
@@ -67,7 +178,14 @@
       "elderly_baseline": 142,
       "pop_change_rate": -3.8,
       "pop_change_rate_annual": -1.39,
-      "elderly_ratio_change": 7.7
+      "elderly_ratio_change": 7.7,
+      "young": 20,
+      "working": 195,
+      "aging_index": 830.0,
+      "old_dependency": 85.1,
+      "avg_age": 58.0,
+      "area_km2": 4.193,
+      "density_per_km2": 90.9
     },
     "2772025025": {
       "ri_name": "수서리",
@@ -80,7 +198,14 @@
       "elderly_baseline": 174,
       "pop_change_rate": -4.0,
       "pop_change_rate_annual": -1.46,
-      "elderly_ratio_change": 4.7
+      "elderly_ratio_change": 4.7,
+      "young": 3,
+      "working": 154,
+      "aging_index": 6100.0,
+      "old_dependency": 118.8,
+      "avg_age": 63.1,
+      "area_km2": 11.383,
+      "density_per_km2": 29.9
     },
     "2772025026": {
       "ri_name": "사직리",
@@ -93,7 +218,14 @@
       "elderly_baseline": 87,
       "pop_change_rate": 6.5,
       "pop_change_rate_annual": 2.3,
-      "elderly_ratio_change": 6.3
+      "elderly_ratio_change": 6.3,
+      "young": 10,
+      "working": 83,
+      "aging_index": 1050.0,
+      "old_dependency": 126.5,
+      "avg_age": 60.9,
+      "area_km2": 3.877,
+      "density_per_km2": 51.1
     },
     "2772025027": {
       "ri_name": "내량리",
@@ -106,7 +238,14 @@
       "elderly_baseline": 164,
       "pop_change_rate": 0.8,
       "pop_change_rate_annual": 0.3,
-      "elderly_ratio_change": 0.4
+      "elderly_ratio_change": 0.4,
+      "young": 11,
+      "working": 186,
+      "aging_index": 1518.2,
+      "old_dependency": 89.8,
+      "avg_age": 60.4,
+      "area_km2": 6.458,
+      "density_per_km2": 56.4
     },
     "2772025028": {
       "ri_name": "외량리",
@@ -119,7 +258,14 @@
       "elderly_baseline": 111,
       "pop_change_rate": -10.5,
       "pop_change_rate_annual": -3.94,
-      "elderly_ratio_change": 6.3
+      "elderly_ratio_change": 6.3,
+      "young": 1,
+      "working": 132,
+      "aging_index": 11500.0,
+      "old_dependency": 87.1,
+      "avg_age": 60.4,
+      "area_km2": 3.288,
+      "density_per_km2": 75.4
     },
     "2772025029": {
       "ri_name": "삽령리",
@@ -132,7 +278,14 @@
       "elderly_baseline": 60,
       "pop_change_rate": -0.8,
       "pop_change_rate_annual": -0.28,
-      "elderly_ratio_change": 1.9
+      "elderly_ratio_change": 1.9,
+      "young": 7,
+      "working": 60,
+      "aging_index": 885.7,
+      "old_dependency": 103.3,
+      "avg_age": 60.1,
+      "area_km2": 2.089,
+      "density_per_km2": 61.8
     },
     "2772025030": {
       "ri_name": "대북리",
@@ -145,7 +298,14 @@
       "elderly_baseline": 134,
       "pop_change_rate": 3.1,
       "pop_change_rate_annual": 1.13,
-      "elderly_ratio_change": 2.6
+      "elderly_ratio_change": 2.6,
+      "young": 7,
+      "working": 111,
+      "aging_index": 2071.4,
+      "old_dependency": 130.6,
+      "avg_age": 64.5,
+      "area_km2": 3.592,
+      "density_per_km2": 73.2
     },
     "2772025031": {
       "ri_name": "오곡리",
@@ -158,7 +318,14 @@
       "elderly_baseline": 66,
       "pop_change_rate": -7.7,
       "pop_change_rate_annual": -2.87,
-      "elderly_ratio_change": 6.9
+      "elderly_ratio_change": 6.9,
+      "young": 3,
+      "working": 59,
+      "aging_index": 2333.3,
+      "old_dependency": 118.6,
+      "avg_age": 60.8,
+      "area_km2": 4.644,
+      "density_per_km2": 28.4
     },
     "2772025032": {
       "ri_name": "정리",
@@ -171,7 +338,14 @@
       "elderly_baseline": 156,
       "pop_change_rate": -2.4,
       "pop_change_rate_annual": -0.88,
-      "elderly_ratio_change": 2.2
+      "elderly_ratio_change": 2.2,
+      "young": 20,
+      "working": 266,
+      "aging_index": 810.0,
+      "old_dependency": 60.9,
+      "avg_age": 55.8,
+      "area_km2": 3.332,
+      "density_per_km2": 134.5
     },
     "2772025033": {
       "ri_name": "하곡리",
@@ -184,7 +358,14 @@
       "elderly_baseline": 76,
       "pop_change_rate": -7.8,
       "pop_change_rate_annual": -2.91,
-      "elderly_ratio_change": 4.4
+      "elderly_ratio_change": 4.4,
+      "young": 10,
+      "working": 112,
+      "aging_index": 790.0,
+      "old_dependency": 70.5,
+      "avg_age": 56.4,
+      "area_km2": 4.284,
+      "density_per_km2": 46.9
     },
     "2772025034": {
       "ri_name": "용대리",
@@ -197,7 +378,14 @@
       "elderly_baseline": 76,
       "pop_change_rate": -6.1,
       "pop_change_rate_annual": -2.25,
-      "elderly_ratio_change": 6.9
+      "elderly_ratio_change": 6.9,
+      "young": 1,
+      "working": 43,
+      "aging_index": 8000.0,
+      "old_dependency": 186.0,
+      "avg_age": 66.1,
+      "area_km2": 5.886,
+      "density_per_km2": 21.1
     },
     "2772025035": {
       "ri_name": "상곡리",
@@ -210,7 +398,14 @@
       "elderly_baseline": 89,
       "pop_change_rate": -1.2,
       "pop_change_rate_annual": -0.45,
-      "elderly_ratio_change": 1.3
+      "elderly_ratio_change": 1.3,
+      "young": 1,
+      "working": 70,
+      "aging_index": 9000.0,
+      "old_dependency": 128.6,
+      "avg_age": 65.2,
+      "area_km2": 7.366,
+      "density_per_km2": 21.9
     },
     "2772025036": {
       "ri_name": "광현리",
@@ -223,7 +418,14 @@
       "elderly_baseline": 121,
       "pop_change_rate": -0.8,
       "pop_change_rate_annual": -0.29,
-      "elderly_ratio_change": 7.2
+      "elderly_ratio_change": 7.2,
+      "young": 3,
+      "working": 108,
+      "aging_index": 4600.0,
+      "old_dependency": 127.8,
+      "avg_age": 64.3,
+      "area_km2": 9.923,
+      "density_per_km2": 25.1
     },
     "2772025037": {
       "ri_name": "대흥리",
@@ -236,7 +438,14 @@
       "elderly_baseline": 103,
       "pop_change_rate": -5.4,
       "pop_change_rate_annual": -2.0,
-      "elderly_ratio_change": 12.7
+      "elderly_ratio_change": 12.7,
+      "young": 2,
+      "working": 69,
+      "aging_index": 6100.0,
+      "old_dependency": 176.8,
+      "avg_age": 66.5,
+      "area_km2": 4.505,
+      "density_per_km2": 42.8
     },
     "2772031021": {
       "ri_name": "사리리",
@@ -249,7 +458,14 @@
       "elderly_baseline": 59,
       "pop_change_rate": -7.1,
       "pop_change_rate_annual": -2.66,
-      "elderly_ratio_change": 9.6
+      "elderly_ratio_change": 9.6,
+      "young": 1,
+      "working": 50,
+      "aging_index": 6600.0,
+      "old_dependency": 132.0,
+      "avg_age": 63.4,
+      "area_km2": 5.138,
+      "density_per_km2": 22.8
     },
     "2772031022": {
       "ri_name": "보현리",
@@ -262,7 +478,14 @@
       "elderly_baseline": 48,
       "pop_change_rate": -6.1,
       "pop_change_rate_annual": -2.27,
-      "elderly_ratio_change": 12.1
+      "elderly_ratio_change": 12.1,
+      "young": 5,
+      "working": 58,
+      "aging_index": 1200.0,
+      "old_dependency": 103.4,
+      "avg_age": 60.2,
+      "area_km2": 7.774,
+      "density_per_km2": 15.8
     },
     "2772031023": {
       "ri_name": "복성리",
@@ -275,7 +498,14 @@
       "elderly_baseline": 76,
       "pop_change_rate": -6.9,
       "pop_change_rate_annual": -2.58,
-      "elderly_ratio_change": 5.2
+      "elderly_ratio_change": 5.2,
+      "young": 0,
+      "working": 44,
+      "aging_index": null,
+      "old_dependency": 175.0,
+      "avg_age": 66.2,
+      "area_km2": 5.026,
+      "density_per_km2": 24.1
     },
     "2772031024": {
       "ri_name": "위성리",
@@ -288,7 +518,14 @@
       "elderly_baseline": 125,
       "pop_change_rate": -3.3,
       "pop_change_rate_annual": -1.21,
-      "elderly_ratio_change": 3.0
+      "elderly_ratio_change": 3.0,
+      "young": 6,
+      "working": 73,
+      "aging_index": 2116.7,
+      "old_dependency": 174.0,
+      "avg_age": 65.7,
+      "area_km2": 9.705,
+      "density_per_km2": 21.2
     },
     "2772031025": {
       "ri_name": "달산리",
@@ -301,7 +538,14 @@
       "elderly_baseline": 122,
       "pop_change_rate": -7.6,
       "pop_change_rate_annual": -2.82,
-      "elderly_ratio_change": 8.3
+      "elderly_ratio_change": 8.3,
+      "young": 4,
+      "working": 96,
+      "aging_index": 3300.0,
+      "old_dependency": 137.5,
+      "avg_age": 64.5,
+      "area_km2": 11.771,
+      "density_per_km2": 19.7
     },
     "2772031026": {
       "ri_name": "송원리",
@@ -314,7 +558,14 @@
       "elderly_baseline": 159,
       "pop_change_rate": -5.7,
       "pop_change_rate_annual": -2.12,
-      "elderly_ratio_change": 1.7
+      "elderly_ratio_change": 1.7,
+      "young": 1,
+      "working": 140,
+      "aging_index": 15500.0,
+      "old_dependency": 110.7,
+      "avg_age": 63.6,
+      "area_km2": 4.266,
+      "density_per_km2": 69.4
     },
     "2772031027": {
       "ri_name": "신계리",
@@ -327,7 +578,14 @@
       "elderly_baseline": 53,
       "pop_change_rate": 0.0,
       "pop_change_rate_annual": 0.0,
-      "elderly_ratio_change": -3.7
+      "elderly_ratio_change": -3.7,
+      "young": 1,
+      "working": 30,
+      "aging_index": 5000.0,
+      "old_dependency": 166.7,
+      "avg_age": 67.7,
+      "area_km2": 1.737,
+      "density_per_km2": 46.6
     },
     "2772031028": {
       "ri_name": "도산리",
@@ -340,7 +598,14 @@
       "elderly_baseline": 122,
       "pop_change_rate": -10.8,
       "pop_change_rate_annual": -4.08,
-      "elderly_ratio_change": 6.9
+      "elderly_ratio_change": 6.9,
+      "young": 3,
+      "working": 80,
+      "aging_index": 4100.0,
+      "old_dependency": 153.8,
+      "avg_age": 65.6,
+      "area_km2": 11.395,
+      "density_per_km2": 18.1
     },
     "2772031029": {
       "ri_name": "서경리",
@@ -353,7 +618,14 @@
       "elderly_baseline": 77,
       "pop_change_rate": 2.6,
       "pop_change_rate_annual": 0.93,
-      "elderly_ratio_change": -0.8
+      "elderly_ratio_change": -0.8,
+      "young": 3,
+      "working": 38,
+      "aging_index": 2600.0,
+      "old_dependency": 205.3,
+      "avg_age": 69.1,
+      "area_km2": 4.301,
+      "density_per_km2": 27.7
     },
     "2772031030": {
       "ri_name": "평호리",
@@ -366,7 +638,14 @@
       "elderly_baseline": 63,
       "pop_change_rate": -5.4,
       "pop_change_rate_annual": -1.98,
-      "elderly_ratio_change": 3.2
+      "elderly_ratio_change": 3.2,
+      "young": 3,
+      "working": 40,
+      "aging_index": 2100.0,
+      "old_dependency": 157.5,
+      "avg_age": 67.0,
+      "area_km2": 8.922,
+      "density_per_km2": 11.9
     },
     "2772031031": {
       "ri_name": "산법리",
@@ -379,7 +658,14 @@
       "elderly_baseline": 32,
       "pop_change_rate": -3.8,
       "pop_change_rate_annual": -1.39,
-      "elderly_ratio_change": 10.2
+      "elderly_ratio_change": 10.2,
+      "young": 0,
+      "working": 15,
+      "aging_index": null,
+      "old_dependency": 240.0,
+      "avg_age": 69.1,
+      "area_km2": 7.661,
+      "density_per_km2": 6.7
     },
     "2772031032": {
       "ri_name": "내의리",
@@ -392,7 +678,14 @@
       "elderly_baseline": 132,
       "pop_change_rate": -2.8,
       "pop_change_rate_annual": -1.04,
-      "elderly_ratio_change": 6.1
+      "elderly_ratio_change": 6.1,
+      "young": 2,
+      "working": 126,
+      "aging_index": 7250.0,
+      "old_dependency": 115.1,
+      "avg_age": 63.2,
+      "area_km2": 10.045,
+      "density_per_km2": 27.2
     },
     "2772031033": {
       "ri_name": "봉황리",
@@ -405,7 +698,14 @@
       "elderly_baseline": 106,
       "pop_change_rate": -7.4,
       "pop_change_rate_annual": -2.74,
-      "elderly_ratio_change": 4.7
+      "elderly_ratio_change": 4.7,
+      "young": 3,
+      "working": 79,
+      "aging_index": 3566.7,
+      "old_dependency": 135.4,
+      "avg_age": 65.6,
+      "area_km2": 8.129,
+      "density_per_km2": 23.2
     },
     "2772031034": {
       "ri_name": "봉소리",
@@ -418,7 +718,14 @@
       "elderly_baseline": 37,
       "pop_change_rate": 1.4,
       "pop_change_rate_annual": 0.49,
-      "elderly_ratio_change": 10.0
+      "elderly_ratio_change": 10.0,
+      "young": 2,
+      "working": 28,
+      "aging_index": 2250.0,
+      "old_dependency": 160.7,
+      "avg_age": 65.7,
+      "area_km2": 4.06,
+      "density_per_km2": 18.5
     },
     "2772032021": {
       "ri_name": "노행리",
@@ -431,7 +738,14 @@
       "elderly_baseline": 99,
       "pop_change_rate": -2.4,
       "pop_change_rate_annual": -0.87,
-      "elderly_ratio_change": 9.9
+      "elderly_ratio_change": 9.9,
+      "young": 2,
+      "working": 86,
+      "aging_index": 5850.0,
+      "old_dependency": 136.0,
+      "avg_age": 63.8,
+      "area_km2": 8.271,
+      "density_per_km2": 24.8
     },
     "2772032022": {
       "ri_name": "오천리",
@@ -444,7 +758,14 @@
       "elderly_baseline": 51,
       "pop_change_rate": 0.0,
       "pop_change_rate_annual": 0.0,
-      "elderly_ratio_change": 1.1
+      "elderly_ratio_change": 1.1,
+      "young": 1,
+      "working": 39,
+      "aging_index": 5200.0,
+      "old_dependency": 133.3,
+      "avg_age": 63.0,
+      "area_km2": 2.843,
+      "density_per_km2": 32.4
     },
     "2772032023": {
       "ri_name": "성리",
@@ -457,7 +778,14 @@
       "elderly_baseline": 107,
       "pop_change_rate": 3.9,
       "pop_change_rate_annual": 1.4,
-      "elderly_ratio_change": 2.7
+      "elderly_ratio_change": 2.7,
+      "young": 4,
+      "working": 92,
+      "aging_index": 2925.0,
+      "old_dependency": 127.2,
+      "avg_age": 63.2,
+      "area_km2": 5.852,
+      "density_per_km2": 36.4
     },
     "2772032024": {
       "ri_name": "병수리",
@@ -470,7 +798,14 @@
       "elderly_baseline": 121,
       "pop_change_rate": 6.2,
       "pop_change_rate_annual": 2.23,
-      "elderly_ratio_change": 0.7
+      "elderly_ratio_change": 0.7,
+      "young": 2,
+      "working": 89,
+      "aging_index": 6500.0,
+      "old_dependency": 146.1,
+      "avg_age": 65.0,
+      "area_km2": 5.527,
+      "density_per_km2": 40.0
     },
     "2772032025": {
       "ri_name": "불로리",
@@ -483,7 +818,14 @@
       "elderly_baseline": 47,
       "pop_change_rate": -2.9,
       "pop_change_rate_annual": -1.06,
-      "elderly_ratio_change": 3.3
+      "elderly_ratio_change": 3.3,
+      "young": 2,
+      "working": 50,
+      "aging_index": 2450.0,
+      "old_dependency": 98.0,
+      "avg_age": 60.3,
+      "area_km2": 3.23,
+      "density_per_km2": 31.3
     },
     "2772032026": {
       "ri_name": "내리리",
@@ -496,7 +838,14 @@
       "elderly_baseline": 58,
       "pop_change_rate": -17.2,
       "pop_change_rate_annual": -6.64,
-      "elderly_ratio_change": 15.8
+      "elderly_ratio_change": 15.8,
+      "young": 2,
+      "working": 35,
+      "aging_index": 3200.0,
+      "old_dependency": 182.9,
+      "avg_age": 65.9,
+      "area_km2": 5.852,
+      "density_per_km2": 17.3
     },
     "2772032027": {
       "ri_name": "중구리",
@@ -509,7 +858,14 @@
       "elderly_baseline": 142,
       "pop_change_rate": -9.9,
       "pop_change_rate_annual": -3.71,
-      "elderly_ratio_change": 11.0
+      "elderly_ratio_change": 11.0,
+      "young": 12,
+      "working": 177,
+      "aging_index": 1391.7,
+      "old_dependency": 94.4,
+      "avg_age": 59.7,
+      "area_km2": 5.348,
+      "density_per_km2": 66.6
     },
     "2772032028": {
       "ri_name": "거매리",
@@ -522,7 +878,14 @@
       "elderly_baseline": 90,
       "pop_change_rate": -8.4,
       "pop_change_rate_annual": -3.13,
-      "elderly_ratio_change": 4.9
+      "elderly_ratio_change": 4.9,
+      "young": 5,
+      "working": 58,
+      "aging_index": 1800.0,
+      "old_dependency": 155.2,
+      "avg_age": 63.2,
+      "area_km2": 4.125,
+      "density_per_km2": 37.1
     },
     "2772032029": {
       "ri_name": "장군리",
@@ -535,7 +898,14 @@
       "elderly_baseline": 197,
       "pop_change_rate": 3.0,
       "pop_change_rate_annual": 1.09,
-      "elderly_ratio_change": 4.9
+      "elderly_ratio_change": 4.9,
+      "young": 14,
+      "working": 172,
+      "aging_index": 1592.9,
+      "old_dependency": 129.7,
+      "avg_age": 62.6,
+      "area_km2": 5.931,
+      "density_per_km2": 69.0
     },
     "2772032030": {
       "ri_name": "장기리",
@@ -548,7 +918,14 @@
       "elderly_baseline": 129,
       "pop_change_rate": -3.1,
       "pop_change_rate_annual": -1.14,
-      "elderly_ratio_change": 10.7
+      "elderly_ratio_change": 10.7,
+      "young": 3,
+      "working": 122,
+      "aging_index": 5166.7,
+      "old_dependency": 127.0,
+      "avg_age": 63.9,
+      "area_km2": 6.792,
+      "density_per_km2": 41.2
     },
     "2772032031": {
       "ri_name": "금매리",
@@ -561,7 +938,14 @@
       "elderly_baseline": 126,
       "pop_change_rate": -6.6,
       "pop_change_rate_annual": -2.45,
-      "elderly_ratio_change": 5.9
+      "elderly_ratio_change": 5.9,
+      "young": 5,
+      "working": 91,
+      "aging_index": 2620.0,
+      "old_dependency": 144.0,
+      "avg_age": 64.7,
+      "area_km2": 9.293,
+      "density_per_km2": 24.4
     },
     "2772032032": {
       "ri_name": "화계리",
@@ -574,7 +958,14 @@
       "elderly_baseline": 110,
       "pop_change_rate": -4.9,
       "pop_change_rate_annual": -1.81,
-      "elderly_ratio_change": 4.8
+      "elderly_ratio_change": 4.8,
+      "young": 3,
+      "working": 77,
+      "aging_index": 3800.0,
+      "old_dependency": 148.1,
+      "avg_age": 64.6,
+      "area_km2": 6.44,
+      "density_per_km2": 30.1
     },
     "2772032033": {
       "ri_name": "마시리",
@@ -587,7 +978,14 @@
       "elderly_baseline": 151,
       "pop_change_rate": 6.2,
       "pop_change_rate_annual": 2.22,
-      "elderly_ratio_change": 11.3
+      "elderly_ratio_change": 11.3,
+      "young": 9,
+      "working": 118,
+      "aging_index": 2188.9,
+      "old_dependency": 166.9,
+      "avg_age": 62.2,
+      "area_km2": 8.692,
+      "density_per_km2": 37.3
     },
     "2772032034": {
       "ri_name": "매곡리",
@@ -600,7 +998,14 @@
       "elderly_baseline": 141,
       "pop_change_rate": -3.2,
       "pop_change_rate_annual": -1.16,
-      "elderly_ratio_change": 5.3
+      "elderly_ratio_change": 5.3,
+      "young": 6,
+      "working": 118,
+      "aging_index": 2516.7,
+      "old_dependency": 128.0,
+      "avg_age": 63.2,
+      "area_km2": 12.735,
+      "density_per_km2": 21.6
     },
     "2772032035": {
       "ri_name": "고곡리",
@@ -613,7 +1018,14 @@
       "elderly_baseline": 219,
       "pop_change_rate": -6.7,
       "pop_change_rate_annual": -2.48,
-      "elderly_ratio_change": 6.0
+      "elderly_ratio_change": 6.0,
+      "young": 27,
+      "working": 229,
+      "aging_index": 866.7,
+      "old_dependency": 102.2,
+      "avg_age": 58.9,
+      "area_km2": 7.53,
+      "density_per_km2": 65.1
     },
     "2772033021": {
       "ri_name": "창평리",
@@ -626,7 +1038,14 @@
       "elderly_baseline": 177,
       "pop_change_rate": -0.2,
       "pop_change_rate_annual": -0.09,
-      "elderly_ratio_change": 7.9
+      "elderly_ratio_change": 7.9,
+      "young": 3,
+      "working": 188,
+      "aging_index": 6933.3,
+      "old_dependency": 110.6,
+      "avg_age": 63.0,
+      "area_km2": 7.35,
+      "density_per_km2": 54.3
     },
     "2772033022": {
       "ri_name": "가호리",
@@ -639,7 +1058,14 @@
       "elderly_baseline": 129,
       "pop_change_rate": -4.2,
       "pop_change_rate_annual": -1.56,
-      "elderly_ratio_change": 8.2
+      "elderly_ratio_change": 8.2,
+      "young": 13,
+      "working": 92,
+      "aging_index": 1107.7,
+      "old_dependency": 156.5,
+      "avg_age": 62.8,
+      "area_km2": 7.741,
+      "density_per_km2": 32.2
     },
     "2772033023": {
       "ri_name": "춘산리",
@@ -652,7 +1078,14 @@
       "elderly_baseline": 74,
       "pop_change_rate": 5.0,
       "pop_change_rate_annual": 1.78,
-      "elderly_ratio_change": 8.9
+      "elderly_ratio_change": 8.9,
+      "young": 0,
+      "working": 38,
+      "aging_index": null,
+      "old_dependency": 234.2,
+      "avg_age": 69.2,
+      "area_km2": 7.28,
+      "density_per_km2": 17.4
     },
     "2772033024": {
       "ri_name": "대율리",
@@ -665,7 +1098,14 @@
       "elderly_baseline": 194,
       "pop_change_rate": 2.9,
       "pop_change_rate_annual": 1.05,
-      "elderly_ratio_change": 5.5
+      "elderly_ratio_change": 5.5,
+      "young": 18,
+      "working": 216,
+      "aging_index": 1250.0,
+      "old_dependency": 104.2,
+      "avg_age": 60.2,
+      "area_km2": 5.492,
+      "density_per_km2": 83.6
     },
     "2772033025": {
       "ri_name": "동산리",
@@ -678,7 +1118,14 @@
       "elderly_baseline": 120,
       "pop_change_rate": 0.0,
       "pop_change_rate_annual": 0.0,
-      "elderly_ratio_change": 6.2
+      "elderly_ratio_change": 6.2,
+      "young": 6,
+      "working": 129,
+      "aging_index": 2283.3,
+      "old_dependency": 106.2,
+      "avg_age": 62.7,
+      "area_km2": 13.422,
+      "density_per_km2": 20.3
     },
     "2772033026": {
       "ri_name": "남산리",
@@ -691,7 +1138,14 @@
       "elderly_baseline": 183,
       "pop_change_rate": -0.3,
       "pop_change_rate_annual": -0.09,
-      "elderly_ratio_change": 6.6
+      "elderly_ratio_change": 6.6,
+      "young": 4,
+      "working": 173,
+      "aging_index": 5200.0,
+      "old_dependency": 120.2,
+      "avg_age": 63.6,
+      "area_km2": 12.804,
+      "density_per_km2": 30.1
     },
     "2772033027": {
       "ri_name": "명산리",
@@ -704,7 +1158,14 @@
       "elderly_baseline": 38,
       "pop_change_rate": -1.5,
       "pop_change_rate_annual": -0.54,
-      "elderly_ratio_change": 14.3
+      "elderly_ratio_change": 14.3,
+      "young": 1,
+      "working": 19,
+      "aging_index": 4700.0,
+      "old_dependency": 247.4,
+      "avg_age": 68.8,
+      "area_km2": 3.627,
+      "density_per_km2": 18.5
     },
     "2772033028": {
       "ri_name": "신화리",
@@ -717,7 +1178,14 @@
       "elderly_baseline": 75,
       "pop_change_rate": 5.7,
       "pop_change_rate_annual": 2.03,
-      "elderly_ratio_change": 1.2
+      "elderly_ratio_change": 1.2,
+      "young": 0,
+      "working": 68,
+      "aging_index": null,
+      "old_dependency": 119.1,
+      "avg_age": 63.3,
+      "area_km2": 6.92,
+      "density_per_km2": 21.5
     },
     "2772034021": {
       "ri_name": "나호리",
@@ -730,7 +1198,14 @@
       "elderly_baseline": 96,
       "pop_change_rate": 2.6,
       "pop_change_rate_annual": 0.94,
-      "elderly_ratio_change": 4.3
+      "elderly_ratio_change": 4.3,
+      "young": 6,
+      "working": 83,
+      "aging_index": 1783.3,
+      "old_dependency": 128.9,
+      "avg_age": 63.9,
+      "area_km2": 7.388,
+      "density_per_km2": 26.5
     },
     "2772034022": {
       "ri_name": "이화리",
@@ -743,7 +1218,14 @@
       "elderly_baseline": 237,
       "pop_change_rate": -4.6,
       "pop_change_rate_annual": -1.7,
-      "elderly_ratio_change": 5.5
+      "elderly_ratio_change": 5.5,
+      "young": 8,
+      "working": 196,
+      "aging_index": 3137.5,
+      "old_dependency": 128.1,
+      "avg_age": 62.9,
+      "area_km2": 6.271,
+      "density_per_km2": 72.6
     },
     "2772034023": {
       "ri_name": "두북리",
@@ -756,7 +1238,14 @@
       "elderly_baseline": 43,
       "pop_change_rate": 5.3,
       "pop_change_rate_annual": 1.9,
-      "elderly_ratio_change": -0.3
+      "elderly_ratio_change": -0.3,
+      "young": 5,
+      "working": 49,
+      "aging_index": 900.0,
+      "old_dependency": 91.8,
+      "avg_age": 58.2,
+      "area_km2": 4.615,
+      "density_per_km2": 21.5
     },
     "2772034024": {
       "ri_name": "선곡리",
@@ -769,7 +1258,14 @@
       "elderly_baseline": 110,
       "pop_change_rate": -4.3,
       "pop_change_rate_annual": -1.6,
-      "elderly_ratio_change": 9.5
+      "elderly_ratio_change": 9.5,
+      "young": 0,
+      "working": 54,
+      "aging_index": null,
+      "old_dependency": 225.9,
+      "avg_age": 67.9,
+      "area_km2": 4.633,
+      "density_per_km2": 38.0
     },
     "2772034025": {
       "ri_name": "미성리",
@@ -782,7 +1278,14 @@
       "elderly_baseline": 108,
       "pop_change_rate": -6.8,
       "pop_change_rate_annual": -2.53,
-      "elderly_ratio_change": 9.7
+      "elderly_ratio_change": 9.7,
+      "young": 0,
+      "working": 60,
+      "aging_index": null,
+      "old_dependency": 196.7,
+      "avg_age": 68.9,
+      "area_km2": 3.89,
+      "density_per_km2": 45.8
     },
     "2772034026": {
       "ri_name": "모산리",
@@ -795,7 +1298,14 @@
       "elderly_baseline": 118,
       "pop_change_rate": -8.3,
       "pop_change_rate_annual": -3.1,
-      "elderly_ratio_change": 1.6
+      "elderly_ratio_change": 1.6,
+      "young": 0,
+      "working": 66,
+      "aging_index": null,
+      "old_dependency": 168.2,
+      "avg_age": 67.8,
+      "area_km2": 6.07,
+      "density_per_km2": 29.2
     },
     "2772034027": {
       "ri_name": "문덕리",
@@ -808,7 +1318,14 @@
       "elderly_baseline": 124,
       "pop_change_rate": -2.8,
       "pop_change_rate_annual": -1.02,
-      "elderly_ratio_change": 6.9
+      "elderly_ratio_change": 6.9,
+      "young": 3,
+      "working": 72,
+      "aging_index": 4500.0,
+      "old_dependency": 187.5,
+      "avg_age": 65.6,
+      "area_km2": 5.873,
+      "density_per_km2": 35.8
     },
     "2772034028": {
       "ri_name": "달산리",
@@ -821,7 +1338,14 @@
       "elderly_baseline": 105,
       "pop_change_rate": 8.2,
       "pop_change_rate_annual": 2.91,
-      "elderly_ratio_change": 7.8
+      "elderly_ratio_change": 7.8,
+      "young": 3,
+      "working": 66,
+      "aging_index": 4300.0,
+      "old_dependency": 195.5,
+      "avg_age": 66.6,
+      "area_km2": 15.393,
+      "density_per_km2": 12.9
     },
     "2772034029": {
       "ri_name": "봉산리",
@@ -834,7 +1358,14 @@
       "elderly_baseline": 110,
       "pop_change_rate": 9.5,
       "pop_change_rate_annual": 3.36,
-      "elderly_ratio_change": 3.3
+      "elderly_ratio_change": 3.3,
+      "young": 0,
+      "working": 102,
+      "aging_index": null,
+      "old_dependency": 125.5,
+      "avg_age": 64.3,
+      "area_km2": 6.139,
+      "density_per_km2": 37.5
     },
     "2772035021": {
       "ri_name": "읍내리",
@@ -847,7 +1378,14 @@
       "elderly_baseline": 295,
       "pop_change_rate": -9.4,
       "pop_change_rate_annual": -3.54,
-      "elderly_ratio_change": 10.8
+      "elderly_ratio_change": 10.8,
+      "young": 8,
+      "working": 213,
+      "aging_index": 4075.0,
+      "old_dependency": 153.1,
+      "avg_age": 64.2,
+      "area_km2": 3.126,
+      "density_per_km2": 175.0
     },
     "2772035022": {
       "ri_name": "수북리",
@@ -860,7 +1398,14 @@
       "elderly_baseline": 109,
       "pop_change_rate": 0.4,
       "pop_change_rate_annual": 0.15,
-      "elderly_ratio_change": 7.9
+      "elderly_ratio_change": 7.9,
+      "young": 6,
+      "working": 102,
+      "aging_index": 2133.3,
+      "old_dependency": 125.5,
+      "avg_age": 63.1,
+      "area_km2": 7.762,
+      "density_per_km2": 30.4
     },
     "2772035023": {
       "ri_name": "수서리",
@@ -873,7 +1418,14 @@
       "elderly_baseline": 74,
       "pop_change_rate": -2.4,
       "pop_change_rate_annual": -0.88,
-      "elderly_ratio_change": 12.1
+      "elderly_ratio_change": 12.1,
+      "young": 1,
+      "working": 34,
+      "aging_index": 8700.0,
+      "old_dependency": 255.9,
+      "avg_age": 69.2,
+      "area_km2": 2.167,
+      "density_per_km2": 56.3
     },
     "2772035024": {
       "ri_name": "이지리",
@@ -886,7 +1438,14 @@
       "elderly_baseline": 140,
       "pop_change_rate": -4.4,
       "pop_change_rate_annual": -1.61,
-      "elderly_ratio_change": 3.8
+      "elderly_ratio_change": 3.8,
+      "young": 2,
+      "working": 96,
+      "aging_index": 7150.0,
+      "old_dependency": 149.0,
+      "avg_age": 65.1,
+      "area_km2": 7.277,
+      "density_per_km2": 33.1
     },
     "2772035025": {
       "ri_name": "파전리",
@@ -899,7 +1458,14 @@
       "elderly_baseline": 65,
       "pop_change_rate": -7.1,
       "pop_change_rate_annual": -2.66,
-      "elderly_ratio_change": 4.8
+      "elderly_ratio_change": 4.8,
+      "young": 0,
+      "working": 51,
+      "aging_index": null,
+      "old_dependency": 129.4,
+      "avg_age": 64.7,
+      "area_km2": 2.208,
+      "density_per_km2": 53.0
     },
     "2772035026": {
       "ri_name": "신덕리",
@@ -912,7 +1478,14 @@
       "elderly_baseline": 51,
       "pop_change_rate": 2.0,
       "pop_change_rate_annual": 0.71,
-      "elderly_ratio_change": 2.9
+      "elderly_ratio_change": 2.9,
+      "young": 4,
+      "working": 45,
+      "aging_index": 1375.0,
+      "old_dependency": 122.2,
+      "avg_age": 63.4,
+      "area_km2": 7.919,
+      "density_per_km2": 13.1
     },
     "2772035027": {
       "ri_name": "지호리",
@@ -925,7 +1498,14 @@
       "elderly_baseline": 87,
       "pop_change_rate": 3.8,
       "pop_change_rate_annual": 1.37,
-      "elderly_ratio_change": 2.9
+      "elderly_ratio_change": 2.9,
+      "young": 3,
+      "working": 65,
+      "aging_index": 3166.7,
+      "old_dependency": 146.2,
+      "avg_age": 65.4,
+      "area_km2": 7.996,
+      "density_per_km2": 20.4
     },
     "2772035028": {
       "ri_name": "연계리",
@@ -938,7 +1518,14 @@
       "elderly_baseline": 138,
       "pop_change_rate": -9.5,
       "pop_change_rate_annual": -3.55,
-      "elderly_ratio_change": 1.0
+      "elderly_ratio_change": 1.0,
+      "young": 5,
+      "working": 69,
+      "aging_index": 2540.0,
+      "old_dependency": 184.1,
+      "avg_age": 66.4,
+      "area_km2": 3.867,
+      "density_per_km2": 52.0
     },
     "2772035029": {
       "ri_name": "매성리",
@@ -951,7 +1538,14 @@
       "elderly_baseline": 77,
       "pop_change_rate": -1.6,
       "pop_change_rate_annual": -0.58,
-      "elderly_ratio_change": 4.2
+      "elderly_ratio_change": 4.2,
+      "young": 2,
+      "working": 41,
+      "aging_index": 4050.0,
+      "old_dependency": 197.6,
+      "avg_age": 65.3,
+      "area_km2": 2.738,
+      "density_per_km2": 45.3
     },
     "2772035030": {
       "ri_name": "원산리",
@@ -964,7 +1558,14 @@
       "elderly_baseline": 137,
       "pop_change_rate": -0.5,
       "pop_change_rate_annual": -0.17,
-      "elderly_ratio_change": 3.6
+      "elderly_ratio_change": 3.6,
+      "young": 0,
+      "working": 70,
+      "aging_index": null,
+      "old_dependency": 205.7,
+      "avg_age": 68.3,
+      "area_km2": 4.618,
+      "density_per_km2": 46.3
     },
     "2772035031": {
       "ri_name": "금양리",
@@ -977,7 +1578,14 @@
       "elderly_baseline": 83,
       "pop_change_rate": -5.2,
       "pop_change_rate_annual": -1.93,
-      "elderly_ratio_change": 7.1
+      "elderly_ratio_change": 7.1,
+      "young": 2,
+      "working": 54,
+      "aging_index": 4450.0,
+      "old_dependency": 164.8,
+      "avg_age": 65.3,
+      "area_km2": 4.918,
+      "density_per_km2": 29.5
     },
     "2772036021": {
       "ri_name": "백학리",
@@ -990,7 +1598,14 @@
       "elderly_baseline": 67,
       "pop_change_rate": 0.8,
       "pop_change_rate_annual": 0.28,
-      "elderly_ratio_change": 1.9
+      "elderly_ratio_change": 1.9,
+      "young": 1,
+      "working": 61,
+      "aging_index": 7000.0,
+      "old_dependency": 114.8,
+      "avg_age": 65.7,
+      "area_km2": 7.828,
+      "density_per_km2": 16.9
     },
     "2772036022": {
       "ri_name": "삼산리",
@@ -1003,7 +1618,14 @@
       "elderly_baseline": 132,
       "pop_change_rate": 8.3,
       "pop_change_rate_annual": 2.94,
-      "elderly_ratio_change": 2.6
+      "elderly_ratio_change": 2.6,
+      "young": 7,
+      "working": 79,
+      "aging_index": 2128.6,
+      "old_dependency": 188.6,
+      "avg_age": 65.5,
+      "area_km2": 3.018,
+      "density_per_km2": 77.9
     },
     "2772036023": {
       "ri_name": "봉림리",
@@ -1016,7 +1638,14 @@
       "elderly_baseline": 74,
       "pop_change_rate": -10.9,
       "pop_change_rate_annual": -4.09,
-      "elderly_ratio_change": 7.9
+      "elderly_ratio_change": 7.9,
+      "young": 3,
+      "working": 37,
+      "aging_index": 2500.0,
+      "old_dependency": 202.7,
+      "avg_age": 68.7,
+      "area_km2": 5.228,
+      "density_per_km2": 22.0
     },
     "2772036024": {
       "ri_name": "무암리",
@@ -1029,7 +1658,14 @@
       "elderly_baseline": 66,
       "pop_change_rate": 3.2,
       "pop_change_rate_annual": 1.16,
-      "elderly_ratio_change": 6.9
+      "elderly_ratio_change": 6.9,
+      "young": 0,
+      "working": 51,
+      "aging_index": null,
+      "old_dependency": 151.0,
+      "avg_age": 67.8,
+      "area_km2": 4.407,
+      "density_per_km2": 29.0
     },
     "2772036025": {
       "ri_name": "운산리",
@@ -1042,7 +1678,14 @@
       "elderly_baseline": 67,
       "pop_change_rate": -4.9,
       "pop_change_rate_annual": -1.79,
-      "elderly_ratio_change": 3.3
+      "elderly_ratio_change": 3.3,
+      "young": 0,
+      "working": 31,
+      "aging_index": null,
+      "old_dependency": 216.1,
+      "avg_age": 68.9,
+      "area_km2": 4.75,
+      "density_per_km2": 20.6
     },
     "2772036026": {
       "ri_name": "화본리",
@@ -1055,7 +1698,14 @@
       "elderly_baseline": 154,
       "pop_change_rate": -0.9,
       "pop_change_rate_annual": -0.35,
-      "elderly_ratio_change": 11.3
+      "elderly_ratio_change": 11.3,
+      "young": 8,
+      "working": 118,
+      "aging_index": 2350.0,
+      "old_dependency": 159.3,
+      "avg_age": 64.1,
+      "area_km2": 6.215,
+      "density_per_km2": 50.5
     },
     "2772036027": {
       "ri_name": "화전리",
@@ -1068,7 +1718,14 @@
       "elderly_baseline": 99,
       "pop_change_rate": 0.6,
       "pop_change_rate_annual": 0.22,
-      "elderly_ratio_change": 3.2
+      "elderly_ratio_change": 3.2,
+      "young": 3,
+      "working": 60,
+      "aging_index": 3500.0,
+      "old_dependency": 175.0,
+      "avg_age": 66.2,
+      "area_km2": 5.772,
+      "density_per_km2": 29.1
     },
     "2772037021": {
       "ri_name": "화수리",
@@ -1081,7 +1738,14 @@
       "elderly_baseline": 78,
       "pop_change_rate": 0.6,
       "pop_change_rate_annual": 0.23,
-      "elderly_ratio_change": 4.7
+      "elderly_ratio_change": 4.7,
+      "young": 0,
+      "working": 72,
+      "aging_index": null,
+      "old_dependency": 119.4,
+      "avg_age": 65.8,
+      "area_km2": 7.175,
+      "density_per_km2": 22.0
     },
     "2772037022": {
       "ri_name": "화북리",
@@ -1094,7 +1758,14 @@
       "elderly_baseline": 149,
       "pop_change_rate": -1.4,
       "pop_change_rate_annual": -0.52,
-      "elderly_ratio_change": 4.4
+      "elderly_ratio_change": 4.4,
+      "young": 4,
+      "working": 113,
+      "aging_index": 3975.0,
+      "old_dependency": 140.7,
+      "avg_age": 64.0,
+      "area_km2": 17.073,
+      "density_per_km2": 16.2
     },
     "2772037023": {
       "ri_name": "괴산리",
@@ -1107,7 +1778,14 @@
       "elderly_baseline": 36,
       "pop_change_rate": 6.8,
       "pop_change_rate_annual": 2.41,
-      "elderly_ratio_change": 4.5
+      "elderly_ratio_change": 4.5,
+      "young": 0,
+      "working": 37,
+      "aging_index": null,
+      "old_dependency": 113.5,
+      "avg_age": 65.8,
+      "area_km2": 10.265,
+      "density_per_km2": 7.7
     },
     "2772037024": {
       "ri_name": "학성리",
@@ -1120,7 +1798,14 @@
       "elderly_baseline": 26,
       "pop_change_rate": -5.4,
       "pop_change_rate_annual": -1.98,
-      "elderly_ratio_change": 8.3
+      "elderly_ratio_change": 8.3,
+      "young": 0,
+      "working": 24,
+      "aging_index": null,
+      "old_dependency": 120.8,
+      "avg_age": 63.5,
+      "area_km2": 10.033,
+      "density_per_km2": 5.3
     },
     "2772037025": {
       "ri_name": "장곡리",
@@ -1133,7 +1818,14 @@
       "elderly_baseline": 4,
       "pop_change_rate": 7.7,
       "pop_change_rate_annual": 2.73,
-      "elderly_ratio_change": 19.2
+      "elderly_ratio_change": 19.2,
+      "young": 0,
+      "working": 7,
+      "aging_index": null,
+      "old_dependency": 100.0,
+      "avg_age": 64.5,
+      "area_km2": 8.987,
+      "density_per_km2": 1.6
     },
     "2772037026": {
       "ri_name": "인곡리",
@@ -1146,7 +1838,14 @@
       "elderly_baseline": 25,
       "pop_change_rate": 29.7,
       "pop_change_rate_annual": 9.93,
-      "elderly_ratio_change": -7.2
+      "elderly_ratio_change": -7.2,
+      "young": 0,
+      "working": 19,
+      "aging_index": null,
+      "old_dependency": 152.6,
+      "avg_age": 66.7,
+      "area_km2": 12.054,
+      "density_per_km2": 4.0
     },
     "2772037027": {
       "ri_name": "양지리",
@@ -1159,7 +1858,14 @@
       "elderly_baseline": 70,
       "pop_change_rate": -1.6,
       "pop_change_rate_annual": -0.6,
-      "elderly_ratio_change": 8.5
+      "elderly_ratio_change": 8.5,
+      "young": 1,
+      "working": 40,
+      "aging_index": 7900.0,
+      "old_dependency": 197.5,
+      "avg_age": 67.1,
+      "area_km2": 9.732,
+      "density_per_km2": 12.3
     },
     "2772037028": {
       "ri_name": "낙전리",
@@ -1172,7 +1878,14 @@
       "elderly_baseline": 53,
       "pop_change_rate": 1.3,
       "pop_change_rate_annual": 0.48,
-      "elderly_ratio_change": -2.2
+      "elderly_ratio_change": -2.2,
+      "young": 1,
+      "working": 23,
+      "aging_index": 5200.0,
+      "old_dependency": 226.1,
+      "avg_age": 68.7,
+      "area_km2": 9.238,
+      "density_per_km2": 8.2
     },
     "2772037029": {
       "ri_name": "가암리",
@@ -1185,7 +1898,14 @@
       "elderly_baseline": 99,
       "pop_change_rate": 2.8,
       "pop_change_rate_annual": 1.02,
-      "elderly_ratio_change": 2.9
+      "elderly_ratio_change": 2.9,
+      "young": 1,
+      "working": 74,
+      "aging_index": 10700.0,
+      "old_dependency": 144.6,
+      "avg_age": 65.2,
+      "area_km2": 7.965,
+      "density_per_km2": 22.9
     },
     "2772037030": {
       "ri_name": "석산리",
@@ -1198,7 +1918,14 @@
       "elderly_baseline": 103,
       "pop_change_rate": -3.9,
       "pop_change_rate_annual": -1.45,
-      "elderly_ratio_change": 6.5
+      "elderly_ratio_change": 6.5,
+      "young": 3,
+      "working": 58,
+      "aging_index": 3666.7,
+      "old_dependency": 189.7,
+      "avg_age": 67.3,
+      "area_km2": 9.517,
+      "density_per_km2": 18.0
     },
     "2772037031": {
       "ri_name": "학암리",
@@ -1211,7 +1938,14 @@
       "elderly_baseline": 80,
       "pop_change_rate": 0.7,
       "pop_change_rate_annual": 0.25,
-      "elderly_ratio_change": 11.3
+      "elderly_ratio_change": 11.3,
+      "young": 0,
+      "working": 48,
+      "aging_index": null,
+      "old_dependency": 202.1,
+      "avg_age": 67.2,
+      "area_km2": 12.804,
+      "density_per_km2": 11.3
     }
   }
 }

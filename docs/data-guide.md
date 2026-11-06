@@ -21,10 +21,10 @@ public/data/*.json        웹 화면용
 | `mois-age-2026-09` | 〃 | 2026-09-30 | `population.json` | 사용 (분석 기준 시점) |
 | `boundary-eupmyeon-2025-06-30` | 읍면 경계 GeoJSON (SGIS 2025 2Q) | 2025-06-30 | `eupmyeon.geojson` | 사용 (2026-10-15 출처 확인) |
 | `datagokr-gunwi-senior-2025-12-19` | 경로당 표준데이터(군위 215곳) | 2025-12-19 | `senior_centers.json` | 사용 |
-| `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | `sgis_stats.json` | 19개 CSV 중 10개 사용 |
-| `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | — | 등록만(prepare.py 미연결) |
+| `sgis-admstat-2025-2q` | SGIS 행정구역 통계(2024년) | 2024-12-31 | — | **분석 제외**(2026-11-06, 주민등록으로 대체) |
+| `binzibe-gunwi-vacant-houses-2025` | 빈집애 읍면별 빈집 수(지자체 행정조사, 8개 읍면 합 602) | 미확인(화면 표시 2025년) | `vacant_houses.json` | 사용 |
 | `mois-age-2023-07` ~ `mois-age-2026-09` (위 2개 제외 37개) | 행안부 연령별 주민등록인구 월별 | 매월 말일 | — | 등록만(prepare.py 미연결). 2026-11-05 gunwi 저장소에서 이관 |
-| `mois-household-2023-07` ~ `mois-household-2026-09` (39개) | 행안부 주민등록 인구 및 세대현황 월별 | 매월 말일 | — | 등록만. 코드 없음 → 같은 달 mois-age 에서 이름으로 붙인다 |
+| `mois-household-2023-07` ~ `mois-household-2026-09` (39개) | 행안부 주민등록 인구 및 세대현황 월별 | 매월 말일 | `population.json` `households` | 2023-12·2026-09 사용. 이름으로 붙이고 총인구 일치 검증 |
 | `gunwi-yearbook-64-2023` | 군위통계연보 제64회 (장별 xlsx zip) | 2023-12-31 | — | 등록만. 10장 주택건설·3장 리별 세대·인구·12장 독거노인 |
 | `hira-2026-09` | HIRA 병의원·약국 (보건소·지소·진료소 포함, 전국 zip) | 2026-09 | — | 등록만. 군위 = '대구군위군' 42행 |
 | `bus-stops-2026-10-20` | 국토부 전국 버스정류장 (CP949) | 2026-10-20 | — | 등록만. 군위는 좌표로 판정 |
@@ -172,7 +172,11 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - **2000년 기준은 공식 기준이 아니라 프로젝트 임시값**이다(`SENIOR_OLD_BEFORE_YEAR`).
 - `source_row` 로 원본 CSV 몇 번째 행인지 추적할 수 있다.
 
-## 4. SGIS 행정구역 통계 → `sgis_stats.json`
+## 4. SGIS 행정구역 통계 — 2026-11-06 분석 제외 (`sgis_stats.json` 삭제)
+
+> 아래는 쓰던 때의 기록이다. 지금은 prepare.py 가 읽지 않는다. 노령화지수·노년부양비·평균나이·인구밀도는
+> `ri_population.json`(주민등록 법정동별 1세 단위 + 리 경계 면적), 세대수는 `population.json` `households`
+> (주민등록 세대현황)로 바꿨다.
 
 **raw**: `sgis-admstat-2025-2q/` CSV 19개 (**cp949**). 전국 파일(269MB zip, 저장소 밖 보관)에서
 군위군(SGIS 코드 `22520`) 행만 걸러낸 것. 형식은 모두 같다:
@@ -228,7 +232,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - SGIS 인구(등록센서스, 2024)와 주민등록 인구(§1)는 **정의가 달라 값이 다르다**
   (군 전체 21,493 vs 22,432). 한 표에서 섞어 쓰지 말 것.
 
-## 5. 빈집애 읍면별 빈집 수 (derived 없음)
+## 5. 빈집애 읍면별 빈집 수 → `vacant_houses.json` (2026-11-06 연결)
 
 **raw**: `binzibe-gunwi-vacant-houses-2025/`
 
@@ -245,7 +249,8 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 - 등급·건별 위치는 없다. 조사시점은 사이트에 없어 미확인.
 - 같은 정의의 분모(주택 수)가 없어 빈집률을 만들지 않는다. SGIS 주택 수(§4)나
   통계청 미거주주택과 정의가 달라 한 산식에서 섞지 않는다.
-- `prepare.py` 에 연결하지 않았다. 연결하면 읍면명(`sojaeji` 끝 단어)으로 region_code 를 붙인다.
+- `prepare_vacant_houses()` 가 읍면명(`sojaeji` 끝 단어)으로 region_code 를 붙이고 합 602 를 검증한다.
+  웹·엑셀에는 읍면 '빈집 수'로만 나간다(빈집률 없음).
 
 ## 6. 법정리 경계 → `ri_boundary.geojson`, 시설 리 배정 → `ri_facilities.json`
 
@@ -298,7 +303,7 @@ derived 의 모든 읍면 단위 값은 **`region_code`(주민등록 행정기�
 | derived | `build.py` → `public/data/` | `export_excel.py` → `outputs/` |
 |---|---|---|
 | `population.json` | `regions.json` 에 합쳐짐(군 합계 행 제거) | 결과표 |
-| `sgis_stats.json` | `regions.json` 에 합쳐짐 | 결과표 |
+| `vacant_houses.json` | `regions.json` 읍면 행 `vacant_house_count` | 결과표 빈집수 |
 | `senior_centers.json` | `regions.json`(읍면 집계·노후 비율) + `facilities.json`(지점) | 결과표 |
 | `eupmyeon.geojson` | 그대로 복사 | — |
 | `ri_housing_age.json` · `ri_access.json` | `regions.json` 읍면 행 + `ri`(법정리 92행) | 결과표 열 + `리별지표` 시트·CSV |

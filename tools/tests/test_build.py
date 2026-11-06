@@ -126,6 +126,7 @@ def test_ri_rows_are_aggregates_only():
     allowed = {"ri_code", "name", "region_code", "region_name", "houses", "old_house_ratio",
                "population", "elderly", "elderly_ratio", "population_baseline", "elderly_baseline",
                "pop_change_rate", "pop_change_rate_annual", "elderly_ratio_change",
+               "aging_index", "old_dependency", "avg_age", "density_per_km2",
                "old_house_confirmed_ratio", "approval_blank_ratio", "primary_care_mean_m",
                "primary_care_median_m", "primary_care_far_pct", "health_mean_m", "clinic_mean_m",
                "bus_stop_mean_m", "bus_stop_far_pct", "school_elementary_mean_m",
