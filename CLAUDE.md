@@ -2,7 +2,9 @@
 
 코드만 봐서는 알 수 없고, 모르면 반드시 틀리는 것들. 사람이 읽어도 그대로 유용하다.
 (2026-10-15 인수인계 시점 최신화. 원작성자는 더 이상 이 저장소를 관리하지 않는다.
-2026-10-30 주제를 "군위군 빈집·노후주택 기반 주거환경 취약지역 분석"으로 바꿨다)
+2026-10-30 주제를 "군위군 빈집·노후주택 기반 주거환경 취약지역 분석"으로 바꿨다.
+2026-11-06 데이터 수집 단계 완료 → 다음 담당자(취약지역 도출 방법·보고서)에게 인수인계.
+**새로 맡았다면 `docs/handoff.md`(사람용 1장)와 `docs/handoff-ai.md`(AI용 전체 맥락)부터 읽는다.**)
 
 ## 분석 주제와 목적
 
@@ -26,12 +28,13 @@ SGIS 2024 통계는 2026-11-06 부터 쓰지 않는다(인구 구조 지표는 �
 2023년 이전 자료는 보지 않는다. 대신 자료 종류를 넓게 조사한다. 인구감소만 두 시점
 비교(`BASELINE_PERIOD` 2023-12 → 2026-09)로 계산한다. 웹·엑셀에는 분석 시점 행만 있고, 인구 변화율·연평균 변화율·고령화율 변화는
 `build.py` `build_regions()` 한 곳에서 계산한다(엑셀도 그 값을 쓴다). 시점 전환 탭은 없앴다. 자료마다 기준일이 다르므로 지표마다 기준일을 함께 적는다.
-raw 의 `mois-age-*` 월별 39개·`mois-household-*` 39개는 당장 쓰지 않아도 남겨 둔다.
+raw 의 `mois-age-*` 월별 39개·`mois-household-*` 39개는 당장 쓰지 않아도 남겨 둔다(2026-11-06 사용자 결정, 삭제 금지).
 
 ## 먼저 읽을 문서
 
 | 알고 싶은 것 | 문서 |
 |---|---|
+| 지금 어디까지 됐고 다음에 무엇을 하나 (인수인계) | `docs/handoff.md` (사람용 1장), `docs/handoff-ai.md` (AI용) |
 | raw 원자료별 내용과 derived 에서 무엇이 되는지 | `docs/data-guide.md` |
 | "X 하려면 어느 파일을 고치나" 작업별 절차 | `docs/how-to.md` |
 | 지표 산식과 근거, 계산하지 않는 이유 | `docs/methodology.md` |
@@ -59,7 +62,8 @@ raw 의 `mois-age-*` 월별 39개·`mois-household-*` 39개는 당장 쓰지 않
 tools/add_source.py    새 원자료를 data/raw/<새 폴더>/ 에 등록 (_meta.json·sha256 자동)
 tools/fetch_binzibe.py 빈집애 지도 내부 API 수집기 (군위군 읍면별 빈집 수, 키 불필요)
 tools/prepare.py       data/raw     -> data/derived   (assert 검증 관문)
-tools/prepare_ri.py    prepare.py 가 부른다. 법정리 경계 정리 + 시설을 리에 배정 (shapely·pyproj·pyshp)
+tools/prepare_ri.py    prepare.py 가 부른다. 법정리 경계·시설 리 배정·노후주택·집별 생활시설 거리·리별 인구
+                       (shapely·pyproj·pyshp, requirements.txt 에 버전 고정 — derived 바이트 재현용)
 tools/build.py         data/derived -> public/data    (공개 결정 지점)
 tools/export_excel.py  data/derived -> outputs/       (제출용 엑셀·CSV)
 tools/figures.py       data/derived -> outputs/figures (보고서 삽화. matplotlib 필요)
@@ -155,7 +159,9 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 
 ## 없는 데이터는 만들지 않는다
 
-빈집 등급·위치(군청 실태조사)와 건축물대장은 아직 없다. 샘플값을 채우지 않는다.
+빈집 등급·리별 위치(군청 실태조사)는 없다 — 군청에 요청하지 않기로 했고(2026-11-06), 리별 빈집은
+선임 답변 대기다. 건축물 정보는 건축물대장 API 대신 GIS건물통합정보(사용승인일·용도 포함)를 쓴다.
+샘플값을 채우지 않는다.
 원자료가 없는 지표는 `status: "missing"` 으로 두면 화면이 비활성으로 표시하고
 이유까지 보여준다. 계획만 있는 자료는 `data/sources.json` 에
 `status: "미확보"`, `raw_dir: null` 로 남긴다.
@@ -184,3 +190,9 @@ tools/tests/           pytest. 원자료 기준 "알려진 개수"를 고정해 
 - `public/index.html` 을 브라우저로 그냥 열어도 동작한다(빌드 후)
 - raw CSV 인코딩이 섞여 있다(UTF-8 BOM / cp949). `_meta.json` 의 `encoding` 필드를 따른다
 - `data/raw/` 는 `.gitattributes` 로 줄바꿈 변환을 막아 sha256 을 유지한다. 지우지 말 것
+- 50MB 넘는 전국 원본(상가 zip, 브이월드 리 경계 zip, 건물통합정보 대구 zip)은 저장소 밖
+  `~/Downloads/gunwi-dl/` 에 두고 sha256 만 `_meta.json` 에 적는다. 저장소에는 군위 부분만 **원본 바이트 그대로**
+  잘라 넣는다(CSV 는 줄 단위, SHP/DBF 는 레코드 바이트 복사 — pyshp 로 다시 쓰면 소수 값이 미세하게 바뀐다)
+- Windows 셸: 한글 출력은 `PYTHONIOENCODING=utf-8` 이 필요하다. `python -I` 는 사용자 site-packages 를 막아
+  pyshp·openpyxl 등을 못 찾는다(다운로드 파일을 다루는 임시 스크립트에만 쓰고 tools/ 실행에는 쓰지 않는다)
+- 약국은 분석에서 뺐다(2026-11-06 선임 결정). HIRA 원자료의 약국 행은 점 배정만 남는다
